@@ -34,7 +34,7 @@ main()
   dJx2.set_size(int(Nmax/2)*(nmax+1)+int(nmax/2)+1,int(Nmax/2)*(nmax+1)+int(nmax/2)+1);
   for(i=0;i<nmax+1;i++){
    for(j=0;j<Nmax/2;i++){
-     td(i*int(nmax/2)+nmax/2+1+j,i*int(nmax/2)+nmax/2+1+j)=(j+1)*(j+1);
+     dJx2(i*int(nmax/2)+nmax/2+1+j,i*int(nmax/2)+nmax/2+1+j)=(j+1)*(j+1);
    }
   }
   
