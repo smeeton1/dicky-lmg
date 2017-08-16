@@ -1,13 +1,14 @@
 
 #include <iostream>
+#include <complex.h>
 #include <armadillo>
 
 main()
 {
-  SpMat td,dJx2;//, hold, n0, I, n;
+  sp_cx_mat tn,dJx2,tm,jp,jp0,Da,Da0;//, hold, n0, I, n;
   float Delta, eta, gamma, omega, omega0, alpha;
   int Nmax, nmax;
-  unsigned int i,j;//counters
+  unsigned int i,j,k;//counters
   
   // initializing variables 
   Nmax=100; //qubit ensemble dimension must be even
@@ -22,21 +23,51 @@ main()
   for(i=0;i<nmax/2+1;i++){ n0(i,i)=2*i; }
   for(i=0;i<nmax+1;i++){ n(i,i)=i; }
   hold=kron(I,n);*/
-  td.set_size(int(Nmax/2)*(nmax+1)+int(nmax/2)+1,int(Nmax/2)*(nmax+1)+int(nmax/2)+1);
+  tn.set_size(int(Nmax/2)*(nmax+1)+int(nmax/2)+1,int(Nmax/2)*(nmax+1)+int(nmax/2)+1);
   for(i=0;i<nmax/2+1;i++){ td(i,i)=2*i; }
   for(i=0;i<Nmax/2;i++){
-   for(j=0;j<nmax+1;i++){
-     td(i*int(Nmax/2)+nmax/2+1+j,i*int(Nmax/2)+nmax/2+1+j)=j;
+   for(j=0;j<nmax+1;j++){
+     tn(i*int(Nmax/2)+nmax/2+1+j,i*int(Nmax/2)+nmax/2+1+j)=j;
    }
   }
   
   
   dJx2.set_size(int(Nmax/2)*(nmax+1)+int(nmax/2)+1,int(Nmax/2)*(nmax+1)+int(nmax/2)+1);
   for(i=0;i<nmax+1;i++){
-   for(j=0;j<Nmax/2;i++){
-     dJx2(i*int(nmax/2)+nmax/2+1+j,i*int(nmax/2)+nmax/2+1+j)=(j+1)*(j+1);
+   for(j=0;j<Nmax/2;j++){
+     dJx2(i*int(Nmax/2)+nmax/2+1+j,i*int(Nmax/2)+nmax/2+1+j)=(j+1)*(j+1);
    }
   }
   
+  tm.set_size(int(Nmax/2)*(nmax+1)+int(nmax/2)+1,int(Nmax/2)*(nmax+1)+int(nmax/2)+1);
+  for(i=0;i<Nmax/2-1;i++){
+   for(j=0;j<nmax;j++){
+     tm(i*int(nmax)+nmax/2+1+j,i*int(nmax)+nmax/2+1+j)=(i+1)*sqrt(j);
+     tm(i*int(nmax)+nmax/2+1+j,i*int(nmax)+nmax/2+1+j)=(i+1)*sqrt(j+1);
+   }
+  }
+  //tm(int(Nmax/2)*(nmax+1)+nmax/2+1,int(Nmax/2)*(nmax+1)+nmax/2)=(Nmax/2)*sqrt(nmax+1);
+  //tm(int(Nmax/2)*(nmax+1)+nmax/2,int(Nmax/2)*(nmax+1)+nmax/2+1)=(Nmax/2+1)*sqrt(nmax+2);
+  
+  jp.set_size(int(Nmax/2)+1,int(Nmax/2)+1);
+  for(i=0;i<Nmax/2;i++){ jp(i+1,i)= sqrt( Nmax/2 *( Nmax/2 + 1) - i*(i - 1)); }
+  jp0.set_size(int(Nmax/2)+1,int(Nmax/2)+1);
+  jp0(1,0)=sqrt( (Nmax/2*(Nmax/2 +1))/ 2;
+  
+  Da.set_size(nmax+1,nmax+1);
+  for(i=0;i<nmax+1;i++){
+    for(j=0;j<nmax+1;j++){
+      Da(i,j)=0;
+      for(k=0;k<min(i,j)+1;k++){
+	Da(i,j)+=cexp((i+j-2*k)*log(alpha) + (j-k)*clog(-1) + 0.5*(lgamma(i+1) + lgamma(j+1))-(lgamma(i-k+1) + lgamma(j-k+1) + lgamma(k+1)));
+  }}}
+  
+  Da0.set_size(nmax+1,nmax+1);
+  for(i=0;i<nmax+1;i++){
+    for(j=0;j<(nmax+1)/2;j++){
+      Da0(i,j)=0;
+      for(k=0;k<min(i,j)+1;k++){
+	Da0(i,j)+=cexp((i+j*2-2*k)*log(alpha) + (j*2-k)*clog(-1) + 0.5*(lgamma(i+1) + lgamma(j*2+1))-(lgamma(i-k+1) + lgamma(j*2-k+1) + lgamma(k+1)));
+  }}}
   
 }
