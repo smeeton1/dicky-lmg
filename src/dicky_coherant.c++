@@ -16,13 +16,7 @@ main()
   Delta=1.0;eta=0.2;gamma=0.3;omega=1.0;omega0=1.0;
   alpha = 2*gamma/(omega*np.sqrt(Nmax));
   /*----------------------------------------*/
-  
-  /*I.eye(int(Nmax/2),int(Nmax/2));
-  n0.set_size(int(nmax/2)+1,int(nmax/2)+1);
-  n.set_size(nmax+1,nmax+1);
-  for(i=0;i<nmax/2+1;i++){ n0(i,i)=2*i; }
-  for(i=0;i<nmax+1;i++){ n(i,i)=i; }
-  hold=kron(I,n);*/
+
   tn.set_size(int(Nmax/2)*(nmax+1),int(Nmax/2)*(nmax+1));//here we are setting up the matrix for a^dagger a
   for(i=0;i<Nmax/2;i++){
    for(j=0;j<nmax+1;j++){
@@ -38,13 +32,13 @@ main()
    }
   }
   
-  tm.set_size(int(Nmax/2)*(nmax+1),int(Nmax/2)*(nmax+1));//move this to the end only used for post processing
+ /* tm.set_size(int(Nmax/2)*(nmax+1),int(Nmax/2)*(nmax+1));//move this to the end only used for post processing
   for(i=0;i<Nmax/2-1;i++){
    for(j=0;j<nmax;j++){
      tm(i*int(nmax)+j,i*int(nmax)+j+1)=(i+1)*sqrt(j);
      tm(i*int(nmax)+j+1,i*int(nmax)+j)=(i+1)*sqrt(j+1);
    }
-  }
+  }*/
   //tm(int(Nmax/2)*(nmax+1)+nmax/2+1,int(Nmax/2)*(nmax+1)+nmax/2)=(Nmax/2)*sqrt(nmax+1);
   //tm(int(Nmax/2)*(nmax+1)+nmax/2,int(Nmax/2)*(nmax+1)+nmax/2+1)=(Nmax/2+1)*sqrt(nmax+2);
   
@@ -69,5 +63,22 @@ main()
   
   
   H=omega*tn-omega*alpha*alpha*dJx2+d*tJz+eta/Nmax*dJz*dJz;
+  
+  cx_vec eigval;
+  cx_mat eigvac;
+  eigs_gen(eigval, eigvec, H,int(0.75*(Nmax/2)*(nmax+1)));
+  
+  ofstream fileeva("eigenval.dat");
+  fileeva << eigval;
+  fileeva.close();
+  
+  ofstream fileeve("eigenvec.dat");
+  for(i=0;i<=eigvac.n_rows;i++){
+    for(j=0;j<=eigvac.n_cols;j++){
+      fileeve << conj(eigval(i,j))*eigval(i,j)<< " ";
+    }
+    fileeve << "/n";
+  }
+  fileeve.close();
   
 }
