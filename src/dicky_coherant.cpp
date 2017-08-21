@@ -1,8 +1,10 @@
 
 #include <iostream>
 #include <fstream>
-#include <complex.h>
+#include <complex>
 #include <armadillo>
+#include <string>
+#include <sstream>
 
 
 using namespace std;
@@ -10,28 +12,28 @@ using namespace arma;
 
 main()
 {
-  //sp_cx_mat H,dJz;//, hold, n0, I, n,jp,jp0,tn,dJx2,tm;
-  //cx_mat Da;
+  std::setvbuf(stdout, NULL, _IONBF, 0);//tm;
   float Delta, eta, gamma, omega, omega0, alpha;
   int Nmax, nmax;
   complex<double> hold;
   unsigned int i,j,k,l;//counters
   
   // initializing variables 
-  Nmax=10; //qubit ensemble dimension must be even
+  Nmax=4; //qubit ensemble dimension must be even
   nmax=2*Nmax; //field dimension only even numbers
   Delta=1.0;eta=0.2;gamma=0.3;omega=1.0;omega0=1.0;
   alpha = 2*gamma/(omega*sqrt(Nmax));
   /*----------------------------------------*/
-  sp_cx_mat H(int(Nmax/2)*(nmax+1),int(Nmax/2)*(nmax+1));//,jp,jp0,dJz;
-  sp_cx_mat dJz(int(Nmax/2)*(nmax+1),int(Nmax/2)*(nmax+1));
+  sp_cx_mat H;//(int(Nmax/2)*(nmax+1),int(Nmax/2)*(nmax+1));//,jp,jp0,dJz;
+  sp_cx_mat dJz;//(int(Nmax/2)*(nmax+1),int(Nmax/2)*(nmax+1));
   //here we are setting up the matrix for a^dagger a and (a+a^dagger)Jx
+
   for(i=0;i<Nmax/2;i++){
    for(j=0;j<nmax+1;j++){
      H(i*int(Nmax/2)+j,i*int(Nmax/2)+j)=omega*j-omega*alpha*alpha*(j+1)*(j+1);
    }
   }
-    
+ 
   //dJx2.set_size(int(Nmax/2)*(nmax+1),int(Nmax/2)*(nmax+1));//here we are setting up the matrix (a+a^dagger)Jx
 //   for(i=0;i<nmax+1;i++){
 //    for(j=0;j<Nmax/2;j++){
@@ -64,7 +66,7 @@ main()
 	dJz(i+(l+1)*int(Nmax/2),j+l*int(Nmax/2))=0;
 	dJz(j+l*int(Nmax/2),i+(l+1)*int(Nmax/2))=0;
 	for(k=0;k<min(i,j)+1;k++){
-	  hold=cexp((i+j-2*k)*log(alpha) + (j-k)*log(-1) + 0.5*(lgamma(i+1) + lgamma(j+1))-(lgamma(i-k+1) + lgamma(j-k+1) + lgamma(k+1)));
+	  hold=complex<double>(exp((i+j-2*k)*log(alpha)))+complex<double>((j-k))*log(complex<double>(-1))+complex<double>(0.5*(lgamma(i+1)+lgamma(j+1))-(lgamma(i-k+1)+lgamma(j-k+1)+lgamma(k+1)));
 	  dJz(i+(l+1)*int(Nmax/2),j+l*int(Nmax/2))+=hold;
 	  dJz(j+l*int(Nmax/2),i+(l+1)*int(Nmax/2))+=hold;
 	}

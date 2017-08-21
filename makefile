@@ -17,5 +17,5 @@ Dicky: Dicky
 cDicky: cDicky
 	$(cc) src/dicky_coherant.cpp -o $@ $(FLAGS)  $(LIB)
 	
-clear: 
+clean: 
 	rm Dicky cDicky
