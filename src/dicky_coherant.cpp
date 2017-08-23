@@ -24,22 +24,24 @@ main()
   Delta=1.0;eta=0.2;gamma=0.3;omega=1.0;omega0=1.0;
   alpha = 2*gamma/(omega*sqrt(Nmax));
   /*----------------------------------------*/
-  sp_cx_mat H;//(int(Nmax/2)*(nmax+1),int(Nmax/2)*(nmax+1));//,jp,jp0,dJz;
-  sp_cx_mat dJz;//(int(Nmax/2)*(nmax+1),int(Nmax/2)*(nmax+1));
-  //here we are setting up the matrix for a^dagger a and (a+a^dagger)Jx
-
+  size= int(Nmax/2)*(nmax+1)+int(nmax/2+1);
+  sp_cx_mat H(size,size);//,jp,jp0,dJz;
+  sp_cx_mat dJz(size,size);
+  /*----------------------------------------*/
+  f = (4*gamma*gamma + eta*omega)/(omega*omega0);
+if (f < 1){
+	f = - omega0*Nmax/2 + eta*Nmax/4;}
+else{
+	f = - omega0*Nmax*(f + 1 /f)/4 + eta*Nmax/4;}
+	
+  //here we are setting up the matrix for a^dagger a
+  for(i=0;i<nmax/2+1;i++){H(i,i)=omega*2*i;}
   for(i=0;i<Nmax/2;i++){
    for(j=0;j<nmax+1;j++){
-     H(i*int(Nmax/2)+j,i*int(Nmax/2)+j)=omega*j-omega*alpha*alpha*(j+1)*(j+1);
+     H(i*int(nmax+1)+j+int(nmax/2)+1,i*int(nmax+1)+j+int(nmax/2)+1)=omega*j-omega*alpha*alpha*(j+1)*(j+1)-f;
    }
   }
- 
-  //dJx2.set_size(int(Nmax/2)*(nmax+1),int(Nmax/2)*(nmax+1));//here we are setting up the matrix (a+a^dagger)Jx
-//   for(i=0;i<nmax+1;i++){
-//    for(j=0;j<Nmax/2;j++){
-//      H(i*int(Nmax/2)+j,i*int(Nmax/2)+j)+=-omega*alpha*alpha*(j+1)*(j+1);
-//    }
-//   }
+
   
  /* tm.set_size(int(Nmax/2)*(nmax+1),int(Nmax/2)*(nmax+1));//move this to the end only used for post processing
   for(i=0;i<Nmax/2-1;i++){
@@ -48,18 +50,12 @@ main()
      tm(i*int(nmax)+j+1,i*int(nmax)+j)=(i+1)*sqrt(j+1);
    }
   }*/
-  //tm(int(Nmax/2)*(nmax+1)+nmax/2+1,int(Nmax/2)*(nmax+1)+nmax/2)=(Nmax/2)*sqrt(nmax+1);
-  //tm(int(Nmax/2)*(nmax+1)+nmax/2,int(Nmax/2)*(nmax+1)+nmax/2+1)=(Nmax/2+1)*sqrt(nmax+2);
+
   
   /* following is the setting up pf the matrix for Jz*/
   
   dJz.set_size(int(Nmax/2)*(nmax+1),int(Nmax/2)*(nmax+1));
-  //for(i=0;i<Nmax/2-1;i++){ jp(i+1,i)= sqrt( Nmax/2 *( Nmax/2 + 1)-(-Nmax/2+i)*(-Nmax/2 +i - 1)); }
-  //jp0.set_size(int(Nmax/2)*(nmax+1),int(Nmax/2)*(nmax+1));
-  /*jp0(i,i+1)=sqrt((Nmax/2*(Nmax/2 +1)))/ 2;
-  for(i=0;i<Nmax/2-1;i++){ jp0(i,i+1)= sqrt( Nmax/2 *( Nmax/2 + 1)-(-Nmax/2+i)*(-Nmax/2 +i - 1)); }*/
-  
-  //Da.set_size(nmax+1,nmax+1); 
+
   for(l=0;l<Nmax/2;l++){ 
     for(i=0;i<nmax+1;i++){
       for(j=0;j<nmax+1;j++){
@@ -85,6 +81,7 @@ main()
   cx_mat eigvac;
   eigs_gen(eigval, eigvac, H,int(0.75*(Nmax/2)*(nmax+1)));
   
+  eigval=(2/Nmax)*eigval;
   ofstream fileeva("eigenval.dat");
   fileeva << eigval;
   fileeva.close();
