@@ -12,9 +12,8 @@ using namespace arma;
 
 main()
 {
-  std::setvbuf(stdout, NULL, _IONBF, 0);//tm;
-  float Delta, eta, gamma, omega, omega0, alpha;
-  int Nmax, nmax;
+  double Delta, eta, gamma, omega, omega0, alpha,tol,f;
+  int Nmax, nmax,size;
   complex<double> hold;
   unsigned int i,j,k,l;//counters
   

@@ -11,11 +11,10 @@ using namespace arma;
 
 main()
 {
-
-  double Delta, eta, gamma, omega, omega0, alpha,tol,f;
+  float tol;
+  double Delta, eta, gamma, omega, omega0, alpha,f;
   int Nmax, nmax,size;
   unsigned int i,j,k,l;//counters
-  complex<double> a;
   
   // initializing variables 
   Nmax=6; //qubit ensemble dimension must be even
@@ -39,7 +38,7 @@ else{
   for(i=0;i<nmax/2+1;i++){H(i,i)=omega*2*i;}
   for(i=0;i<Nmax/2;i++){
    for(j=0;j<nmax+1;j++){
-     H(i*int(nmax+1)+j+int(nmax/2)+1,i*int(nmax+1)+j+int(nmax/2)+1)=omega*j-omega*alpha*alpha*(j+1)*(j+1)-f;
+     H(i*int(nmax+1)+j+int(nmax/2)+1,i*int(nmax+1)+j+int(nmax/2)+1)=omega*j-omega*alpha*alpha*(j+1)*(j+1);
    }
   }
   /*tm.set_size(int(Nmax/2)*(nmax+1),int(Nmax/2)*(nmax+1));//move this to the end only used for post processing
@@ -50,7 +49,7 @@ else{
    }
   }*/
 
-
+cout<<H<<endl;
   for(l=0;l<Nmax;l++){
     for(i=0;i<nmax+1;i++){
       for(j=0;j<nmax+1;j++){
@@ -59,26 +58,25 @@ else{
 	  for(k=0;k<min(i,j)+1;k++){
 	    jp(i+(l+1)*int(Nmax),j+l*int(Nmax))+=exp(complex<double>((i+j-2*k)*log(alpha))+complex<double>(j-k)*log(complex<double>(-1))+complex<double>(0.5*(lgamma(i+1)+lgamma(j+1))-(lgamma(i-k+1)+lgamma(j-k+1)+lgamma(k+1)))); 
 	  }
-	  jp(i+(l+1)*int(Nmax),j+l*int(Nmax))*=complex<double>(exp(-alpha*alpha/2))*sqrt(Nmax/2*(Nmax/2+1)-double(l*(l-1)));
+	  jp(i+(l+1)*int(Nmax),j+l*int(Nmax))*=complex<double>(exp(-alpha*alpha/2))*sqrt(complex<double>(Nmax/2*(Nmax/2+1)-double(l*(l-1))));
 	 }
   }}}
 
   for(i=0;i<nmax+1;i++){
     for(j=0;j<(nmax+1)/2;j++){
       for(k=0;k<min(i,j)+1;k++){
-	  jp0(i+int(Nmax),j)+=exp(complex<double>((i+j*2-2*k)*log(alpha))+complex<double>(j*2-k)*log(complex<double>(-1))+complex<double>(0.5*(lgamma(i+1)+lgamma(j*2+1))-(lgamma(i-k+1)+lgamma(j*2-k+1)+lgamma(k+1))));
+	  jp0(i+int(Nmax),j)+=exp(complex<double>((i+j-2*k)*log(alpha))+complex<double>(j-k)*log(complex<double>(-1))+complex<double>(0.5*(lgamma(i+1)+lgamma(j+1))-(lgamma(i-k+1)+lgamma(j-k+1)+lgamma(k+1))));
 	}
 	jp0(i+int(Nmax),j)*=complex<double>(exp(-alpha*alpha/2)*sqrt((Nmax/2*(Nmax/2+1))/ 2));
   }}
   
   dJz=-(2*jp0.t()+2*jp0+jp+jp.t())/2;
-
   H=H+Delta*dJz+eta/Nmax*dJz*dJz;
   cout<<H<<endl;
   cout<<int(0.75*size)<<" "<<size<<" "<<Nmax/2<<" "<<nmax+1<<endl;
   cx_vec eigval;
   cx_mat eigvac;
-  eigs_gen(eigval, eigvac, H,int(0.95*size),"lm");
+  eigs_gen(eigval, eigvac, H,int(10),"sr");
   
   eigval=2*eigval/Nmax;
   ofstream fileeva("eigenval.dat");
