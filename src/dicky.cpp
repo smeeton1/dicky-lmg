@@ -73,7 +73,6 @@ cout<<H<<endl;
   dJz=-(2*jp0.t()+2*jp0+jp+jp.t())/2;
   H=H+Delta*dJz+eta/Nmax*dJz*dJz;
   cout<<H<<endl;
-  cout<<int(0.75*size)<<" "<<size<<" "<<Nmax/2<<" "<<nmax+1<<endl;
   cx_vec eigval;
   cx_mat eigvac;
   eigs_gen(eigval, eigvac, H,int(10),"sr");
