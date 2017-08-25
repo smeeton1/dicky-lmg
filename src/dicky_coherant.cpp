@@ -37,7 +37,7 @@ else{
   for(i=0;i<nmax/2+1;i++){H(i,i)=omega*2*i;}
   for(i=0;i<Nmax/2;i++){
    for(j=0;j<nmax+1;j++){
-     H(i*int(nmax+1)+j+int(nmax/2)+1,i*int(nmax+1)+j+int(nmax/2)+1)=omega*j-omega*alpha*alpha*(j+1)*(j+1)-f;
+     H(i*int(nmax+1)+j+int(nmax/2)+1,i*int(nmax+1)+j+int(nmax/2)+1)=omega*j-omega*alpha*alpha*(i+1)*(i+1)-f;
    }
   }
 
