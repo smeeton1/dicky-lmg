@@ -56,18 +56,18 @@ else{
       for(j=0;j<nmax+1;j++){
 	 if((i+(l+1)*int(nmax+1)<size)&&(j+l*int(nmax+1)<size)){
 	  for(k=0;k<min(i,j)+1;k++){
-	    jp(i+(l+1)*int(nmax+1),j+l*int(nmax+1))+=exp(complex<double>((i+j-2*k)*log(alpha))+complex<double>(j-k)*log(complex<double>(-1))+complex<double>(0.5*(lgamma(i+1)+lgamma(j+1))-(lgamma(i-k+1)+lgamma(j-k+1)+lgamma(k+1)))); 
+	    jp(i+(l+1)*int(nmax+1)-(nmax/2),j+l*int(nmax+1))+=exp(complex<double>((i+j-2*k)*log(alpha))+complex<double>(j-k)*log(complex<double>(-1))+complex<double>(0.5*(lgamma(i+1)+lgamma(j+1))-(lgamma(i-k+1)+lgamma(j-k+1)+lgamma(k+1)))); 
 	  }
-	  jp(i+(l+1)*int(nmax+1),j+l*int(nmax+1))*=complex<double>(exp(-alpha*alpha/2))*sqrt(complex<double>(Nmax/2*(Nmax/2+1))-complex<double>((l+2)*(l+1)));
+	  jp(i+(l+1)*int(nmax+1)-(nmax/2),j+l*int(nmax+1))*=complex<double>(exp(-alpha*alpha/2))*sqrt(complex<double>(Nmax/2*(Nmax/2+1))-complex<double>((l+2)*(l+1)));
 	 }
   }}}
 
   for(i=0;i<nmax+1;i++){
     for(j=0;j<(nmax+1)/2+1;j++){
       for(k=0;k<min(i,j)+1;k++){
-	  jp0(i+int(nmax+1)-(Nmax/2+1),j)+=exp(complex<double>((i+j*2-2*k)*log(alpha))+complex<double>(j*2-k)*log(complex<double>(-1))+complex<double>(0.5*(lgamma(i+1)+lgamma(j*2+1))-(lgamma(i-k+1)+lgamma(j*2-k+1)+lgamma(k+1))));
+	  jp0(i+int(nmax+1)-(nmax/2),j)+=exp(complex<double>((i+j*2-2*k)*log(alpha))+complex<double>(j*2-k)*log(complex<double>(-1))+complex<double>(0.5*(lgamma(i+1)+lgamma(j*2+1))-(lgamma(i-k+1)+lgamma(j*2-k+1)+lgamma(k+1))));
 	}
-	jp0(i+int(nmax+1)-(Nmax/2+1),j)*=complex<double>(exp(-alpha*alpha/2)*sqrt((Nmax/2*(Nmax/2+1))/ 2));
+	jp0(i+int(nmax+1)-(nmax/2),j)*=complex<double>(exp(-alpha*alpha/2)*sqrt((Nmax/2*(Nmax/2+1))/ 2));
   }}
   cout<<jp<<endl;
   cout<<jp0<<endl;
@@ -76,7 +76,7 @@ else{
   cout<<H<<endl;
   cx_vec eigval;
   cx_mat eigvac;
-  eigs_gen(eigval, eigvac, H,int(10),"sr");
+  eigs_gen(eigval, eigvac, H,int(10),"sm");
   
   eigval=2*eigval/Nmax;
   ofstream fileeva("eigenval.dat");
