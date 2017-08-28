@@ -11,10 +11,10 @@ endif
 
 All: Dicky cDicky
 
-Dicky: Dicky
+Dicky: 
 	$(cc) src/dicky.cpp -o $@ $(FLAGS)  $(LIB)
 
-cDicky: cDicky
+cDicky: 
 	$(cc) src/dicky_coherant.cpp -o $@ $(FLAGS)  $(LIB)
 	
 clean: 
