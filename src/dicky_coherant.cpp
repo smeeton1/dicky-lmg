@@ -145,11 +145,11 @@ main()
   eigs_gen(eigval, eigvac, H,int(en*size),"sr");
   
   eigval=(2/Nmax)*eigval;
-  ofstream fileeva("eigenval.dat");
+  ofstream fileeva("results/eigenval.dat");
   fileeva << real(eigval);
   fileeva.close();
   
-  ofstream fileeve("eigenvec.dat");
+  ofstream fileeve("results/eigenvec.dat");
   for(i=0;i<eigvac.n_rows;i++){
     for(j=0;j<eigvac.n_cols;j++){
       fileeve << real(conj(eigvac(i,j))*eigvac(i,j))<< " ";
