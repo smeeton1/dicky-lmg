@@ -10,7 +10,7 @@
 using namespace std;
 using namespace arma;
 
-main()
+int main(int argc, char *argv[])
 {
   double Delta, eta, gamma, omega, omega0, alpha,tol,en;
   int Nmax, nmax,size;
@@ -27,13 +27,12 @@ main()
       switch(*argv[i]) {
 	case 'N':
 	  if(isdigit(*argv[i+1]) ){
-	    Nmax=int(*argv[i+1]-'0');
+	    Nmax=atoi(argv[i+1]);
 	  }
 	break;
 	case 'n':
 	  if(isdigit(*argv[i+1]) ){
-	    nmax=int(*argv[i+1]-'0');
-	  }
+	    nmax=atoi(argv[i+1]);
 	break;
 	case 'W':
 	  if(isdigit(*argv[i+1]) ){
