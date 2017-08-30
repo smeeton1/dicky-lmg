@@ -5,10 +5,21 @@
 #include <armadillo>
 #include <string>
 #include <sstream>
+#include <cmath>
 
 
 using namespace std;
 using namespace arma;
+
+
+double fac(int n){
+  int i;
+  double sum=1;
+  if(n>0){
+  for(i=1;i<=n;i++){sum=sum*i;}
+  return sum;}
+  else{return 1;}
+}
 
 int main(int argc, char *argv[])
 {
@@ -33,6 +44,7 @@ int main(int argc, char *argv[])
 	case 'n':
 	  if(isdigit(*argv[i+1]) ){
 	    nmax=atoi(argv[i+1]);
+	  }
 	break;
 	case 'W':
 	  if(isdigit(*argv[i+1]) ){
@@ -91,17 +103,17 @@ int main(int argc, char *argv[])
   // calculated values
   /*----------------------------------------*/   
   alpha = 2*gamma/(omega*sqrt(Nmax));
-  size= int(Nmax/2)*(nmax+1)+int(nmax/2+1);
-  sp_cx_mat H(size,size);//,jp,jp0,dJz;
+  size= int(Nmax/2)*(nmax+1);
+  sp_cx_mat H(size,size);
   sp_cx_mat dJz(size,size);
   /*----------------------------------------*/
 
 	
   //here we are setting up the matrix for a^dagger a
-  for(i=0;i<nmax/2+1;i++){H(i,i)=omega*2*i;}
+  //for(i=0;i<nmax/2+1;i++){H(i,i)=omega*2*i;}
   for(i=0;i<Nmax/2;i++){
    for(j=0;j<nmax+1;j++){
-     H(i*int(nmax+1)+j+int(nmax/2)+1,i*int(nmax+1)+j+int(nmax/2)+1)=omega*j-omega*alpha*alpha*(i+1)*(i+1);
+     H(i*int(nmax+1)+j,i*int(nmax+1)+j)=omega*j-omega*alpha*alpha*(i)*(i);
    }
   }
 
@@ -111,32 +123,29 @@ int main(int argc, char *argv[])
    for(j=0;j<nmax;j++){
      tm(i*int(nmax)+j,i*int(nmax)+j+1)=(i+1)*sqrt(j);
      tm(i*int(nmax)+j+1,i*int(nmax)+j)=(i+1)*sqrt(j+1);
-   }
+   }+(nmax/2)+1
   }*/
 
-  
   /* following is the setting up pf the matrix for Jz*/
-  
-  dJz.set_size(size,size);
 
+//put in formula from page two from paritybasisdicky.pdf
   for(l=0;l<Nmax/2+1;l++){ 
     for(i=0;i<nmax+1;i++){
       for(j=0;j<nmax+1;j++){
-	if((i+(l+1)*int(nmax+1)+(nmax/2)+1<size)&&(j+l*int(nmax+1)+(nmax/2)+1<size)){
+	if((i+(l+1)*int(nmax+1)<size)&&(j+l*int(nmax+1)<size)){
 	  for(k=0;k<min(i,j)+1;k++){
-	    hold=exp(complex<double>((i+j-2*k)*log(alpha))+complex<double>(j-k)*log(complex<double>(-1))+complex<double>(0.5*(lgamma(i+1)+lgamma(j+1))-(lgamma(i-k+1)+lgamma(j-k+1)+lgamma(k+1))));
-	    dJz(i+(l+1)*int(nmax+1)+(nmax/2)+1,j+l*int(nmax+1)+(nmax/2)+1)+=hold;
-	    dJz(i+(l)*int(nmax+1)+(nmax/2)+1,j+(l+1)*int(nmax+1)+(nmax/2)+1)+=hold;
+	    hold=complex<double>(pow(alpha,(i+j-2*k))+pow(-1,(j-k))+(sqrt(fac(i))*sqrt(fac(j)))/(fac(i-k)*fac(j-k)*fac(k)));
+	    dJz(i+(l+1)*int(nmax+1),j+l*int(nmax+1))+=hold;
+	    dJz(j+(l)*int(nmax+1),i+(l+1)*int(nmax+1))+=hold;
 	  }
-	  hold=complex<double>(exp(-alpha*alpha/2))*sqrt(complex<double>(Nmax/2*(Nmax/2+1))-complex<double>((l+2)*(l+1)));
-	  dJz(i+(l+1)*int(nmax+1)+(nmax/2)+1,j+l*int(nmax+1)+(nmax/2)+1)*=-hold/complex< double >(2,0);
-	  dJz(i+(l)*int(nmax+1)+(nmax/2)+1,j+(l+1)*int(nmax+1)+(nmax/2)+1)*=-hold/complex< double >(2,0);
+	  hold=-complex<double>(exp(-alpha*alpha/2))*sqrt(complex<double>(Nmax/2*(Nmax/2+1))-complex<double>((-Nmax/2+l+1)*(-Nmax/2+l)))/complex< double >(2,0);
+	  dJz(i+(l+1)*int(nmax+1),j+l*int(nmax+1))*=hold;
+	  dJz(j+(l)*int(nmax+1),i+(l+1)*int(nmax+1))*=hold;
 	}
       }      
     }
   }
 
-  
   H=H+Delta*dJz+eta/Nmax*dJz*dJz;
   
   cx_vec eigval;

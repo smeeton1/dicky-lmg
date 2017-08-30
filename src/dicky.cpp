@@ -90,29 +90,14 @@ int main(int argc, char *argv[])
   /*----------------------------------------*/
   alpha = 2*gamma/(omega*sqrt(Nmax));
   size= int(Nmax/2)*(nmax+1)+int(nmax/2+1);
-  sp_cx_mat H(size,size);//,jp,jp0,dJz;
+  sp_cx_mat H(size,size);
   sp_cx_mat jp(size,size);
   sp_cx_mat jp0(size,size);
   sp_cx_mat dJz(size,size);
   /*----------------------------------------*/
-	
-  //here we are setting up the matrix for a^dagger a
-  for(i=0;i<nmax/2+1;i++){H(i,i)=omega*2*i;}
-  for(i=0;i<Nmax/2;i++){
-   for(j=0;j<nmax+1;j++){
-     H(i*int(nmax+1)+j+int(nmax/2)+1,i*int(nmax+1)+j+int(nmax/2)+1)=omega*j-omega*alpha*alpha*(i+1)*(i+1);
-   }
-  }
-  
-  /*tm.set_size(int(Nmax/2)*(nmax+1),int(Nmax/2)*(nmax+1));//move this to the end only used for post processing
-  for(i=0;i<Nmax/2-1;i++){
-   for(j=0;j<nmax;j++){
-     tm(i*int(nmax)+j,i*int(nmax)+j+1)=(i+1)*sqrt(j);
-     tm(i*int(nmax)+j+1,i*int(nmax)+j)=(i+1)*sqrt(j+1);
-   }
-  }*/
 
-  for(l=0;l<Nmax/2+1;l++){
+  // Here we are building Jz
+   for(l=0;l<Nmax/2+1;l++){
     for(i=0;i<nmax+1;i++){
       for(j=0;j<nmax+1;j++){
 	 if((i+(l+1)*int(nmax+1)+(nmax/2)+1<size)&&(j+l*int(nmax+1)+(nmax/2)+1<size)){
@@ -131,7 +116,29 @@ int main(int argc, char *argv[])
 	jp0(i+int(nmax+1)-(nmax/2),j)*=complex<double>(exp(-alpha*alpha/2)*sqrt((Nmax/2*(Nmax/2+1))/ 2));
   }}
   dJz=-(2*jp0.t()+2*jp0+jp+jp.t())/2;
-  H=H+Delta*dJz+(eta/Nmax)*(dJz*dJz);
+  H=Delta*dJz+(eta/Nmax)*(dJz*dJz); 
+  
+  
+  
+  
+  
+  //here we are setting up the matrix for a^dagger a
+  for(i=0;i<nmax/2+1;i++){H(i,i)=omega*2*i;}
+  for(i=0;i<Nmax/2;i++){
+   for(j=0;j<nmax+1;j++){
+     H(i*int(nmax+1)+j+int(nmax/2)+1,i*int(nmax+1)+j+int(nmax/2)+1)=omega*j-omega*alpha*alpha*(i+1)*(i+1);
+   }
+  }
+  
+  /*tm.set_size(int(Nmax/2)*(nmax+1),int(Nmax/2)*(nmax+1));//move this to the end only used for post processing
+  for(i=0;i<Nmax/2-1;i++){
+   for(j=0;j<nmax;j++){
+     tm(i*int(nmax)+j,i*int(nmax)+j+1)=(i+1)*sqrt(j);
+     tm(i*int(nmax)+j+1,i*int(nmax)+j)=(i+1)*sqrt(j+1);
+   }
+  }*/
+
+
   
   cx_vec eigval;
   cx_mat eigvac;
