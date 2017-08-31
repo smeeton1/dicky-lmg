@@ -128,13 +128,13 @@ int main(int argc, char *argv[])
 
   /* following is the setting up pf the matrix for Jz*/
 
-//put in formula from page two from paritybasisdicky.pdf
+//put in formula from page two from paritybasisdicky.pdf generalized leigar polynomials or displacement operator generalized laguerre polynomials
   for(l=0;l<Nmax/2+1;l++){ 
     for(i=0;i<nmax+1;i++){
       for(j=0;j<nmax+1;j++){
 	if((i+(l+1)*int(nmax+1)<size)&&(j+l*int(nmax+1)<size)){
 	  for(k=0;k<min(i,j)+1;k++){
-	    hold=complex<double>(pow(alpha,(i+j-2*k))+pow(-1,(j-k))+(sqrt(fac(i))*sqrt(fac(j)))/(fac(i-k)*fac(j-k)*fac(k)));
+	    hold=complex<double>(pow(alpha,(i+j-2*k))*pow(-1,(j-k))*(sqrt(fac(i))*sqrt(fac(j)))/(fac(i-k)*fac(j-k)*fac(k)));
 	    dJz(i+(l+1)*int(nmax+1),j+l*int(nmax+1))+=hold;
 	    dJz(j+(l)*int(nmax+1),i+(l+1)*int(nmax+1))+=hold;
 	  }
@@ -147,12 +147,12 @@ int main(int argc, char *argv[])
   }
 
   H=H+Delta*dJz+eta/Nmax*dJz*dJz;
-  
+
   cx_vec eigval;
   cx_mat eigvac;
   eigs_gen(eigval, eigvac, H,int(en*size),"sr");
   
-  eigval=(2/Nmax)*eigval;
+  //eigval=(2/Nmax)*eigval;
   ofstream fileeva("results/eigenval.dat");
   fileeva << real(eigval);
   fileeva.close();
