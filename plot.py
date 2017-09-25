@@ -7,6 +7,11 @@ import psutil
 import subprocess
 import matplotlib.pyplot as plt
 
-Dickytake=[]
-Dickymem=[]
-Dickysize=[]
+
+DoS = []
+f1 = open('results/DoS.dat', 'r')
+for line in f
+  data=line.split()
+  DoS.append(double(data[1]),double(data[2]))
+
+f.close

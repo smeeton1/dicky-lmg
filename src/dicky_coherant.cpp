@@ -166,26 +166,24 @@ int main(int argc, char *argv[])
   }
   fileeve.close();
   
-  vec mjz;
-  for(i=0;i<size;i++){
-   mjz(i)=real(eigvac.col(i).t*dJz*eigvac.col(i)); 
+
+  ofstream filemjz("results/mjz.dat");
+  for(i=0;i<int(en*size);i++){
+   filemjz << real(eigvac.col(i).t()*dJz*eigvac.col(i))<<endl; 
   }
+  filemjz.close(); 
   
-  ofstream fileeva("results/mjz.dat");
-  fileeva << mjz;
-  fileeva.close(); 
-  
-  ofstream fileeve("results/DoS.dat");
-  for(i=0;i<size-21;i++){
+  ofstream filedos("results/DoS.dat");
+  for(i=0;i<int(en*size)-21;i++){
     Dsum=0;
     Nsum=0;
     for(j=i;j<i+20;j++){
       Dsum+=real(eigval(j+1)+eigval(j));
       Nsum+=real(eigval(j+1)-eigval(j));
     }
-    fileeve << Dsum/42<< " "<<21/Nsum;
-    fileeve << "\n";
+    filedos << Dsum/42 << " " << 21/Nsum;
+    filedos << "\n";
   }
-  fileeve.close();
+  filedos.close();
   
 }
