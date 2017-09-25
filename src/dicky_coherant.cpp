@@ -23,7 +23,7 @@ double fac(int n){
 
 int main(int argc, char *argv[])
 {
-  double Delta, eta, gamma, omega, omega0, alpha,tol,en;
+  double Delta, eta, gamma, omega, omega0, alpha,tol,en,Dsum,Nsum;
   int Nmax, nmax,size;
   complex<double> hold;
   unsigned int i,j,k,l;//counters
@@ -162,6 +162,28 @@ int main(int argc, char *argv[])
     for(j=0;j<eigvac.n_cols;j++){
       fileeve << real(conj(eigvac(i,j))*eigvac(i,j))<< " ";
     }
+    fileeve << "\n";
+  }
+  fileeve.close();
+  
+  vec mjz;
+  for(i=0;i<size;i++){
+   mjz(i)=real(eigvac.col(i).t*dJz*eigvac.col(i)); 
+  }
+  
+  ofstream fileeva("results/mjz.dat");
+  fileeva << mjz;
+  fileeva.close(); 
+  
+  ofstream fileeve("results/DoS.dat");
+  for(i=0;i<size-21;i++){
+    Dsum=0;
+    Nsum=0;
+    for(j=i;j<i+20;j++){
+      Dsum+=real(eigval(j+1)+eigval(j));
+      Nsum+=real(eigval(j+1)-eigval(j));
+    }
+    fileeve << Dsum/42<< " "<<21/Nsum;
     fileeve << "\n";
   }
   fileeve.close();
