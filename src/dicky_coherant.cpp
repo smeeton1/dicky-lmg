@@ -29,7 +29,7 @@ int main(int argc, char *argv[])
   unsigned int i,j,k,l;//counters
   
   // initializing variables 
-  Nmax=4; //qubit ensemble dimension must be even
+  Nmax=10; //qubit ensemble dimension must be even
   nmax=2*Nmax; //field dimension only even numbers
   Delta=1.0;eta=0.2;gamma=0.3;omega=1.0;omega0=1.0;en=0.2;
   
@@ -169,7 +169,7 @@ int main(int argc, char *argv[])
 
   ofstream filemjz("results/mjz.dat");
   for(i=0;i<int(en*size);i++){
-   filemjz << real(eigvac.col(i).t()*dJz*eigvac.col(i))<<endl; 
+   filemjz << real(eigvac.col(i).t()*dJz*eigvac.col(i)); 
   }
   filemjz.close(); 
   
