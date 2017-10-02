@@ -1,10 +1,6 @@
-import os
-import time
 import numpy 
 import cmath 
 import math 
-import psutil
-import subprocess
 import matplotlib.pyplot as plt
 
 ##################################################################################
@@ -19,46 +15,49 @@ omega=1.0
 omega0=1.0
 en=0.8
 
-#################################################################################
+##############################################################################
 
-DoS = []
-f1 = open('results/DoS.dat', 'r')
-for line in f1
+DoS1 = []
+DoS2 = []
+fh= open('results/DoS.dat', 'r')
+for line in fh:
   data=line.split()
-  DoS.append(double(data[1]),double(data[2]))
+  DoS1.append(float(data[0]))
+  DoS2.append(float(data[1]))
 
-f1.close
+fh.close
 
 plt.figure(1)
-plt.plot(DoS,'.','b')
+plt.plot(DoS1,DoS2,'.')
 plt.savefig('DoS.eps')
 
-del DoS
+del DoS1
+del DoS2
 
 #######################################################################################
 
-EiV = []
-f1 = open('results/eigenval.dat', 'r')
-for line in f1
-  data=line.split()
-  EiV.append(double(data[1]))
+#EiV = []
+#f1 = open('results/eigenval.dat', 'r')
+#for line in f1:
+  #data=line.split()
+  #EiV.append(float(data[0]))
 
-f1.close
+#f1.close
 
-mJz = []
-f1 = open('results/mjz.dat', 'r')
-for line in f1
-  data=line.split()
-  mJz.append(double(data[1]))
+#mJz = []
+#f1 = open('results/mjz.dat', 'r')
+#for line in f1:
+  #data=line.split()
+  #mJz.append(float(data[0]))
 
-f1.close
+#f1.close
 
-plt.figure(1)
-plt.plot(EiV,mJz,'.','b')
-plt.savefig('PeresL.eps')
+#plt.figure(1)
+#plt.plot(EiV,mJz,'.','b')
+#plt.savefig('PeresL.eps')
 
-del EiV
-del mJz
+#del EiV
+#del mJz
 
 #########################################################################################
 
