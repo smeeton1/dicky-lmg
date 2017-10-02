@@ -19,8 +19,6 @@ omega=1.0
 omega0=1.0
 en=0.8
 
-os.system('./cDicky N '+str(Nmax)+' n '+str(nmax)+' W '+str(omega)+' w '+str(omega0)+' D '+str(Delta)+' E '+str(eta)+' G '+str(gamma)+' e '+str(en))
-
 #################################################################################
 
 DoS = []

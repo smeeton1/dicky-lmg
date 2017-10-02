@@ -1,0 +1,15 @@
+#!/bin/bash
+
+Nmax=10 ##qubit ensemble dimension must be even
+nmax=20 ##field dimension only even numbers 
+Delta=1.0
+eta=0.2
+gamma=0.3
+omega=1.0
+omega0=1.0
+en=0.8
+
+
+./cDicky N $Nmax n $nmax W $omega w $omega0 D $Delta E $eta G $gamma e $en
+
+python plot.py
