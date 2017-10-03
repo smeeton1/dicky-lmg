@@ -1,11 +1,14 @@
 
 #include <iostream>
+#include <iomanip>
 #include <fstream>
 #include <complex>
 #include <armadillo>
 #include <string>
 #include <sstream>
 #include <cmath>
+#include <cstring>
+#include <sstream>
 
 
 using namespace std;
@@ -27,7 +30,7 @@ int main(int argc, char *argv[])
   int Nmax, nmax,size;
   complex<double> hold;
   unsigned int i,j,k,l;//counters
-  
+  ostringstream osseva,osseve,ossdos,ossmjz;
   // initializing variables 
   Nmax=10; //qubit ensemble dimension must be even
   nmax=2*Nmax; //field dimension only even numbers
@@ -151,13 +154,15 @@ int main(int argc, char *argv[])
   cx_vec eigval;
   cx_mat eigvac;
   eigs_gen(eigval, eigvac, H,int(en*size),"sr");
-  
+  //cout<<showpoint<<setprecision(2)<<omega<<' '<<omega0<<endl;
   //eigval=(2/Nmax)*eigval;
-  ofstream fileeva("results/eigenval.dat");
+  osseva<<"results/eigenval_"<<Nmax<<'_'<<nmax<<'_'<<showpoint<<setprecision(1)<<fixed<<omega<<'_'<<omega0<<'_'<<Delta<<'_'<<eta<<'_'<<gamma<<".dat";
+  ofstream fileeva(osseva.str().c_str());
   fileeva << real(eigval);
   fileeva.close();
   
-  ofstream fileeve("results/eigenvec.dat");
+  osseve<<"results/eigenvec_"<<Nmax<<'_'<<nmax<<'_'<<showpoint<<setprecision(1)<<fixed<<omega<<'_'<<omega0<<'_'<<Delta<<'_'<<eta<<'_'<<gamma<<".dat";
+  ofstream fileeve(osseve.str().c_str());
   for(i=0;i<eigvac.n_rows;i++){
     for(j=0;j<eigvac.n_cols;j++){
       fileeve << real(conj(eigvac(i,j))*eigvac(i,j))<< " ";
@@ -166,14 +171,15 @@ int main(int argc, char *argv[])
   }
   fileeve.close();
   
-
-  ofstream filemjz("results/mjz.dat");
+  ossmjz<<"results/mjz_"<<Nmax<<'_'<<nmax<<'_'<<showpoint<<setprecision(1)<<fixed<<omega<<'_'<<omega0<<'_'<<Delta<<'_'<<eta<<'_'<<gamma<<".dat";
+  ofstream filemjz(ossmjz.str().c_str());
   for(i=0;i<int(en*size);i++){
    filemjz << real(eigvac.col(i).t()*dJz*eigvac.col(i)); 
   }
   filemjz.close(); 
   
-  ofstream filedos("results/DoS.dat");
+  ossdos<<"results/DoS_"<<Nmax<<'_'<<nmax<<'_'<<showpoint<<setprecision(1)<<fixed<<omega<<'_'<<omega0<<'_'<<Delta<<'_'<<eta<<'_'<<gamma<<".dat";
+  ofstream filedos(ossdos.str().c_str());
   for(i=0;i<int(en*size)-21;i++){
     Dsum=0;
     Nsum=0;
