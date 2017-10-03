@@ -14,11 +14,11 @@ eta=0.2
 gamma=0.3
 omega=1.0
 omega0=1.0
-en=0.8
+en=0.5
 
 ##############################################################################
 
-FileDoS='results/DoS_%d_%d_%.1f_%.1f_%.1f_%.1f_%.1f.dat' % (Nmax,nmax,omega,omega0,Delta,eta,gamma)
+FileDoS='results/DoS_%d_%d_%.1f_%.1f_%.1f_%.1f_%.1f_%.1f.dat' % (Nmax,nmax,omega,omega0,Delta,eta,gamma,en)
 DoS1 = []
 DoS2 = []
 fh= open(FileDoS, 'r')
@@ -29,7 +29,7 @@ for line in fh:
 
 fh.close
 
-ImgDoS='images/DoS_%d_%d_%.1f_%.1f_%.1f_%.1f_%.1f.eps' % (Nmax,nmax,omega,omega0,Delta,eta,gamma)
+ImgDoS='images/DoS_%d_%d_%.1f_%.1f_%.1f_%.1f_%.1f_%.1f.dat' % (Nmax,nmax,omega,omega0,Delta,eta,gamma,en)
 plt.figure(1)
 plt.plot(DoS1,DoS2,'b.')
 plt.savefig(ImgDoS)
@@ -40,7 +40,7 @@ del DoS2
 #######################################################################################
 
 
-Fileval='results/eigenval_%d_%d_%.1f_%.1f_%.1f_%.1f_%.1f.dat' % (Nmax,nmax,omega,omega0,Delta,eta,gamma)
+Fileval='results/eigenval_%d_%d_%.1f_%.1f_%.1f_%.1f_%.1f_%.1f.dat' % (Nmax,nmax,omega,omega0,Delta,eta,gamma,en)
 EiV = []
 f1 = open(Fileval, 'r')
 for line in f1:
@@ -50,7 +50,7 @@ for line in f1:
 f1.close
 
 
-Filemjz='results/mjz_%d_%d_%.1f_%.1f_%.1f_%.1f_%.1f.dat' % (Nmax,nmax,omega,omega0,Delta,eta,gamma)
+Filemjz='results/mjz_%d_%d_%.1f_%.1f_%.1f_%.1f_%.1f_%.1f.dat' % (Nmax,nmax,omega,omega0,Delta,eta,gamma,en)
 mJz = []
 f1 = open(Filemjz, 'r')
 for line in f1:
@@ -59,8 +59,8 @@ for line in f1:
 
 f1.close
 
-ImgPeresL='images/PeresL_%d_%d_%.1f_%.1f_%.1f_%.1f_%.1f.eps' % (Nmax,nmax,omega,omega0,Delta,eta,gamma)
-plt.figure(1)
+ImgPeresL='images/PeresL_%d_%d_%.1f_%.1f_%.1f_%.1f_%.1f_%.1f.dat' % (Nmax,nmax,omega,omega0,Delta,eta,gamma,en)
+plt.figure(2)
 plt.plot(EiV,mJz,'.')
 plt.savefig(ImgPeresL)
 
