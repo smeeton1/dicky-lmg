@@ -24,6 +24,19 @@ double fac(int n){
   else{return 1;}
 }
 
+double laguerre(double n,double m,int k){
+  double sum,l1,l2,l3;
+  int j;
+  l1=1;l2=1+m-n;
+  sum=l1+l2;
+  for(j=1;j++;j=k){
+    l3=(m+2*j+1-n)*l2/(j+1)-(j+m)*l1/(j+1);
+    l1=l2;l2=l3;
+    sum+=l3;
+  }
+return sum;
+}
+
 int main(int argc, char *argv[])
 {
   double Delta, eta, gamma, omega, omega0, alpha,tol,en,Dsum,Nsum;
@@ -34,7 +47,7 @@ int main(int argc, char *argv[])
   // initializing variables 
   Nmax=10; //qubit ensemble dimension must be even
   nmax=2*Nmax; //field dimension only even numbers
-  Delta=1.0;eta=0.2;gamma=0.3;omega=1.0;omega0=1.0;en=0.2;
+  Delta=1.0;eta=0.2;gamma=0.3;omega=1.0;omega0=1.0;en=0.8;
   
     if(argc>1){//this is used to set the variables for the program from the command line using flags all can be changed or defults used
     for(i=1;i<argc;i=i+2){
@@ -110,56 +123,50 @@ int main(int argc, char *argv[])
   sp_cx_mat H(size,size);
   sp_cx_mat dJz(size,size);
   /*----------------------------------------*/
-
+  // Creating the Hamiltonian
 	
   //here we are setting up the matrix for a^dagger a
-  //for(i=0;i<nmax/2+1;i++){H(i,i)=omega*2*i;}
   for(i=0;i<Nmax/2;i++){
    for(j=0;j<nmax+1;j++){
      H(i*int(nmax+1)+j,i*int(nmax+1)+j)=omega*j-omega*alpha*alpha*(i)*(i);
    }
   }
 
-  
- /* tm.set_size(int(Nmax/2)*(nmax+1),int(Nmax/2)*(nmax+1));//move this to the end only used for post processing
-  for(i=0;i<Nmax/2-1;i++){
-   for(j=0;j<nmax;j++){
-     tm(i*int(nmax)+j,i*int(nmax)+j+1)=(i+1)*sqrt(j);
-     tm(i*int(nmax)+j+1,i*int(nmax)+j)=(i+1)*sqrt(j+1);
-   }+(nmax/2)+1
-  }*/
-
   /* following is the setting up pf the matrix for Jz*/
 
-//put in formula from page two from paritybasisdicky.pdf generalized leigar polynomials or displacement operator generalized laguerre polynomials
+//put in formula from page two from paritybasisdicky.pdf  displacement operator generalized laguerre polynomials
   for(l=0;l<Nmax/2+1;l++){ 
     for(i=0;i<nmax+1;i++){
       for(j=0;j<nmax+1;j++){
 	if((i+(l+1)*int(nmax+1)<size)&&(j+l*int(nmax+1)<size)){
 	  for(k=0;k<min(i,j)+1;k++){
-	    hold=complex<double>(pow(alpha,(i+j-2*k))*pow(-1,(j-k))*(sqrt(fac(i))*sqrt(fac(j)))/(fac(i-k)*fac(j-k)*fac(k)));
-	    dJz(i+(l+1)*int(nmax+1),j+l*int(nmax+1))+=hold;
-	    dJz(j+(l)*int(nmax+1),i+(l+1)*int(nmax+1))+=conj(hold);
+	    hold=complex<double>(pow(alpha,(i+j-2*k))*pow(-1,(j-k))*((sqrt(fac(i))*sqrt(fac(j)))/(fac(i-k)*fac(j-k)*fac(k))));
+	    dJz(i+(l+1)*int(nmax+1),j+l*int(nmax+1))+=hold;//complex<double>(pow(alpha,(i+j-2*k))*pow(-1,(j-k))*((sqrt(fac(i))*sqrt(fac(j)))/(fac(i-k)*fac(j-k)*fac(k))));;
+	    dJz(j+(l)*int(nmax+1),i+(l+1)*int(nmax+1))+=conj(hold);//complex<double>(pow(-alpha,(i+j-2*k))*pow(-1,(j-k))*((sqrt(fac(i))*sqrt(fac(j)))/(fac(i-k)*fac(j-k)*fac(k))));;
 	  }
 	  hold=-complex<double>(exp(-alpha*alpha/2))*sqrt(complex<double>(Nmax/2*(Nmax/2+1))-complex<double>((-Nmax/2+l+1)*(-Nmax/2+l)))/complex< double >(2,0);
-	  dJz(i+(l+1)*int(nmax+1),j+l*int(nmax+1))*=hold;
-	  dJz(j+(l)*int(nmax+1),i+(l+1)*int(nmax+1))*=conj(hold);
+	  dJz(i+(l+1)*int(nmax+1),j+l*int(nmax+1))*=hold;//-complex<double>(exp(-alpha*alpha/2))*sqrt(complex<double>(Nmax/2*(Nmax/2+1))-complex<double>((-Nmax/2+l+1)*(-Nmax/2+l)))/complex< double >(2,0);
+	  dJz(j+(l)*int(nmax+1),i+(l+1)*int(nmax+1))*=conj(hold);//-complex<double>(exp(-alpha*alpha/2))*sqrt(complex<double>(Nmax/2*(Nmax/2+1))-complex<double>((-Nmax/2+l-1)*(-Nmax/2+l)))/complex< double >(2,0);
 	}
       }      
     }
   }
-
+  
   H=H+Delta*dJz+eta/Nmax*dJz*dJz;
+  
+  /*------------------------------------------------------------*/
+  //getting Eigenvalues and Eigenvectors
 
-  cx_vec eigval; //solving for the eigen values and the eigen vectors.
+  cx_vec eigval;
   cx_mat eigvac;
-  eigs_gen(eigval, eigvac, H,int(en*size),"sr");
+  eigs_gen(eigval, eigvac, H,int(en*size),"sr");//getting en% of the eigenvalues(eigval)  with smallest real part and corisponding eigenvectors(eigvac)
   
-  //cout<<H*eigvac.col(1)-eigval(1)*eigvac.col(1)<<endl;
+  //cout<<H*eigvac.col(1)-eigval(1)*eigvac.col(1)<<endl;//quick test of eigen value
   
+  /*------------------------------------------------------------*/
+  //Doing post processing and writing to file
   
-  //cout<<showpoint<<setprecision(2)<<omega<<' '<<omega0<<endl;
-  //eigval=(2/Nmax)*eigval;
+
   osseva<<"results/eigenval_"<<Nmax<<'_'<<nmax<<'_'<<showpoint<<setprecision(1)<<fixed<<omega<<'_'<<omega0<<'_'<<Delta<<'_'<<eta<<'_'<<gamma<<'_'<<en<<".dat";
   ofstream fileeva(osseva.str().c_str());
   fileeva << real(eigval);
