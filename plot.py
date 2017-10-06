@@ -25,6 +25,13 @@ else:
   eta=0.2
   gamma=0.3
   en=0.8
+  
+
+e1=-1+eta/2*Delta
+e2=1+eta/2*Delta
+emin=-0.5*((math.pow(4*gamma,2)+eta*Delta)/(omega*Delta)+(omega*Delta)/(math.pow(4*gamma,2)+eta*Delta))+eta/2*Delta
+eNe=-Delta/2*eta
+f=(4*pow(gamma,2)+eta*omega)/omega*omega0
 
 ##############################################################################
 
@@ -34,14 +41,25 @@ DoS2 = []
 fh= open(FileDoS, 'r')
 for line in fh:
   data=line.split()
-  DoS1.append(float(data[0]))
-  DoS2.append(float(data[1]))
+  DoS1.append(float(data[0])/(Nmax/2))
+  DoS2.append(float(data[1])/(Nmax))
 
 fh.close
+yex=[]
+yex.append(max(DoS2)+1)
+yex.append(min(DoS2)-1)
 
 ImgDoS='images/DoS_%d_%d_%.1f_%.1f_%.1f_%.1f_%.1f_%.1f.eps' % (Nmax,nmax,omega,omega0,Delta,eta,gamma,en)
 plt.figure(1)
 plt.plot(DoS1,DoS2,'b.')
+plt.plot([e1,e1],yex,'r--')
+plt.plot([e2,e2],yex,'r--')
+axes=plt.gca()
+axes.set_ylim([yex[1]+0.5,yex[0]-0.5])
+if f>=1 and eta<Delta:
+  plt.plot([emin,emin],yex,'r--')
+if f>=1 and eta>=Delta:
+  plt.plot([eNe,eNe],yex,'r--')
 plt.savefig(ImgDoS)
 del DoS1
 del DoS2
@@ -68,9 +86,21 @@ for line in f1:
 
 f1.close
 
+yex=[]
+yex.append(max(mJz)+1)
+yex.append(min(mJz)-1)
+
 ImgPeresL='images/PeresL_%d_%d_%.1f_%.1f_%.1f_%.1f_%.1f_%.1f.eps' % (Nmax,nmax,omega,omega0,Delta,eta,gamma,en)
 plt.figure(2)
 plt.plot(EiV,mJz,'r.')
+plt.plot([e1,e1],yex,'r--')
+plt.plot([e2,e2],yex,'r--')
+axes=plt.gca()
+axes.set_ylim([yex[1]+0.5,yex[0]-0.5])
+if f>=1 and eta<Delta:
+  plt.plot([emin,emin],yex,'r--')
+if f>=1 and eta>=Delta:
+  plt.plot([eNe,eNe],yex,'r--')
 plt.savefig(ImgPeresL)
 del EiV
 del mJz
