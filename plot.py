@@ -82,7 +82,7 @@ mJz = []
 f1 = open(Filemjz, 'r')
 for line in f1:
   data=line.split()
-  mJz.append(float(data[0])/(Nmax))
+  mJz.append(float(data[0])/(Nmax/2))
 
 f1.close
 
