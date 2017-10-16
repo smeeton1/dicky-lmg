@@ -48,6 +48,8 @@ fh.close
 yex=[]
 yex.append(max(DoS2)+1)
 yex.append(min(DoS2)-1)
+xmax=max(DoS1)+0.1
+xmin=min(DoS1)-0.1
 
 ImgDoS='images/DoS_%d_%d_%.1f_%.1f_%.1f_%.1f_%.1f_%.1f.eps' % (Nmax,nmax,omega,omega0,Delta,eta,gamma,en)
 plt.figure(1)
@@ -56,6 +58,7 @@ plt.plot([e1,e1],yex,'r--')
 plt.plot([e2,e2],yex,'r--')
 axes=plt.gca()
 axes.set_ylim([yex[1]+0.9,yex[0]-0.9])
+axes.set_xlim(xmin,xmax)
 if f>=1 and eta<Delta:
   plt.plot([emin,emin],yex,'r--')
 if f>=1 and eta>=Delta:
@@ -89,6 +92,8 @@ f1.close
 yex=[]
 yex.append(max(mJz)+1)
 yex.append(min(mJz)-1)
+xmax=max(EiV)+0.3
+xmin=min(EiV)-0.3
 
 ImgPeresL='images/PeresL_%d_%d_%.1f_%.1f_%.1f_%.1f_%.1f_%.1f.eps' % (Nmax,nmax,omega,omega0,Delta,eta,gamma,en)
 plt.figure(2)
@@ -97,6 +102,7 @@ plt.plot([e1,e1],yex,'r--')
 plt.plot([e2,e2],yex,'r--')
 axes=plt.gca()
 axes.set_ylim([yex[1]+0.995,yex[0]-0.995])
+axes.set_xlim(xmin,xmax)
 if f>=1 and eta<Delta:
   plt.plot([emin,emin],yex,'r--')
 if f>=1 and eta>=Delta:
