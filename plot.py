@@ -72,7 +72,7 @@ EiV = []
 f1 = open(Fileval, 'r')
 for line in f1:
   data=line.split()
-  EiV.append(float(data[0])/(Nmax))
+  EiV.append(float(data[0])/(Nmax/2))
 
 f1.close
 
