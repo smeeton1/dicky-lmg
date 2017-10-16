@@ -10,18 +10,18 @@ omega0=1.0
 en=0.8
 
 
-./cDicky N 50 n 100 W 1.0 w 1.0 D 1.0 E 0.2 G 0.3 e 0.5
+./cDicky N 200 n 600 W 1.0 w 1.0 D 1.0 E 0.2 G 0.3 e 0.5
 
-python plot.py 50 100 1.0 1.0 1.0 0.2 0.3 0.5
+python plot.py 200 600 1.0 1.0 1.0 0.2 0.3 0.5
 
 echo "one done"
 
-./cDicky N 50 n 100 W 1.0 w 1.0 D 1.0 E 0.2 G 0.8 e 0.5
+./cDicky N 200 n 600 W 1.0 w 1.0 D 1.0 E 0.2 G 0.8 e 0.5
 
-python plot.py 50 100 1.0 1.0 1.0 0.2 0.8 0.5
+python plot.py 200 600 1.0 1.0 1.0 0.2 0.8 0.5
 
 echo "two done"
 
-./cDicky N 50 n 100 W 1.0 w 1.0 D 1.0 E 2.1 G 0.8 e 0.5
+./cDicky N 200 n 600 W 1.0 w 1.0 D 1.0 E 2.1 G 0.8 e 0.5
 
-python plot.py 50 100 1.0 1.0 1.0 2.1 0.8 0.5
+python plot.py 200 600 1.0 1.0 1.0 2.1 0.8 0.5
