@@ -55,7 +55,7 @@ plt.plot(DoS1,DoS2,'b.')
 plt.plot([e1,e1],yex,'r--')
 plt.plot([e2,e2],yex,'r--')
 axes=plt.gca()
-axes.set_ylim([yex[1]+0.5,yex[0]-0.5])
+axes.set_ylim([yex[1]+0.8,yex[0]-0.8])
 if f>=1 and eta<Delta:
   plt.plot([emin,emin],yex,'r--')
 if f>=1 and eta>=Delta:
@@ -72,7 +72,7 @@ EiV = []
 f1 = open(Fileval, 'r')
 for line in f1:
   data=line.split()
-  EiV.append(float(data[0]))
+  EiV.append(float(data[0])/(Nmax))
 
 f1.close
 
@@ -82,7 +82,7 @@ mJz = []
 f1 = open(Filemjz, 'r')
 for line in f1:
   data=line.split()
-  mJz.append(float(data[0]))
+  mJz.append(float(data[0])/(Nmax))
 
 f1.close
 
@@ -96,7 +96,7 @@ plt.plot(EiV,mJz,'r.')
 plt.plot([e1,e1],yex,'r--')
 plt.plot([e2,e2],yex,'r--')
 axes=plt.gca()
-axes.set_ylim([yex[1]+0.5,yex[0]-0.5])
+axes.set_ylim([yex[1]+0.8,yex[0]-0.8])
 if f>=1 and eta<Delta:
   plt.plot([emin,emin],yex,'r--')
 if f>=1 and eta>=Delta:
