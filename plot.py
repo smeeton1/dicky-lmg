@@ -55,7 +55,7 @@ plt.plot(DoS1,DoS2,'b.')
 plt.plot([e1,e1],yex,'r--')
 plt.plot([e2,e2],yex,'r--')
 axes=plt.gca()
-axes.set_ylim([yex[1]+0.8,yex[0]-0.8])
+axes.set_ylim([yex[1]+0.9,yex[0]-0.9])
 if f>=1 and eta<Delta:
   plt.plot([emin,emin],yex,'r--')
 if f>=1 and eta>=Delta:
@@ -96,7 +96,7 @@ plt.plot(EiV,mJz,'r.')
 plt.plot([e1,e1],yex,'r--')
 plt.plot([e2,e2],yex,'r--')
 axes=plt.gca()
-axes.set_ylim([yex[1]+0.8,yex[0]-0.8])
+axes.set_ylim([yex[1]+0.95,yex[0]-0.95])
 if f>=1 and eta<Delta:
   plt.plot([emin,emin],yex,'r--')
 if f>=1 and eta>=Delta:
