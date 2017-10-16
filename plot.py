@@ -96,7 +96,7 @@ plt.plot(EiV,mJz,'r.')
 plt.plot([e1,e1],yex,'r--')
 plt.plot([e2,e2],yex,'r--')
 axes=plt.gca()
-axes.set_ylim([yex[1]+0.95,yex[0]-0.95])
+axes.set_ylim([yex[1]+0.98,yex[0]-0.98])
 if f>=1 and eta<Delta:
   plt.plot([emin,emin],yex,'r--')
 if f>=1 and eta>=Delta:
