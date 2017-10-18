@@ -131,7 +131,7 @@ int main(int argc, char *argv[])
      H(i*int(nmax+1)+j,i*int(nmax+1)+j)=omega*j-omega*alpha*alpha*(i)*(i);
    }
   }
-
+  cout<<"hello"<<endl;
   /* following is the setting up pf the matrix for Jz*/
 
 //put in formula from page two from paritybasisdicky.pdf  displacement operator generalized laguerre polynomials
@@ -153,7 +153,7 @@ int main(int argc, char *argv[])
   }
   
   H=H+Delta*dJz+eta/Nmax*dJz*dJz;
-  
+  cout<<"hello"<<endl;
   /*------------------------------------------------------------*/
   //getting Eigenvalues and Eigenvectors
 
