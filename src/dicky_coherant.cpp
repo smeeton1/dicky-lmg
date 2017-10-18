@@ -37,6 +37,17 @@ double laguerre(double n,double m,int k){
 return sum;
 }
 
+complex<double> Kloop(int i,int j,int l,int Nmax,double alpha){
+  complex<double> hold=complex<double>(0, 0);
+  #pragma omp parallel for
+  for(int k=0;k<min(i,j)+1;k++){
+    hold+=complex<double>(pow(alpha,(i+j-2*k))*pow(-1,(j-k))*((sqrt(fac(i))*sqrt(fac(j)))/(fac(i-k)*fac(j-k)*fac(k)))); 
+  }
+  hold*=-complex<double>(exp(-alpha*alpha/2))*sqrt(complex<double>(Nmax/2*(Nmax/2+1))-complex<double>((-Nmax/2+l+1)*(-Nmax/2+l)))/complex< double >(2,0);
+  return hold;
+}
+	  
+
 int main(int argc, char *argv[])
 {
   double Delta, eta, gamma, omega, omega0, alpha,tol,en,Dsum,Nsum;
@@ -126,30 +137,32 @@ int main(int argc, char *argv[])
   // Creating the Hamiltonian
 	
   //here we are setting up the matrix for a^dagger a
+  #pragma omp parallel shared(H)
+  {
+  #pragma omp parallel for
   for(i=0;i<Nmax/2;i++){
    for(j=0;j<nmax+1;j++){
      H(i*int(nmax+1)+j,i*int(nmax+1)+j)=omega*j-omega*alpha*alpha*(i)*(i);
    }
   }
+  }
   cout<<"hello"<<endl;
   /* following is the setting up pf the matrix for Jz*/
 
 //put in formula from page two from paritybasisdicky.pdf  displacement operator generalized laguerre polynomials
+  //#pragma omp parallel shared(dJz,l,i,j)
+  {
+  //#pragma omp parallel for
   for(l=0;l<Nmax/2+1;l++){ 
     for(i=0;i<nmax+1;i++){
       for(j=0;j<nmax+1;j++){
-	if((i+(l+1)*int(nmax+1)<size)&&(j+l*int(nmax+1)<size)){
-	  for(k=0;k<min(i,j)+1;k++){
-	    hold=complex<double>(pow(alpha,(i+j-2*k))*pow(-1,(j-k))*((sqrt(fac(i))*sqrt(fac(j)))/(fac(i-k)*fac(j-k)*fac(k))));
-	    dJz(i+(l+1)*int(nmax+1),j+l*int(nmax+1))+=hold;//complex<double>(pow(alpha,(i+j-2*k))*pow(-1,(j-k))*((sqrt(fac(i))*sqrt(fac(j)))/(fac(i-k)*fac(j-k)*fac(k))));;
-	    dJz(j+(l)*int(nmax+1),i+(l+1)*int(nmax+1))+=conj(hold);//complex<double>(pow(-alpha,(i+j-2*k))*pow(-1,(j-k))*((sqrt(fac(i))*sqrt(fac(j)))/(fac(i-k)*fac(j-k)*fac(k))));;
+	  if((i+(l+1)*int(nmax+1)<size)&&(j+l*int(nmax+1)<size)){
+	    dJz(i+(l+1)*int(nmax+1),j+l*int(nmax+1))=Kloop(i,j,l,Nmax,alpha);
+	    dJz(j+(l)*int(nmax+1),i+(l+1)*int(nmax+1))=conj(Kloop(i,j,l,Nmax,alpha));
 	  }
-	  hold=-complex<double>(exp(-alpha*alpha/2))*sqrt(complex<double>(Nmax/2*(Nmax/2+1))-complex<double>((-Nmax/2+l+1)*(-Nmax/2+l)))/complex< double >(2,0);
-	  dJz(i+(l+1)*int(nmax+1),j+l*int(nmax+1))*=hold;//-complex<double>(exp(-alpha*alpha/2))*sqrt(complex<double>(Nmax/2*(Nmax/2+1))-complex<double>((-Nmax/2+l+1)*(-Nmax/2+l)))/complex< double >(2,0);
-	  dJz(j+(l)*int(nmax+1),i+(l+1)*int(nmax+1))*=conj(hold);//-complex<double>(exp(-alpha*alpha/2))*sqrt(complex<double>(Nmax/2*(Nmax/2+1))-complex<double>((-Nmax/2+l-1)*(-Nmax/2+l)))/complex< double >(2,0);
-	}
       }      
     }
+  }
   }
   
   H=H+Delta*dJz+eta/Nmax*dJz*dJz;

@@ -4,7 +4,7 @@ BINDIR?= mod
 
 ifeq ($(MA), mine)
  cc = g++
- FLAGS = -O2 -pthread
+ FLAGS = -O2 -fopenmp
  LIB =    -larmadillo -llapack -lm
 endif
 
