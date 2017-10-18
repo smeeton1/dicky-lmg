@@ -137,9 +137,9 @@ int main(int argc, char *argv[])
   // Creating the Hamiltonian
 	
   //here we are setting up the matrix for a^dagger a
-  #pragma omp parallel shared(H)
+  //#pragma omp parallel shared(H)
   {
-  #pragma omp parallel for
+  //#pragma omp parallel for
   for(i=0;i<Nmax/2;i++){
    for(j=0;j<nmax+1;j++){
      H(i*int(nmax+1)+j,i*int(nmax+1)+j)=omega*j-omega*alpha*alpha*(i)*(i);
