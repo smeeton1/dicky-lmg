@@ -4,6 +4,91 @@ import cmath
 import math 
 import matplotlib.pyplot as plt
 
+########################################################################################################
+
+##### Simple Numaricla intergration ################
+
+def IntPhi(b,a,omega,omega0,eta,gamma,i):
+  phi=(b-a)*(numpy.arccos(math.sqrt((omega*omega0)*((eta/(2*omega0))*pow(b,2)+b-i)/(2*pow(gamma,2)*(1-pow(b,2)))))+numpy.arccos(math.sqrt((omega*omega0)*((eta/(2*omega0))*pow(a,2)+a-i)/(2*pow(gamma,2)*(1-pow(a,2))))))/2
+  return phi
+
+
+#############################################################################################################
+
+############### classical DoS functions ###################################
+
+
+########## Region 1 #####################
+def DoSR1(xmin,xmax,e1,e2,omega,omega0,eta,gamma):
+  CDoS = []
+  i=e1+0.01
+  while i<e2:
+    z1=-(math.sqrt(16*pow(gamma,4)+4*pow(gamma,2)*omega*(eta+2*i*omega0)+omega0*pow(omega,2)*(2*i*eta+omega0))+omega*omega0)/(4*pow(gamma,2)+eta*omega)
+    z2=(math.sqrt(16*pow(gamma,4)+4*pow(gamma,2)*omega*(eta+2*i*omega0)+omega0*pow(omega,2)*(2*i*eta+omega0))-omega*omega0)/(4*pow(gamma,2)+eta*omega)
+    i+=0.1
+    phi=IntPhi(z2,z1,omega,omega0,eta,gamma,i)
+    CDoS.append((z2+1)/2+phi/math.pi,i)
+  while e2<=i<xmax
+    CDoS.append(1,i)
+    i+=0.1
+  return CDoS
+
+################# Region 2 ####################
+
+def DoSR2(xmin,xmax,e1,e2,emin,omega,omega0,eta,gamma):
+  CDoS = []
+  i=e1+0.01
+  while i<emin:
+    zn=-(math.sqrt(omega0*(omega-2*i*eta))+omega)/eta
+    zp=(math.sqrt(omega0*(omega-2*i*eta))-omega)/eta
+    i+=0.1
+    phi=IntPhi(zn,zp,omega,omega0,eta,gamma,i)
+    CDoS.append(phi/math.pi,i)
+  while emin<=i<e2
+    z2=(math.sqrt(16*pow(gamma,4)+4*pow(gamma,2)*omega*(eta+2*i*omega0)+omega0*pow(omega,2)*(2*i*eta+omega0))-omega*omega0)/(4*pow(gamma,2)+eta*omega)
+    zp=(math.sqrt(omega0*(omega-2*i*eta))-omega)/eta
+    phi=IntPhi(z2,zp,omega,omega0,eta,gamma,i)
+    CDoS.append((z2+1)/2+phi/math.pi,i)
+    i+=0.1
+  while e2<=i<xmax
+    CDoS.append(1,i)
+    i+=0.1
+  return CDoS
+
+
+#################### Region 3 #########################
+
+def DoSR3(xmin,xmax,e1,e2,emin,eNe,omega,omega0,eta,gamma):
+  CDoS = []
+  i=e1+0.01
+  while i<eNe:
+    zn=-(math.sqrt(omega0*(omega-2*i*eta))+omega)/eta
+    zp=(math.sqrt(omega0*(omega-2*i*eta))-omega)/eta
+    i+=0.1
+    phi=IntPhi(zn,zp,omega,omega0,eta,gamma,i)
+    CDoS.append(phi/math.pi,i)
+  while emNe<=i<emin
+    z1=-(math.sqrt(16*pow(gamma,4)+4*pow(gamma,2)*omega*(eta+2*i*omega0)+omega0*pow(omega,2)*(2*i*eta+omega0))+omega*omega0)/(4*pow(gamma,2)+eta*omega)
+    z2=(math.sqrt(16*pow(gamma,4)+4*pow(gamma,2)*omega*(eta+2*i*omega0)+omega0*pow(omega,2)*(2*i*eta+omega0))-omega*omega0)/(4*pow(gamma,2)+eta*omega)
+    zp=(math.sqrt(omega0*(omega-2*i*eta))-omega)/eta
+    zn=-(math.sqrt(omega0*(omega-2*i*eta))+omega)/eta
+    phi=IntPhi(zn,z1,omega,omega0,eta,gamma,i)
+    phi2=IntPhi(z2,zp,omega,omega0,eta,gamma,i)
+    CDoS.append((z2-z1)/2+(phi+phi2)/math.pi,i)
+    i+=0.1
+  while emin<=i<e2
+    z2=(math.sqrt(16*pow(gamma,4)+4*pow(gamma,2)*omega*(eta+2*i*omega0)+omega0*pow(omega,2)*(2*i*eta+omega0))-omega*omega0)/(4*pow(gamma,2)+eta*omega)
+    zp=(math.sqrt(omega0*(omega-2*i*eta))-omega)/eta
+    phi=IntPhi(z2,zp,omega,omega0,eta,gamma,i)
+    CDoS.append((z2+1)/2+phi/math.pi,i)
+    i+=0.1
+  while e2<=i<xmax
+    CDoS.append(1,i)
+    i+=0.1
+  return CDoS
+
+#################################################################################
+
 ##################################################################################
 ##################################################################################
 ### takeing the inputs for the graphs or using defults
@@ -33,7 +118,8 @@ emin=-0.5*((math.pow(4*gamma,2)+eta*Delta)/(omega*Delta)+(omega*Delta)/(math.pow
 eNe=-Delta/2*eta
 f=(4*pow(gamma,2)+eta*omega)/omega*omega0
 
-##############################################################################
+############################################################################## add 1 to 1 ratio
+### Ploting for the DoS 
 
 FileDoS='results/DoS_%d_%d_%.1f_%.1f_%.1f_%.1f_%.1f_%.1f.dat' % (Nmax,nmax,omega,omega0,Delta,eta,gamma,en)
 DoS1 = []
@@ -61,14 +147,19 @@ axes.set_ylim([yex[1]+0.9,yex[0]-0.9])
 axes.set_xlim(xmin,xmax)
 if f>=1 and eta<Delta:
   plt.plot([emin,emin],yex,'r--')
+  CDoS=DoSR2(xmin,xmax,e1,e2,emin,omega,omega0,eta,gamma)
+  plt.plot(CDoS,'r-')
 if f>=1 and eta>=Delta:
+  plt.plot([emin,emin],yex,'r--')
   plt.plot([eNe,eNe],yex,'r--')
+  CDoS=DoSR3(xmin,xmax,e1,e2,emin,eNe,omega,omega0,eta,gamma)
+  plt.plot(CDoS,'r-')
 plt.savefig(ImgDoS)
 del DoS1
 del DoS2
 
 #######################################################################################
-
+## Ploting Peres lattices
 
 Fileval='results/eigenval_%d_%d_%.1f_%.1f_%.1f_%.1f_%.1f_%.1f.dat' % (Nmax,nmax,omega,omega0,Delta,eta,gamma,en)
 EiV = []
@@ -106,6 +197,7 @@ axes.set_xlim(xmin,xmax)
 if f>=1 and eta<Delta:
   plt.plot([emin,emin],yex,'r--')
 if f>=1 and eta>=Delta:
+  plt.plot([emin,emin],yex,'r--')
   plt.plot([eNe,eNe],yex,'r--')
 plt.savefig(ImgPeresL)
 del EiV
