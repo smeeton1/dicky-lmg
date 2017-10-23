@@ -179,12 +179,12 @@ int main(int argc, char *argv[])
   //Doing post processing and writing to file
   
 
-  osseva<<"results/eigenval_"<<Nmax<<'_'<<nmax<<'_'<<showpoint<<setprecision(1)<<fixed<<omega<<'_'<<omega0<<'_'<<Delta<<'_'<<eta<<'_'<<gamma<<'_'<<en<<".dat";
+  osseva<<"results/eigenval_"<<Nmax<<'_'<<nmax<<'_'<<showpoint<<setprecision(1)<<fixed<<omega<<'_'<<omega0<<'_'<<Delta<<'_'<<eta<<'_'<<gamma<<'_'<<showpoint<<setprecision(2)<<fixed<<en<<".dat";
   ofstream fileeva(osseva.str().c_str());
   fileeva << real(eigval);
   fileeva.close();
   
-  osseve<<"results/eigenvec_"<<Nmax<<'_'<<nmax<<'_'<<showpoint<<setprecision(1)<<fixed<<omega<<'_'<<omega0<<'_'<<Delta<<'_'<<eta<<'_'<<gamma<<'_'<<en<<".dat";
+  osseve<<"results/eigenvec_"<<Nmax<<'_'<<nmax<<'_'<<showpoint<<setprecision(1)<<fixed<<omega<<'_'<<omega0<<'_'<<Delta<<'_'<<eta<<'_'<<gamma<<showpoint<<setprecision(2)<<fixed<<'_'<<en<<".dat";
   ofstream fileeve(osseve.str().c_str());
   for(i=0;i<eigvac.n_rows;i++){
     for(j=0;j<eigvac.n_cols;j++){
@@ -194,14 +194,14 @@ int main(int argc, char *argv[])
   }
   fileeve.close();
   
-  ossmjz<<"results/mjz_"<<Nmax<<'_'<<nmax<<'_'<<showpoint<<setprecision(1)<<fixed<<omega<<'_'<<omega0<<'_'<<Delta<<'_'<<eta<<'_'<<gamma<<'_'<<en<<".dat";
+  ossmjz<<"results/mjz_"<<Nmax<<'_'<<nmax<<'_'<<showpoint<<setprecision(1)<<fixed<<omega<<'_'<<omega0<<'_'<<Delta<<'_'<<eta<<'_'<<gamma<<'_'<<showpoint<<setprecision(2)<<fixed<<en<<".dat";
   ofstream filemjz(ossmjz.str().c_str());
   for(i=0;i<int(en*size);i++){
    filemjz << real(eigvac.col(i).t()*dJz*eigvac.col(i))*2/Nmax; 
   }
   filemjz.close(); 
   
-  ossdos<<"results/DoS_"<<Nmax<<'_'<<nmax<<'_'<<showpoint<<setprecision(1)<<fixed<<omega<<'_'<<omega0<<'_'<<Delta<<'_'<<eta<<'_'<<gamma<<'_'<<en<<".dat";
+  ossdos<<"results/DoS_"<<Nmax<<'_'<<nmax<<'_'<<showpoint<<setprecision(1)<<fixed<<omega<<'_'<<omega0<<'_'<<Delta<<'_'<<eta<<'_'<<gamma<<'_'<<showpoint<<setprecision(2)<<fixed<<en<<".dat";
   ofstream filedos(ossdos.str().c_str());
   for(i=0;i<int(en*size)-21;i++){
     Dsum=0;

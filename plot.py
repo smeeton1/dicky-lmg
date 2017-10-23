@@ -121,7 +121,7 @@ f=(4*pow(gamma,2)+eta*omega)/omega*omega0
 ############################################################################## add 1 to 1 ratio
 ### Ploting for the DoS 
 
-FileDoS='results/DoS_%d_%d_%.1f_%.1f_%.1f_%.1f_%.1f_%.1f.dat' % (Nmax,nmax,omega,omega0,Delta,eta,gamma,en)
+FileDoS='results/DoS_%d_%d_%.1f_%.1f_%.1f_%.1f_%.1f_%.2f.dat' % (Nmax,nmax,omega,omega0,Delta,eta,gamma,en)
 DoS1 = []
 DoS2 = []
 fh= open(FileDoS, 'r')
@@ -137,7 +137,7 @@ yex.append(min(DoS2)-1)
 xmax=max(DoS1)+0.1
 xmin=min(DoS1)-0.1
 
-ImgDoS='images/DoS_%d_%d_%.1f_%.1f_%.1f_%.1f_%.1f_%.1f.eps' % (Nmax,nmax,omega,omega0,Delta,eta,gamma,en)
+ImgDoS='images/DoS_%d_%d_%.1f_%.1f_%.1f_%.1f_%.1f_%.2f.eps' % (Nmax,nmax,omega,omega0,Delta,eta,gamma,en)
 plt.figure(1)
 plt.plot(DoS1,DoS2,'b.')
 plt.plot([e1,e1],yex,'r--')
@@ -161,7 +161,7 @@ del DoS2
 #######################################################################################
 ## Ploting Peres lattices
 
-Fileval='results/eigenval_%d_%d_%.1f_%.1f_%.1f_%.1f_%.1f_%.1f.dat' % (Nmax,nmax,omega,omega0,Delta,eta,gamma,en)
+Fileval='results/eigenval_%d_%d_%.1f_%.1f_%.1f_%.1f_%.1f_%.2f.dat' % (Nmax,nmax,omega,omega0,Delta,eta,gamma,en)
 EiV = []
 f1 = open(Fileval, 'r')
 for line in f1:
@@ -171,7 +171,7 @@ for line in f1:
 f1.close
 
 
-Filemjz='results/mjz_%d_%d_%.1f_%.1f_%.1f_%.1f_%.1f_%.1f.dat' % (Nmax,nmax,omega,omega0,Delta,eta,gamma,en)
+Filemjz='results/mjz_%d_%d_%.1f_%.1f_%.1f_%.1f_%.1f_%.2f.dat' % (Nmax,nmax,omega,omega0,Delta,eta,gamma,en)
 mJz = []
 f1 = open(Filemjz, 'r')
 for line in f1:
@@ -186,7 +186,7 @@ yex.append(min(mJz)-1)
 xmax=max(EiV)+0.3
 xmin=min(EiV)-0.3
 
-ImgPeresL='images/PeresL_%d_%d_%.1f_%.1f_%.1f_%.1f_%.1f_%.1f.eps' % (Nmax,nmax,omega,omega0,Delta,eta,gamma,en)
+ImgPeresL='images/PeresL_%d_%d_%.1f_%.1f_%.1f_%.1f_%.1f_%.2f.eps' % (Nmax,nmax,omega,omega0,Delta,eta,gamma,en)
 plt.figure(2)
 plt.plot(EiV,mJz,'r.')
 plt.plot([e1,e1],yex,'r--')
