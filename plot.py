@@ -145,6 +145,9 @@ plt.plot([e2,e2],yex,'r--')
 axes=plt.gca()
 axes.set_ylim([yex[1]+0.9,yex[0]-0.9])
 axes.set_xlim(xmin,xmax)
+if f<1:
+  CDoS=DoSR1(xmin,xmax,e1,e2,omega,omega0,eta,gamma)
+  plt.plot(CDoS,'r-')
 if f>=1 and eta<Delta:
   plt.plot([emin,emin],yex,'r--')
   CDoS=DoSR2(xmin,xmax,e1,e2,emin,omega,omega0,eta,gamma)
