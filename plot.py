@@ -13,6 +13,7 @@ import matplotlib.pyplot as plt
 def IntPhi(b,a,omega,omega0,eta,gamma,i):
   h1=((omega*omega0)*((eta/(2*omega0))*pow(b,2)+b-i))/(2*pow(gamma,2)*(1-pow(b,2)))
   h2=((omega*omega0)*((eta/(2*omega0))*pow(a,2)+a-i))/(2*pow(gamma,2)*(1-pow(a,2)))
+  print(h1,h2)
   if h1<0.0001:
     h1=0
   if h2<0.0001:
