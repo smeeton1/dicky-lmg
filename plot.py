@@ -48,7 +48,6 @@ def DoSR1(xmin,xmax,e1,e2,omega,omega0,eta,gamma):
   while e2<=i<xmax:
     CDoS.append([i,1])
     i+=0.001
-  print(CDoS)
   return CDoS
 
 ################# Region 2 ####################
@@ -166,16 +165,14 @@ axes.set_ylim([yex[1]+0.9,yex[0]-0.9])
 axes.set_xlim(xmin,xmax)
 if f<1:
   CDoS=DoSR1(xmin,xmax,e1,e2,omega,omega0,eta,gamma)
-  plt.plot(CDoS,'r-')
 if f>=1 and eta<Delta:
   plt.plot([emin,emin],yex,'r--')
   CDoS=DoSR2(xmin,xmax,e1,e2,emin,omega,omega0,eta,gamma)
-  plt.plot(CDoS,'r-')
 if f>=1 and eta>=Delta:
   plt.plot([emin,emin],yex,'r--')
   plt.plot([eNe,eNe],yex,'r--')
   CDoS=DoSR3(xmin,xmax,e1,e2,emin,eNe,omega,omega0,eta,gamma)
-  plt.plot(CDoS,'r-')
+plt.plot(CDoS[1],CDoS[2],'r-')
 plt.savefig(ImgDoS)
 del DoS1
 del DoS2
