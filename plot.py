@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 ##### Simple Numaricla intergration ################
 
 def IntPhi(b,a,omega,omega0,eta,gamma,i):
-  print((omega*omega0)*((eta/(2*omega0))*pow(b,2)+b-i),(1-pow(b,2)),(omega*omega0)*((eta/(2*omega0))*pow(a,2)+a-i),(1-pow(a,2)))
+  print((eta/(2*omega0))*pow(b,2)+b,i,(1-pow(b,2)),(omega*omega0)*((eta/(2*omega0))*pow(a,2)+a-i),(1-pow(a,2)))
   if b>a:
     phi=(b-a)*(numpy.arccos(math.sqrt((omega*omega0)*((eta/(2*omega0))*pow(b,2)+b-i)/(2*pow(gamma,2)*(1-pow(b,2)))))+numpy.arccos(math.sqrt((omega*omega0)*((eta/(2*omega0))*pow(a,2)+a-i)/(2*pow(gamma,2)*(1-pow(a,2))))))/2
   else:
