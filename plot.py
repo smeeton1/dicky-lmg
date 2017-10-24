@@ -48,7 +48,7 @@ def DoSR1(xmin,xmax,e1,e2,omega,omega0,eta,gamma):
   while e2<=i<xmax:
     CDoS.append([i,1])
     i+=0.001
-  print(i)
+  print(CDoS)
   return CDoS
 
 ################# Region 2 ####################
