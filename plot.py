@@ -70,7 +70,7 @@ def DoSR3(xmin,xmax,e1,e2,emin,eNe,omega,omega0,eta,gamma):
     i+=0.1
     phi=IntPhi(zn,zp,omega,omega0,eta,gamma,i)
     CDoS.append(phi/math.pi,i)
-  while emNe<=i<emin:
+  while eNe<=i<emin:
     z1=-(math.sqrt(16*pow(gamma,4)+4*pow(gamma,2)*omega*(eta+2*i*omega0)+omega0*pow(omega,2)*(2*i*eta+omega0))+omega*omega0)/(4*pow(gamma,2)+eta*omega)
     z2=(math.sqrt(16*pow(gamma,4)+4*pow(gamma,2)*omega*(eta+2*i*omega0)+omega0*pow(omega,2)*(2*i*eta+omega0))-omega*omega0)/(4*pow(gamma,2)+eta*omega)
     zp=(math.sqrt(omega0*(omega-2*i*eta))-omega)/eta
