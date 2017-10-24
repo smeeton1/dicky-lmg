@@ -121,6 +121,8 @@ emin=-0.5*((math.pow(4*gamma,2)+eta*Delta)/(omega*Delta)+(omega*Delta)/(math.pow
 eNe=-Delta/2*eta
 f=(4*pow(gamma,2)+eta*omega)/omega*omega0
 
+print(e1,e2)
+
 ############################################################################## add 1 to 1 ratio
 ### Ploting for the DoS 
 
