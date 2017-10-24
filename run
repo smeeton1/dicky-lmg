@@ -1,13 +1,13 @@
 #!/bin/bash
 
-Nmax=200 ##qubit ensemble dimension must be even
-nmax=600 ##field dimension only even numbers 
+Nmax=50 ##qubit ensemble dimension must be even
+nmax=100 ##field dimension only even numbers 
 Delta=1.0
 eta=0.2
 gamma=0.3
 omega=1.0
 omega0=1.0
-en=0.05
+en=0.5
 
 
 ./cDicky N $Nmax n $nmax W 1.0 w 1.0 D 1.0 E 0.2 G 0.3 e $en
