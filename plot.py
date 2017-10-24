@@ -44,7 +44,7 @@ def DoSR1(xmin,xmax,e1,e2,omega,omega0,eta,gamma):
     z2=(math.sqrt(16*pow(gamma,4)+4*pow(gamma,2)*omega*(eta+2*i*omega0)+omega0*pow(omega,2)*(2*i*eta+omega0))-omega*omega0)/(4*pow(gamma,2)+eta*omega)
     i+=0.001
     phi=IntPhi(z2,z1,omega,omega0,eta,gamma,i)
-    CDoS.append([(z1+1)/2+phi/math.pi],i)
+    CDoS.append([(z1+1)/2+phi/math.pi,i])
   while e2<=i<xmax:
     CDoS.append([1,i])
     i+=0.001
