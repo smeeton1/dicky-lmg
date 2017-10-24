@@ -19,7 +19,7 @@ def IntPhi(b,a,omega,omega0,eta,gamma,i):
     h2=0
   h1=math.sqrt(h1)
   h2=math.sqrt(h2)
-    if h1>1:
+  if h1>1:
     h1=1
   if h2>1:
     h2=1
