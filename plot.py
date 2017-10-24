@@ -111,7 +111,7 @@ def DoSR3(xmin,xmax,e1,e2,emin,eNe,omega,omega0,eta,gamma):
     xdos.append(i)
     i+=0.001
   while e2<=i<xmax:
-    CDoS.append([1)
+    CDoS.append(1)
     xdos.append(i)
     i+=0.001
   return xdos,CDoS
