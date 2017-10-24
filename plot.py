@@ -13,15 +13,20 @@ import matplotlib.pyplot as plt
 def IntPhi(b,a,omega,omega0,eta,gamma,i):
   h1=((omega*omega0)*((eta/(2*omega0))*pow(b,2)+b-i))/(2*pow(gamma,2)*(1-pow(b,2)))
   h2=((omega*omega0)*((eta/(2*omega0))*pow(a,2)+a-i))/(2*pow(gamma,2)*(1-pow(a,2)))
-  print(h1,h2)
   if h1<0.0001:
     h1=0
   if h2<0.0001:
     h2=0
+  h1=math.sqrt(h1)
+  h2=math.sqrt(h2)
+    if h1>1:
+    h1=1
+  if h2>1:
+    h2=1
   if b>a:
-    phi=(b-a)*(numpy.arccos(math.sqrt(h1))+numpy.arccos(math.sqrt(h2)))/2
+    phi=(b-a)*(numpy.arccos(h1)+numpy.arccos(h2))/2
   else:
-    phi=(a-b)*(numpy.arccos(math.sqrt(h1))+numpy.arccos(math.sqrt(h2)))/2
+    phi=(a-b)*(numpy.arccos(h1)+numpy.arccos(h2))/2
   return phi
 
 
