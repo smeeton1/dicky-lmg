@@ -38,52 +38,61 @@ def IntPhi(b,a,omega,omega0,eta,gamma,i):
 ########## Region 1 #####################
 def DoSR1(xmin,xmax,e1,e2,omega,omega0,eta,gamma):
   CDoS = []
+  xdos = []
   i=e1+0.001
   while i<e2:
     z1=-(math.sqrt(16*pow(gamma,4)+4*pow(gamma,2)*omega*(eta+2*i*omega0)+omega0*pow(omega,2)*(2*i*eta+omega0))+omega*omega0)/(4*pow(gamma,2)+eta*omega)
     z2=(math.sqrt(16*pow(gamma,4)+4*pow(gamma,2)*omega*(eta+2*i*omega0)+omega0*pow(omega,2)*(2*i*eta+omega0))-omega*omega0)/(4*pow(gamma,2)+eta*omega)
-    i+=0.001
     phi=IntPhi(z2,z1,omega,omega0,eta,gamma,i)
-    CDoS.append([i,(z1+1)/2+phi/math.pi])
-  while e2<=i<xmax:
-    CDoS.append([i,1])
+    CDoS.append((z1+1)/2+phi/math.pi)
+    xdos.append(i)
     i+=0.001
-  return CDoS
+  while e2<=i<xmax:
+    CDoS.append(1)
+    xdos.append(i)
+    i+=0.001
+  return xdos,CDoS
 
 ################# Region 2 ####################
 
 def DoSR2(xmin,xmax,e1,e2,emin,omega,omega0,eta,gamma):
   CDoS = []
+  xdos = []
   i=e1+0.001
   while i<emin:
     zn=-(math.sqrt(omega0*(omega-2*i*eta))+omega)/eta
     zp=(math.sqrt(omega0*(omega-2*i*eta))-omega)/eta
-    i+=0.001
     phi=IntPhi(zn,zp,omega,omega0,eta,gamma,i)
-    CDoS.append([i,phi/math.pi])
+    CDoS.append(phi/math.pi)
+    xdos.append(i)
+    i+=0.001
   while emin<=i<e2:
     z2=(math.sqrt(16*pow(gamma,4)+4*pow(gamma,2)*omega*(eta+2*i*omega0)+omega0*pow(omega,2)*(2*i*eta+omega0))-omega*omega0)/(4*pow(gamma,2)+eta*omega)
     zp=(math.sqrt(omega0*(omega-2*i*eta))-omega)/eta
     phi=IntPhi(z2,zp,omega,omega0,eta,gamma,i)
-    CDoS.append([i,(z2+1)/2+phi/math.pi])
+    CDoS.append((z2+1)/2+phi/math.pi)
+    xdos.append(i)
     i+=0.001
   while e2<=i<xmax:
-    CDoS.append([i,1])
+    CDoS.append(1)
+    xdos.append(i)
     i+=0.001
-  return CDoS
+  return xdos,CDoS
 
 
 #################### Region 3 #########################
 
 def DoSR3(xmin,xmax,e1,e2,emin,eNe,omega,omega0,eta,gamma):
   CDoS = []
+  xdos = []
   i=e1+0.001
   while i<eNe:
     zn=-(math.sqrt(omega0*(omega-2*i*eta))+omega)/eta
     zp=(math.sqrt(omega0*(omega-2*i*eta))-omega)/eta
-    i+=0.001
     phi=IntPhi(zn,zp,omega,omega0,eta,gamma,i)
-    CDoS.append([i,phi/math.pi])
+    CDoS.append(phi/math.pi)
+    xdos.append(i)
+    i+=0.001
   while eNe<=i<emin:
     z1=-(math.sqrt(16*pow(gamma,4)+4*pow(gamma,2)*omega*(eta+2*i*omega0)+omega0*pow(omega,2)*(2*i*eta+omega0))+omega*omega0)/(4*pow(gamma,2)+eta*omega)
     z2=(math.sqrt(16*pow(gamma,4)+4*pow(gamma,2)*omega*(eta+2*i*omega0)+omega0*pow(omega,2)*(2*i*eta+omega0))-omega*omega0)/(4*pow(gamma,2)+eta*omega)
@@ -91,18 +100,21 @@ def DoSR3(xmin,xmax,e1,e2,emin,eNe,omega,omega0,eta,gamma):
     zn=-(math.sqrt(omega0*(omega-2*i*eta))+omega)/eta
     phi=IntPhi(zn,z1,omega,omega0,eta,gamma,i)
     phi2=IntPhi(z2,zp,omega,omega0,eta,gamma,i)
-    CDoS.append([i,(z2-z1)/2+(phi+phi2)/math.pi])
+    CDoS.append((z2-z1)/2+(phi+phi2)/math.pi)
+    xdos.append(i)
     i+=0.001
   while emin<=i<e2:
     z2=(math.sqrt(16*pow(gamma,4)+4*pow(gamma,2)*omega*(eta+2*i*omega0)+omega0*pow(omega,2)*(2*i*eta+omega0))-omega*omega0)/(4*pow(gamma,2)+eta*omega)
     zp=(math.sqrt(omega0*(omega-2*i*eta))-omega)/eta
     phi=IntPhi(z2,zp,omega,omega0,eta,gamma,i)
-    CDoS.append([i,(z2+1)/2+phi/math.pi])
+    CDoS.append((z2+1)/2+phi/math.pi)
+    xdos.append(i)
     i+=0.001
   while e2<=i<xmax:
-    CDoS.append([i,1])
+    CDoS.append([1)
+    xdos.append(i)
     i+=0.001
-  return CDoS
+  return xdos,CDoS
 
 #################################################################################
 
@@ -164,15 +176,15 @@ axes=plt.gca()
 #axes.set_ylim([yex[1]+0.9,yex[0]-0.9])
 #axes.set_xlim(xmin,xmax)
 if f<1:
-  CDoS=DoSR1(xmin,xmax,e1,e2,omega,omega0,eta,gamma)
+  xdos,CDoS=DoSR1(xmin,xmax,e1,e2,omega,omega0,eta,gamma)
 if f>=1 and eta<Delta:
   plt.plot([emin,emin],yex,'r--')
-  CDoS=DoSR2(xmin,xmax,e1,e2,emin,omega,omega0,eta,gamma)
+  xdos,CDoS=DoSR2(xmin,xmax,e1,e2,emin,omega,omega0,eta,gamma)
 if f>=1 and eta>=Delta:
   plt.plot([emin,emin],yex,'r--')
   plt.plot([eNe,eNe],yex,'r--')
-  CDoS=DoSR3(xmin,xmax,e1,e2,emin,eNe,omega,omega0,eta,gamma)
-plt.plot(CDoS[1],CDoS[2],'r-')
+  xdos,CDoS=DoSR3(xmin,xmax,e1,e2,emin,eNe,omega,omega0,eta,gamma)
+plt.plot(xdos,CDoS,'r-')
 plt.savefig(ImgDoS)
 del DoS1
 del DoS2
