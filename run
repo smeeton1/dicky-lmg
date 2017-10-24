@@ -1,27 +1,27 @@
 #!/bin/bash
 
-Nmax=10 ##qubit ensemble dimension must be even
-nmax=20 ##field dimension only even numbers 
+Nmax=200 ##qubit ensemble dimension must be even
+nmax=600 ##field dimension only even numbers 
 Delta=1.0
 eta=0.2
 gamma=0.3
 omega=1.0
 omega0=1.0
-en=0.8
+en=0.05
 
 
-./cDicky N 200 n 600 W 1.0 w 1.0 D 1.0 E 0.2 G 0.3 e 0.05
+./cDicky N $Nmax n $nmax W 1.0 w 1.0 D 1.0 E 0.2 G 0.3 e $en
 
-python plot.py 200 600 1.0 1.0 1.0 0.2 0.3 0.05
+python plot.py $Nmax $nmax 1.0 1.0 1.0 0.2 0.3 $en
 
 echo "one done"
 
-./cDicky N 200 n 600 W 1.0 w 1.0 D 1.0 E 0.2 G 0.8 e 0.05
+./cDicky N $Nmax n $nmax W 1.0 w 1.0 D 1.0 E 0.2 G 0.8 e $en
 
-python plot.py 200 600 1.0 1.0 1.0 0.2 0.8 0.05
+python plot.py $Nmax $nmax 1.0 1.0 1.0 0.2 0.8 $en
 
 echo "two done"
 
-./cDicky N 200 n 600 W 1.0 w 1.0 D 1.0 E 2.1 G 0.8 e 0.05
+./cDicky N $Nmax n $nmax W 1.0 w 1.0 D 1.0 E 2.1 G 0.8 e $en
 
-python plot.py 200 600 1.0 1.0 1.0 2.1 0.8 0.05
+python plot.py $Nmax $nmax 1.0 1.0 1.0 2.1 0.8 $en

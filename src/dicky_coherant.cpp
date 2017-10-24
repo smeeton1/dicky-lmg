@@ -56,7 +56,7 @@ int main(int argc, char *argv[])
   unsigned int i,j,k,l;//counters
   ostringstream osseva,osseve,ossdos,ossmjz;
   // initializing variables 
-  Nmax=10; //qubit ensemble dimension must be even
+  Nmax=20; //qubit ensemble dimension must be even
   nmax=2*Nmax; //field dimension only even numbers
   Delta=1.0;eta=0.2;gamma=0.3;omega=1.0;omega0=1.0;en=0.8;
   
@@ -147,24 +147,24 @@ int main(int argc, char *argv[])
   }
   }
   /* following is the setting up pf the matrix for Jz*/
-
+  
 //put in formula from page two from paritybasisdicky.pdf  displacement operator generalized laguerre polynomials
   //#pragma omp parallel shared(dJz,l,i,j)
   {
   //#pragma omp parallel for
-  for(l=0;l<Nmax/2+1;l++){ 
+  for(l=0;l<Nmax/2-1;l++){ 
     for(i=0;i<nmax+1;i++){
       for(j=0;j<nmax+1;j++){
-	  if((i+(l+1)*int(nmax+1)<size)&&(j+l*int(nmax+1)<size)){
+	  //if((i+(l+1)*int(nmax+1)<size)&&(j+l*int(nmax+1)<size)){
 	    hold=Kloop(i,j,l,Nmax,alpha);
 	    dJz(i+(l+1)*int(nmax+1),j+l*int(nmax+1))=hold;
 	    dJz(j+(l)*int(nmax+1),i+(l+1)*int(nmax+1))=conj(hold);
-	  }
+	  //}
       }      
     }
   }
   }
-  
+
   H=H+Delta*dJz+eta/Nmax*dJz*dJz;
   /*------------------------------------------------------------*/
   //getting Eigenvalues and Eigenvectors
