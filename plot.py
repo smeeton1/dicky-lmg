@@ -44,9 +44,9 @@ def DoSR1(xmin,xmax,e1,e2,omega,omega0,eta,gamma):
     z2=(math.sqrt(16*pow(gamma,4)+4*pow(gamma,2)*omega*(eta+2*i*omega0)+omega0*pow(omega,2)*(2*i*eta+omega0))-omega*omega0)/(4*pow(gamma,2)+eta*omega)
     i+=0.001
     phi=IntPhi(z2,z1,omega,omega0,eta,gamma,i)
-    CDoS.append([(z2+1)/2+phi/math.pi,i])
+    CDoS.append([i,(z2+1)/2+phi/math.pi])
   while e2<=i<xmax:
-    CDoS.append([1,i])
+    CDoS.append([i,1])
     i+=0.001
   return CDoS
 
@@ -60,15 +60,15 @@ def DoSR2(xmin,xmax,e1,e2,emin,omega,omega0,eta,gamma):
     zp=(math.sqrt(omega0*(omega-2*i*eta))-omega)/eta
     i+=0.001
     phi=IntPhi(zn,zp,omega,omega0,eta,gamma,i)
-    CDoS.append([phi/math.pi,i])
+    CDoS.append([i,phi/math.pi])
   while emin<=i<e2:
     z2=(math.sqrt(16*pow(gamma,4)+4*pow(gamma,2)*omega*(eta+2*i*omega0)+omega0*pow(omega,2)*(2*i*eta+omega0))-omega*omega0)/(4*pow(gamma,2)+eta*omega)
     zp=(math.sqrt(omega0*(omega-2*i*eta))-omega)/eta
     phi=IntPhi(z2,zp,omega,omega0,eta,gamma,i)
-    CDoS.append([(z2+1)/2+phi/math.pi,i])
+    CDoS.append([i,(z2+1)/2+phi/math.pi])
     i+=0.001
   while e2<=i<xmax:
-    CDoS.append([1,i])
+    CDoS.append([i,1])
     i+=0.001
   return CDoS
 
@@ -83,7 +83,7 @@ def DoSR3(xmin,xmax,e1,e2,emin,eNe,omega,omega0,eta,gamma):
     zp=(math.sqrt(omega0*(omega-2*i*eta))-omega)/eta
     i+=0.001
     phi=IntPhi(zn,zp,omega,omega0,eta,gamma,i)
-    CDoS.append([phi/math.pi,i])
+    CDoS.append([i,phi/math.pi])
   while eNe<=i<emin:
     z1=-(math.sqrt(16*pow(gamma,4)+4*pow(gamma,2)*omega*(eta+2*i*omega0)+omega0*pow(omega,2)*(2*i*eta+omega0))+omega*omega0)/(4*pow(gamma,2)+eta*omega)
     z2=(math.sqrt(16*pow(gamma,4)+4*pow(gamma,2)*omega*(eta+2*i*omega0)+omega0*pow(omega,2)*(2*i*eta+omega0))-omega*omega0)/(4*pow(gamma,2)+eta*omega)
@@ -91,16 +91,16 @@ def DoSR3(xmin,xmax,e1,e2,emin,eNe,omega,omega0,eta,gamma):
     zn=-(math.sqrt(omega0*(omega-2*i*eta))+omega)/eta
     phi=IntPhi(zn,z1,omega,omega0,eta,gamma,i)
     phi2=IntPhi(z2,zp,omega,omega0,eta,gamma,i)
-    CDoS.append([(z2-z1)/2+(phi+phi2)/math.pi,i])
+    CDoS.append([i,(z2-z1)/2+(phi+phi2)/math.pi])
     i+=0.001
   while emin<=i<e2:
     z2=(math.sqrt(16*pow(gamma,4)+4*pow(gamma,2)*omega*(eta+2*i*omega0)+omega0*pow(omega,2)*(2*i*eta+omega0))-omega*omega0)/(4*pow(gamma,2)+eta*omega)
     zp=(math.sqrt(omega0*(omega-2*i*eta))-omega)/eta
     phi=IntPhi(z2,zp,omega,omega0,eta,gamma,i)
-    CDoS.append([(z2+1)/2+phi/math.pi,i])
+    CDoS.append([i,(z2+1)/2+phi/math.pi])
     i+=0.001
   while e2<=i<xmax:
-    CDoS.append([1,i])
+    CDoS.append([i,1])
     i+=0.001
   return CDoS
 
