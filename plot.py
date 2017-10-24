@@ -8,12 +8,19 @@ import matplotlib.pyplot as plt
 
 ##### Simple Numaricla intergration ################
 
+######## need zero check the sqrt is crashing when near zero
+
 def IntPhi(b,a,omega,omega0,eta,gamma,i):
-  print((eta/(2*omega0))*pow(b,2)+b,i,(1-pow(b,2)),(omega*omega0)*((eta/(2*omega0))*pow(a,2)+a-i),(1-pow(a,2)))
+  h1=(omega*omega0)*((eta/(2*omega0))*pow(b,2)+b-i)/(2*pow(gamma,2)*(1-pow(b,2))
+  h2=(omega*omega0)*((eta/(2*omega0))*pow(a,2)+a-i)/(2*pow(gamma,2)*(1-pow(a,2))
+  if h1<0.0001:
+    h1=0
+  if h2<0.0001:
+    h2=0
   if b>a:
-    phi=(b-a)*(numpy.arccos(math.sqrt((omega*omega0)*((eta/(2*omega0))*pow(b,2)+b-i)/(2*pow(gamma,2)*(1-pow(b,2)))))+numpy.arccos(math.sqrt((omega*omega0)*((eta/(2*omega0))*pow(a,2)+a-i)/(2*pow(gamma,2)*(1-pow(a,2))))))/2
+    phi=(b-a)*(numpy.arccos(math.sqrt(h1))+numpy.arccos(math.sqrt(h2)))/2
   else:
-    phi=(a-b)*(numpy.arccos(math.sqrt((omega*omega0)*((eta/(2*omega0))*pow(b,2)+b-i)/(2*pow(gamma,2)*(1-pow(b,2)))))+numpy.arccos(math.sqrt((omega*omega0)*((eta/(2*omega0))*pow(a,2)+a-i)/(2*pow(gamma,2)*(1-pow(a,2))))))/2
+    phi=(a-b)*(numpy.arccos(math.sqrt(h1))+numpy.arccos(math.sqrt(h2)))/2
   return phi
 
 
