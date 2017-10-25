@@ -158,10 +158,9 @@ else:
 
 e1=-1+eta/2*Delta
 e2=1+eta/2*Delta
-emin=-0.5*((math.pow(4*gamma,2)+eta*Delta)/(omega*Delta)+(omega*Delta)/(math.pow(4*gamma,2)+eta*Delta))+eta/2*Delta
-eNe=-Delta/2*eta
+eNe=-omega0/2*eta
 f=(4*pow(gamma,2)+eta*omega)/omega*omega0
-
+emin=(-0.5*(f+1/f)+eta/(2*omega0)
 
 ############################################################################## add 1 to 1 ratio
 ### Ploting for the DoS 
