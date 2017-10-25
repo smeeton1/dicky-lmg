@@ -164,7 +164,6 @@ e2=1+eta/2*Delta
 eNe=-omega0/2*eta
 f=(4*pow(gamma,2)+eta*omega)/omega*omega0
 emin=(-0.5*(f+1/f)+eta/(2*omega0))
-print(e1,e2,eNe,f,emin)
 
 ############################################################################## add 1 to 1 ratio
 ### Ploting for the DoS 
@@ -191,7 +190,7 @@ plt.plot(DoS1,DoS2,'b.')
 plt.plot([e1,e1],yex,'r--')
 plt.plot([e2,e2],yex,'r--')
 axes=plt.gca()
-#axes.set_ylim([yex[1]+0.9,yex[0]-0.9])
+axes.set_ylim([yex[1]+0.9,yex[0]-0.9])
 #axes.set_xlim(xmin,xmax)
 if f<1:
   xdos,CDoS=DoSR1(xmin,xmax,e1,e2,omega,omega0,eta,gamma)
