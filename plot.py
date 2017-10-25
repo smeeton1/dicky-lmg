@@ -58,8 +58,8 @@ def DoSR1(xmin,xmax,e1,e2,omega,omega0,eta,gamma):
 def DoSR2(xmin,xmax,e1,e2,emin,omega,omega0,eta,gamma):
   CDoS = []
   xdos = []
-  i=e1+0.001
-  while i<emin:
+  i=emin+0.001
+  while i<e1:
     h1=omega0*(omega-2*i*eta)
     if h1<0:
       h1=0
@@ -69,7 +69,7 @@ def DoSR2(xmin,xmax,e1,e2,emin,omega,omega0,eta,gamma):
     CDoS.append(phi/math.pi)
     xdos.append(i)
     i+=0.001
-  while emin<=i<e2:
+  while e1<=i<e2:
     h1=omega0*(omega-2*i*eta)
     if h1<0:
       h1=0
@@ -91,7 +91,7 @@ def DoSR2(xmin,xmax,e1,e2,emin,omega,omega0,eta,gamma):
 def DoSR3(xmin,xmax,e1,e2,emin,eNe,omega,omega0,eta,gamma):
   CDoS = []
   xdos = []
-  i=e1+0.001
+  i=emin+0.001
   while i<eNe:
     h1=omega0*(omega-2*i*eta)
     if h1<0:
@@ -102,7 +102,7 @@ def DoSR3(xmin,xmax,e1,e2,emin,eNe,omega,omega0,eta,gamma):
     CDoS.append(phi/math.pi)
     xdos.append(i)
     i+=0.001
-  while eNe<=i<emin:
+  while eNe<=i<e1:
     h1=omega0*(omega-2*i*eta)
     if h1<0:
       h1=0
