@@ -41,8 +41,8 @@ def DoSR1(xmin,xmax,e1,e2,omega,omega0,eta,gamma):
   xdos = []
   i=e1+0.001
   while i<e2:
-    z1=(math.sqrt(16*pow(gamma,4)+4*pow(gamma,2)*omega*(eta+2*i*omega0)+omega0*pow(omega,2)*(2*i*eta+omega0))-omega*omega0)/(4*pow(gamma,2)+eta*omega)
-    z2=-(math.sqrt(16*pow(gamma,4)+4*pow(gamma,2)*omega*(eta+2*i*omega0)+omega0*pow(omega,2)*(2*i*eta+omega0))+omega*omega0)/(4*pow(gamma,2)+eta*omega)
+    z1=-(math.sqrt(16*pow(gamma,4)+4*pow(gamma,2)*omega*(eta+2*i*omega0)+omega0*pow(omega,2)*(2*i*eta+omega0))+omega*omega0)/(4*pow(gamma,2)+eta*omega)
+    z2=(math.sqrt(16*pow(gamma,4)+4*pow(gamma,2)*omega*(eta+2*i*omega0)+omega0*pow(omega,2)*(2*i*eta+omega0))-omega*omega0)/(4*pow(gamma,2)+eta*omega)
     phi=IntPhi(z2,z1,omega,omega0,eta,gamma,i)
     CDoS.append(0.5*((z2+1)/2+phi/math.pi))
     xdos.append(i)
@@ -63,8 +63,8 @@ def DoSR2(xmin,xmax,e1,e2,emin,omega,omega0,eta,gamma):
     h1=omega0*(omega-2*i*eta)
     if h1<0:
       h1=0
-    zn=-(math.sqrt(16*pow(gamma,4)+4*pow(gamma,2)*omega*(eta+2*i*omega0)+omega0*pow(omega,2)*(2*i*eta+omega0))+omega*omega0)/(4*pow(gamma,2)+eta*omega)
-    zp=(math.sqrt(16*pow(gamma,4)+4*pow(gamma,2)*omega*(eta+2*i*omega0)+omega0*pow(omega,2)*(2*i*eta+omega0))-omega*omega0)/(4*pow(gamma,2)+eta*omega)
+    zn=-(math.sqrt(h1)+omega)/eta
+    zp=(math.sqrt(h1)-omega)/eta
     phi=IntPhi(zn,zp,omega,omega0,eta,gamma,i)
     CDoS.append(0.5*(phi/math.pi))
     xdos.append(i)
@@ -73,8 +73,8 @@ def DoSR2(xmin,xmax,e1,e2,emin,omega,omega0,eta,gamma):
     h1=omega0*(omega-2*i*eta)
     if h1<0:
       h1=0
-    zp=(math.sqrt(16*pow(gamma,4)+4*pow(gamma,2)*omega*(eta+2*i*omega0)+omega0*pow(omega,2)*(2*i*eta+omega0))-omega*omega0)/(4*pow(gamma,2)+eta*omega)
-    z2=(math.sqrt(h1)-omega)/eta
+    z2=(math.sqrt(16*pow(gamma,4)+4*pow(gamma,2)*omega*(eta+2*i*omega0)+omega0*pow(omega,2)*(2*i*eta+omega0))-omega*omega0)/(4*pow(gamma,2)+eta*omega)
+    zp=(math.sqrt(h1)-omega)/eta
     phi=IntPhi(z2,zp,omega,omega0,eta,gamma,i)
     CDoS.append(0.5*((z2+1)/2+phi/math.pi))
     xdos.append(i)
@@ -96,8 +96,8 @@ def DoSR3(xmin,xmax,e1,e2,emin,eNe,omega,omega0,eta,gamma):
     h1=omega0*(omega-2*i*eta)
     if h1<0:
       h1=0
-    zn=-(math.sqrt(16*pow(gamma,4)+4*pow(gamma,2)*omega*(eta+2*i*omega0)+omega0*pow(omega,2)*(2*i*eta+omega0))+omega*omega0)/(4*pow(gamma,2)+eta*omega)
-    zp=(math.sqrt(16*pow(gamma,4)+4*pow(gamma,2)*omega*(eta+2*i*omega0)+omega0*pow(omega,2)*(2*i*eta+omega0))-omega*omega0)/(4*pow(gamma,2)+eta*omega)
+    zn=-(math.sqrt(h1)+omega)/eta
+    zp=(math.sqrt(h1)-omega)/eta
     phi=IntPhi(zn,zp,omega,omega0,eta,gamma,i)
     CDoS.append(0.5*(phi/math.pi))
     xdos.append(i)
@@ -106,10 +106,10 @@ def DoSR3(xmin,xmax,e1,e2,emin,eNe,omega,omega0,eta,gamma):
     h1=omega0*(omega-2*i*eta)
     if h1<0:
       h1=0
-    zn=-(math.sqrt(16*pow(gamma,4)+4*pow(gamma,2)*omega*(eta+2*i*omega0)+omega0*pow(omega,2)*(2*i*eta+omega0))+omega*omega0)/(4*pow(gamma,2)+eta*omega)
-    zp=(math.sqrt(16*pow(gamma,4)+4*pow(gamma,2)*omega*(eta+2*i*omega0)+omega0*pow(omega,2)*(2*i*eta+omega0))-omega*omega0)/(4*pow(gamma,2)+eta*omega)
-    z1=(math.sqrt(h1)-omega)/eta
-    z2=-(math.sqrt(h1)+omega)/eta
+    z1=-(math.sqrt(16*pow(gamma,4)+4*pow(gamma,2)*omega*(eta+2*i*omega0)+omega0*pow(omega,2)*(2*i*eta+omega0))+omega*omega0)/(4*pow(gamma,2)+eta*omega)
+    z2=(math.sqrt(16*pow(gamma,4)+4*pow(gamma,2)*omega*(eta+2*i*omega0)+omega0*pow(omega,2)*(2*i*eta+omega0))-omega*omega0)/(4*pow(gamma,2)+eta*omega)
+    zp=(math.sqrt(h1)-omega)/eta
+    zn=-(math.sqrt(h1)+omega)/eta
     phi=IntPhi(zn,z1,omega,omega0,eta,gamma,i)
     phi2=IntPhi(z2,zp,omega,omega0,eta,gamma,i)
     CDoS.append(0.5*((z2-z1)/2+(phi+phi2)/math.pi))
@@ -119,8 +119,8 @@ def DoSR3(xmin,xmax,e1,e2,emin,eNe,omega,omega0,eta,gamma):
     h1=omega0*(omega-2*i*eta)
     if h1<0:
       h1=0
-    zp=(math.sqrt(16*pow(gamma,4)+4*pow(gamma,2)*omega*(eta+2*i*omega0)+omega0*pow(omega,2)*(2*i*eta+omega0))-omega*omega0)/(4*pow(gamma,2)+eta*omega)
-    z2=(math.sqrt(h1)-omega)/eta
+    z2=(math.sqrt(16*pow(gamma,4)+4*pow(gamma,2)*omega*(eta+2*i*omega0)+omega0*pow(omega,2)*(2*i*eta+omega0))-omega*omega0)/(4*pow(gamma,2)+eta*omega)
+    zp=(math.sqrt(h1)-omega)/eta
     phi=IntPhi(z2,zp,omega,omega0,eta,gamma,i)
     CDoS.append(0.5*((z2+1)/2+phi/math.pi))
     xdos.append(i)
@@ -161,6 +161,7 @@ e2=1+eta/2*Delta
 eNe=-omega0/2*eta
 f=(4*pow(gamma,2)+eta*omega)/omega*omega0
 emin=(-0.5*(f+1/f)+eta/(2*omega0))
+print(e1,e2,eNe,f,emin)
 
 ############################################################################## add 1 to 1 ratio
 ### Ploting for the DoS 
@@ -187,7 +188,7 @@ plt.plot(DoS1,DoS2,'b.')
 plt.plot([e1,e1],yex,'r--')
 plt.plot([e2,e2],yex,'r--')
 axes=plt.gca()
-axes.set_ylim([yex[1]+0.9,yex[0]-0.9])
+#axes.set_ylim([yex[1]+0.9,yex[0]-0.9])
 #axes.set_xlim(xmin,xmax)
 if f<1:
   xdos,CDoS=DoSR1(xmin,xmax,e1,e2,omega,omega0,eta,gamma)
