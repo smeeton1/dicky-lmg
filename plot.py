@@ -110,8 +110,8 @@ def DoSR3(xmin,xmax,e1,e2,emin,eNe,omega,omega0,eta,gamma):
     z2=(math.sqrt(16*pow(gamma,4)+4*pow(gamma,2)*omega*(eta+2*i*omega0)+omega0*pow(omega,2)*(2*i*eta+omega0))-omega*omega0)/(4*pow(gamma,2)+eta*omega)
     zp=(math.sqrt(h1)-omega)/eta
     zn=-(math.sqrt(h1)+omega)/eta
-    phi=IntPhi(zn,z1,omega,omega0,eta,gamma,i)
-    phi2=IntPhi(z2,zp,omega,omega0,eta,gamma,i)
+    phi=IntPhi(zn,z2,omega,omega0,eta,gamma,i)
+    phi2=IntPhi(z1,zp,omega,omega0,eta,gamma,i)
     CDoS.append(0.5*((z2-z1)/2+(phi+phi2)/math.pi))
     xdos.append(i)
     i+=0.001
