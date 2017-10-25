@@ -161,6 +161,7 @@ e2=1+eta/2*Delta
 eNe=-omega0/2*eta
 f=(4*pow(gamma,2)+eta*omega)/omega*omega0
 emin=(-0.5*(f+1/f)+eta/(2*omega0))
+print(e1,e2,eNe,f,emin)
 
 ############################################################################## add 1 to 1 ratio
 ### Ploting for the DoS 
