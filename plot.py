@@ -3,86 +3,56 @@ import numpy
 import cmath 
 import math 
 import matplotlib.pyplot as plt
+import scipy.integrate as integrate
 
 ########################################################################################################
+
+##############################################################################
+################# Phi Function ###############
+
+def PhiF(a,omega,omega0,eta,gamma,i):
+  h1=((omega*omega0)*((eta/(2*omega0))*pow(a,2)+a-i))/(2*pow(gamma,2)*(1-pow(a,2)))
+  if h1<0:
+    h1=0
+  h1=math.sqrt(h1)
+  if h1>1:
+    h1=1
+  return numpy.arccos(h1)
+
+#####################################################################################
+
 
 ##### Simple Numaricla intergration ################
 
 ######## need zero check the sqrt is crashing when near zero
 
 def IntPhi(b,a,omega,omega0,eta,gamma,i):
-  h1=((omega*omega0)*((eta/(2*omega0))*pow(b,2)+b-i))/(2*pow(gamma,2)*(1-pow(b,2)))
-  h2=((omega*omega0)*((eta/(2*omega0))*pow(a,2)+a-i))/(2*pow(gamma,2)*(1-pow(a,2)))
-  if h1<0:
-    h1=0
-  if h2<0:
-    h2=0
-  h1=math.sqrt(h1)
-  h2=math.sqrt(h2)
-  if h1>1:
-    h1=1
-  if h2>1:
-    h2=1
   if b>a:
-    phi=(b-a)*(numpy.arccos(h1)+numpy.arccos(h2))/2
+    phi=(b-a)*(PhiF(a,omega,omega0,eta,gamma,i)+PhiF(b,omega,omega0,eta,gamma,i))/2
   else:
-    phi=(a-b)*(numpy.arccos(h1)+numpy.arccos(h2))/2
+    phi=(a-b)*(PhiF(a,omega,omega0,eta,gamma,i)+PhiF(b,omega,omega0,eta,gamma,i))/2
   return phi
 
 
 def IntPhi2(b,a,omega,omega0,eta,gamma,i):
-  h1=((omega*omega0)*((eta/(2*omega0))*pow(b,2)+b-i))/(2*pow(gamma,2)*(1-pow(b,2)))
-  h2=((omega*omega0)*((eta/(2*omega0))*pow(a,2)+a-i))/(2*pow(gamma,2)*(1-pow(a,2)))
-  if h1<0:
-    h1=0
-  if h2<0:
-    h2=0
-  h1=math.sqrt(h1)
-  h2=math.sqrt(h2)
-  if h1>1:
-    h1=1
-  if h2>1:
-    h2=1
   if b>a:
-    h3=((omega*omega0)*((eta/(2*omega0))*pow(a+((b-a)/3),2)+a+((b-a)/3)-i))/(2*pow(gamma,2)*(1-pow(a+((b-a)/3),2)))
-    h4=((omega*omega0)*((eta/(2*omega0))*pow(a+(2*(b-a)/3),2)+a+(2*(b-a)/3)-i))/(2*pow(gamma,2)*(1-pow(a+(2*(b-a)/3),2)))
-    h5=((omega*omega0)*((eta/(2*omega0))*pow(a+(3*(b-a)/3),2)+a+(3*(b-a)/3)-i))/(2*pow(gamma,2)*(1-pow(a+(3*(b-a)/3),2)))
-    if h3<0:
-        h3=0
-    if h4<0:
-        h4=0
-    if h5<0:
-        h5=0
-    h3=math.sqrt(h3)
-    h4=math.sqrt(h4)
-    h5=math.sqrt(h5)
-    if h3>1:
-        h3=1
-    if h4>1:
-        h4=1
-    if h5>1:
-        h5=1
-    phi=(b-a)/3*((numpy.arccos(h1)+numpy.arccos(h2))/2+numpy.arccos(h3)+numpy.arccos(h4)+numpy.arccos(h5))
+    phi=(b-a)/3*((PhiF(a,omega,omega0,eta,gamma,i)+PhiF(b,omega,omega0,eta,gamma,i))/2+PhiF(a+((b-a)/3),omega,omega0,eta,gamma,i)+PhiF(a+2*((b-a)/3),omega,omega0,eta,gamma,i)+PhiF(a+3*((b-a)/3),omega,omega0,eta,gamma,i))
   else:
-    h3=((omega*omega0)*((eta/(2*omega0))*pow(b+((a-b)/3),2)+b+((a-b)/3)-i))/(2*pow(gamma,2)*(1-pow(b+((a-b)/3),2)))
-    h4=((omega*omega0)*((eta/(2*omega0))*pow(b+(2*(a-b)/3),2)+b+(2*(a-b)/3)-i))/(2*pow(gamma,2)*(1-pow(b+(2*(a-b)/3),2)))
-    h5=((omega*omega0)*((eta/(2*omega0))*pow(b+(3*(a-b)/3),2)+b+(3*(a-b)/3)-i))/(2*pow(gamma,2)*(1-pow(b+(3*(a-b)/3),2)))
-    if h3<0:
-        h3=0
-    if h4<0:
-        h4=0
-    if h5<0:
-        h5=0
-    h3=math.sqrt(h3)
-    h4=math.sqrt(h4)
-    h5=math.sqrt(h5)
-    if h3>1:
-        h3=1
-    if h4>1:
-        h4=1
-    if h5>1:
-        h5=1
-    phi=(b-a)/3*((numpy.arccos(h1)+numpy.arccos(h2))/2+numpy.arccos(h3)+numpy.arccos(h4)+numpy.arccos(h5))
+    phi=(a-b)/3*((PhiF(a,omega,omega0,eta,gamma,i)+PhiF(b,omega,omega0,eta,gamma,i))/2+PhiF(b+((a-b)/3),omega,omega0,eta,gamma,i)+PhiF(b+2*((a-b)/3),omega,omega0,eta,gamma,i)+PhiF(b+3*((a-b)/3),omega,omega0,eta,gamma,i))
+  return phi
+
+def IntPhiN(b,a,omega,omega0,eta,gamma,i,N):
+  j=1
+  if b>a:
+    phi=(b-a)/N*(PhiF(a,omega,omega0,eta,gamma,i)+PhiF(b,omega,omega0,eta,gamma,i))/2
+    while j<N+1:
+        phi=phi+(b-a)/N*PhiF(a+j*((b-a)/N),omega,omega0,eta,gamma,i)
+        j+=1
+  else:
+    phi=(a-b)/N*(PhiF(a,omega,omega0,eta,gamma,i)+PhiF(b,omega,omega0,eta,gamma,i))/2
+    while j<N+1:
+        phi=phi+(a-b)/N*PhiF(b+j*((a-b)/N),omega,omega0,eta,gamma,i)
+        j+=1
   return phi
 
 #############################################################################################################
@@ -113,31 +83,31 @@ def DoSR1(xmin,xmax,e1,e2,omega,omega0,eta,gamma):
 def DoSR2(xmin,xmax,e1,e2,emin,omega,omega0,eta,gamma):
   CDoS = []
   xdos = []
-  i=emin+0.01
+  i=emin+0.001
   while i<e1:
     h1=omega0*(omega-2*i*eta)
     if h1<0:
       h1=0
     zn=-(math.sqrt(16*pow(gamma,4)+4*pow(gamma,2)*omega*(eta+2*i*omega0)+omega0*pow(omega,2)*(2*i*eta+omega0))+omega*omega0)/(4*pow(gamma,2)+eta*omega)
     zp=(math.sqrt(16*pow(gamma,4)+4*pow(gamma,2)*omega*(eta+2*i*omega0)+omega0*pow(omega,2)*(2*i*eta+omega0))-omega*omega0)/(4*pow(gamma,2)+eta*omega)
-    phi=IntPhi2(zp,zn,omega,omega0,eta,gamma,i)
-    CDoS.append(0.5*(phi/math.pi)+0.05)
+    phi=IntPhiN(zp,zn,omega,omega0,eta,gamma,i,10)
+    CDoS.append(0.5*(phi/math.pi))
     xdos.append(i)
-    i+=0.01
+    i+=0.001
   while e1<=i<e2:
     h1=omega0*(omega-2*i*eta)
     if h1<0:
       h1=0
     z2=(math.sqrt(16*pow(gamma,4)+4*pow(gamma,2)*omega*(eta+2*i*omega0)+omega0*pow(omega,2)*(2*i*eta+omega0))-omega*omega0)/(4*pow(gamma,2)+eta*omega)
     zp=(math.sqrt(h1)-omega)/eta
-    phi=IntPhi2(z2,zp,omega,omega0,eta,gamma,i)
-    CDoS.append(0.4*((z2+1)/2+phi/math.pi)-0.1)
+    phi=IntPhiN(z2,zp,omega,omega0,eta,gamma,i,100)
+    CDoS.append(0.4*((z2+1)/2+phi/math.pi)-0.12)
     xdos.append(i)
-    i+=0.01
+    i+=0.001
   while e2<=i<xmax:
     CDoS.append(0.6*(1))
     xdos.append(i)
-    i+=0.01
+    i+=0.001
   return xdos,CDoS
 
 
@@ -146,17 +116,17 @@ def DoSR2(xmin,xmax,e1,e2,emin,omega,omega0,eta,gamma):
 def DoSR3(xmin,xmax,e1,e2,emin,eNe,omega,omega0,eta,gamma):
   CDoS = []
   xdos = []
-  i=emin+0.01
+  i=emin+0.001
   while i<eNe:
     h1=omega0*(omega-2*i*eta)
     if h1<0:
       h1=0
     zn=-(math.sqrt(16*pow(gamma,4)+4*pow(gamma,2)*omega*(eta+2*i*omega0)+omega0*pow(omega,2)*(2*i*eta+omega0))+omega*omega0)/(4*pow(gamma,2)+eta*omega)
     zp=(math.sqrt(16*pow(gamma,4)+4*pow(gamma,2)*omega*(eta+2*i*omega0)+omega0*pow(omega,2)*(2*i*eta+omega0))-omega*omega0)/(4*pow(gamma,2)+eta*omega)
-    phi=IntPhi2(zp,zn,omega,omega0,eta,gamma,i)
+    phi=IntPhiN(zp,zn,omega,omega0,eta,gamma,i,10)
     CDoS.append((phi/math.pi))
     xdos.append(i)
-    i+=0.01
+    i+=0.001
   while eNe<=i<e1:
     h1=omega0*(omega-2*i*eta)
     if h1<0:
@@ -165,21 +135,21 @@ def DoSR3(xmin,xmax,e1,e2,emin,eNe,omega,omega0,eta,gamma):
     z2=(math.sqrt(16*pow(gamma,4)+4*pow(gamma,2)*omega*(eta+2*i*omega0)+omega0*pow(omega,2)*(2*i*eta+omega0))-omega*omega0)/(4*pow(gamma,2)+eta*omega)
     zp=(math.sqrt(h1)-omega)/eta
     zn=-(math.sqrt(h1)+omega)/eta
-    phi=IntPhi(z2,zp,omega,omega0,eta,gamma,i)
-    phi2=IntPhi(zn,z1,omega,omega0,eta,gamma,i)
+    phi=IntPhiN(z2,zp,omega,omega0,eta,gamma,i,100)
+    phi2=IntPhiN(zn,z1,omega,omega0,eta,gamma,i,100)
     CDoS.append(0.6*((z2-z1)/2+(phi+phi2)/math.pi)-0.29)
     xdos.append(i)
-    i+=0.01
+    i+=0.001
   while e1<=i<e2:
     h1=omega0*(omega-2*i*eta)
     if h1<0:
       h1=0
     z2=(math.sqrt(16*pow(gamma,4)+4*pow(gamma,2)*omega*(eta+2*i*omega0)+omega0*pow(omega,2)*(2*i*eta+omega0))-omega*omega0)/(4*pow(gamma,2)+eta*omega)
     zp=(math.sqrt(h1)-omega)/eta
-    phi=IntPhi2(z2,zp,omega,omega0,eta,gamma,i)
+    phi=IntPhiN(z2,zp,omega,omega0,eta,gamma,i,100)
     CDoS.append(0.4*((z2+1)/2+phi/math.pi)-0.1)
     xdos.append(i)
-    i+=0.01
+    i+=0.001
   while e2<=i<xmax:
     CDoS.append(0.4*(1))
     xdos.append(i)
@@ -210,14 +180,11 @@ else:
   gamma=0.3
   en=0.8
   
-print(omega,omega0,Delta,eta,gamma)
 f=(4*gamma*gamma+eta*omega)/omega*omega0
 e1=-1+eta/2*Delta
 e2=1+eta/2*Delta
 eNe=-Delta/2*eta
 emin=(-0.5*(f+1/f)+eta/(2*omega0))
-print(emin,e1,e2,eNe,f)
-
 
 ############################################################################## add 1 to 1 ratio
 ### Ploting for the DoS 
