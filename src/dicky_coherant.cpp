@@ -39,7 +39,7 @@ return sum;
 
 complex<double> Kloop(int i,int j,int l,int Nmax,double alpha){
   complex<double> hold=complex<double>(0, 0);
-  //#pragma omp parallel for
+  #pragma omp parallel for shared(hold)
   for(int k=0;k<min(i,j)+1;k++){
     hold+=complex<double>(pow(alpha,(i+j-2*k))*pow(-1,(j-k))*((sqrt(fac(i))*sqrt(fac(j)))/(fac(i-k)*fac(j-k)*fac(k)))); 
   }
@@ -149,7 +149,7 @@ int main(int argc, char *argv[])
   /* following is the setting up pf the matrix for Jz*/
   
 //put in formula from page two from paritybasisdicky.pdf  displacement operator generalized laguerre polynomials
-  //#pragma omp parallel shared(dJz,l,i,j)
+  //#pragma omp parallel shared(dJz)
   {
   //#pragma omp parallel for
   for(l=0;l<Nmax/2-1;l++){ 
