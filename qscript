@@ -10,7 +10,7 @@
 #PBS -N jrod_job
 
 # mail alert at start, end and abortion of execution
-#PBS -m jrod
+#PBS -m e
 
 # send mail to this address
 #PBS -M jeremy.p.rodriguez@mail.mcgill.ca
