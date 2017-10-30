@@ -15,5 +15,5 @@
 # send mail to this address
 #PBS -M jeremy.p.rodriguez@mail.mcgill.ca
 
-cd $PBS_O_WORKDIR
+
 ./run
