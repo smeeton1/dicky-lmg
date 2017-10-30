@@ -14,4 +14,4 @@
 #PBS -M jeremy.p.rodriguez@mail.mcgill.ca
 
 
-./run
+./home/jrod/code/dicky-lmg/run
