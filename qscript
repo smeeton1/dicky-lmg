@@ -9,11 +9,6 @@
 # set name of job
 #PBS -N jrod_job
 
-# mail alert at start, end and abortion of execution
-#PBS -m e
-
-# send mail to this address
-#PBS -M jeremy.p.rodriguez@mail.mcgill.ca
 
 
 ./run
