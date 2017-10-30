@@ -1,7 +1,5 @@
 #!/bin/bash
 
-# set the number of nodes and processes per node
-#PBS -l nodes=1:ppn=1
 
 # set max wallclock time, here itis set to 72h
 #PBS -l walltime=72:00:00
