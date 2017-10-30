@@ -1,0 +1,18 @@
+#!/bin/bash
+
+# set the number of nodes and processes per node
+#PBS -l nodes=1:ppn=8
+
+# set max wallclock time, here itis set to 72h
+#PBS -l walltime=72:00:00
+
+# set name of job
+#PBS -N jrod_job
+
+# mail alert at start, end and abortion of execution
+#PBS -m jrod
+
+# send mail to this address
+#PBS -M jeremy.p.rodriguez@mail.mcgill.ca
+
+./run
