@@ -39,12 +39,13 @@ return sum;
 
 complex<double> Kloop(int i,int j,int l,int Nmax,double alpha){
   complex<double> hold=complex<double>(0, 0);
-//  #pragma omp parallel for shared(hold)
-  for(int k=0;k<min(i,j)+1;k++){
-    hold+=complex<double>(pow(alpha,(i+j-2*k))*pow(-1,(j-k))*((sqrt(fac(i))*sqrt(fac(j)))/(fac(i-k)*fac(j-k)*fac(k)))); 
-  }
-  hold*=-complex<double>(exp(-alpha*alpha/2))*sqrt(complex<double>(Nmax/2*(Nmax/2+1))-complex<double>((-Nmax/2+l+1)*(-Nmax/2+l)))/complex< double >(2,0);
-  return hold;
+  double lhold=0.0;
+    #pragma omp parallel for reduction (+:lhold)
+    for(int k=0;k<min(i,j)+1;k++){
+      lhold=lhold+(pow(alpha,(i+j-2*k))*pow(-1,(j-k))*((sqrt(fac(i))*sqrt(fac(j)))/(fac(i-k)*fac(j-k)*fac(k)))); 
+    }
+    hold=complex<double>(lhold);
+    return hold*(-complex<double>(exp(-alpha*alpha/2))*sqrt(complex<double>(Nmax/2*(Nmax/2+1))-complex<double>((-Nmax/2+l+1)*(-Nmax/2+l)))/complex< double >(2,0));
 }
 	  
 
