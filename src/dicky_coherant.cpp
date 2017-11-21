@@ -167,6 +167,17 @@ int main(int argc, char *argv[])
   }
 
   H=H+Delta*dJz+eta/Nmax*dJz*dJz;
+  
+  /*---------------------------------------------*/
+  // testing if H has any NaN in it
+  
+  if(H.has_nan()){
+    cout<<"H has a NaN"<<endl;
+    return 0;
+  }
+  
+  
+  
   /*------------------------------------------------------------*/
   //getting Eigenvalues and Eigenvectors
 
