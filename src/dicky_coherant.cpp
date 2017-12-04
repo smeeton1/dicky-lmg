@@ -147,6 +147,11 @@ int main(int argc, char *argv[])
    }
   }
   }
+  
+  if(H.has_nan()){
+    cout<<"H dag has a NaN"<<endl;
+    return 0;
+  }
   /* following is the setting up pf the matrix for Jz*/
   
 //
@@ -164,6 +169,11 @@ int main(int argc, char *argv[])
       }      
     }
   }
+  }
+  
+  if(dJz.has_nan()){
+    cout<<"dJz has a NaN"<<endl;
+    return 0;
   }
 
   H=H+Delta*dJz+eta/Nmax*dJz*dJz;
