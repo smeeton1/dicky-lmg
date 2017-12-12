@@ -45,7 +45,7 @@ complex<long double> Kloop(int i,int j,int l,int Nmax,double alpha){
       lhold=lhold+(pow(alpha,(i+j-2*k))*pow(-1,(j-k))*((sqrt(fac(i))*sqrt(fac(j)))/(fac(i-k)*fac(j-k)*fac(k)))); 
     }
     hold=complex<long double>(lhold);
-    return hold*(-complex<long double>(exp(-alpha*alpha/2))*sqrt(complex<double>(Nmax/2*(Nmax/2+1))-complex<double>((-Nmax/2+l+1)*(-Nmax/2+l)))/complex< double >(2,0));
+    return hold*(-complex<long double>(exp(-alpha*alpha/2))*sqrt(complex<long double>(Nmax/2*(Nmax/2+1))-complex<long double>((-Nmax/2+l+1)*(-Nmax/2+l)))/complex<long double >(2,0));
 }
 	  
 
@@ -53,7 +53,7 @@ int main(int argc, char *argv[])
 {
   long double Delta, eta, gamma, omega, omega0, alpha,tol,en,Dsum,Nsum;
   int Nmax, nmax,size;
-  complex<double> hold;
+  complex<long double> hold;
   unsigned int i,j,k,l;//counters
   ostringstream osseva,osseve,ossdos,ossmjz;
   // initializing variables 
