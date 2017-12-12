@@ -53,7 +53,7 @@ int main(int argc, char *argv[])
 {
   long double Delta, eta, gamma, omega, omega0, alpha,tol,en,Dsum,Nsum;
   int Nmax, nmax,size;
-  complex<long double> hold;
+  complex<double> hold;
   unsigned int i,j,k,l;//counters
   ostringstream osseva,osseve,ossdos,ossmjz;
   // initializing variables 
@@ -162,7 +162,7 @@ int main(int argc, char *argv[])
     for(i=0;i<nmax+1;i++){
       for(j=0;j<nmax+1;j++){
 	  //if((i+(l+1)*int(nmax+1)<size)&&(j+l*int(nmax+1)<size)){
-	    hold=Kloop(i,j,l,Nmax,alpha);
+	    hold=complex<double>(Kloop(i,j,l,Nmax,alpha));
 	    dJz(i+(l+1)*int(nmax+1),j+l*int(nmax+1))=hold;
 	    dJz(j+(l)*int(nmax+1),i+(l+1)*int(nmax+1))=conj(hold);
 	  //}
