@@ -15,9 +15,9 @@ using namespace std;
 using namespace arma;
 
 
-double fac(int n){
+long double fac(int n){
   int i;
-  double sum=1;
+  long double sum=1;
   if(n>0){
   for(i=1;i<=n;i++){sum=sum*i;}
   return sum;}
@@ -37,21 +37,21 @@ double laguerre(double n,double m,int k){
 return sum;
 }
 
-complex<double> Kloop(int i,int j,int l,int Nmax,double alpha){
-  complex<double> hold=complex<double>(0, 0);
+complex<long double> Kloop(int i,int j,int l,int Nmax,double alpha){
+  complex<long double> hold=complex<double>(0, 0);
   long double lhold=0.0;
     #pragma omp parallel for reduction (+:lhold)
     for(int k=0;k<min(i,j)+1;k++){
       lhold=lhold+(pow(alpha,(i+j-2*k))*pow(-1,(j-k))*((sqrt(fac(i))*sqrt(fac(j)))/(fac(i-k)*fac(j-k)*fac(k)))); 
     }
-    hold=complex<double>(lhold);
-    return hold*(-complex<double>(exp(-alpha*alpha/2))*sqrt(complex<double>(Nmax/2*(Nmax/2+1))-complex<double>((-Nmax/2+l+1)*(-Nmax/2+l)))/complex< double >(2,0));
+    hold=complex<long double>(lhold);
+    return hold*(-complex<long double>(exp(-alpha*alpha/2))*sqrt(complex<double>(Nmax/2*(Nmax/2+1))-complex<double>((-Nmax/2+l+1)*(-Nmax/2+l)))/complex< double >(2,0));
 }
 	  
 
 int main(int argc, char *argv[])
 {
-  double Delta, eta, gamma, omega, omega0, alpha,tol,en,Dsum,Nsum;
+  long double Delta, eta, gamma, omega, omega0, alpha,tol,en,Dsum,Nsum;
   int Nmax, nmax,size;
   complex<double> hold;
   unsigned int i,j,k,l;//counters
