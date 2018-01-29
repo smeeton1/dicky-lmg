@@ -9,7 +9,7 @@
 #include <cmath>
 #include <cstring>
 #include <sstream>
-
+#include <boost/math/special_functions/factorials.hpp>
 
 using namespace std;
 using namespace arma;
@@ -42,7 +42,7 @@ complex<long double> Kloop(int i,int j,int l,int Nmax,double alpha){
   long double lhold=0.0;
     #pragma omp parallel for reduction (+:lhold)
     for(int k=0;k<min(i,j)+1;k++){
-      lhold=lhold+(pow(alpha,(i+j-2*k))*pow(-1,(j-k))*((sqrt(fac(i))*sqrt(fac(j)))/(fac(i-k)*fac(j-k)*fac(k)))); 
+      lhold=lhold+(pow(alpha,(i+j-2*k))*pow(-1,(j-k))*((sqrt(boost::math::factorial<long double>(i))*sqrt(boost::math::factorial<long double>(j)))/(boost::math::factorial<long double>(i-k)*boost::math::factorial<long double>(j-k)*boost::math::factorial<long double>(k)))); 
     }
     hold=complex<long double>(lhold);
     return hold*(-complex<long double>(exp(-alpha*alpha/2))*sqrt(complex<long double>(Nmax/2*(Nmax/2+1))-complex<long double>((-Nmax/2+l+1)*(-Nmax/2+l)))/complex<long double >(2,0));
@@ -148,10 +148,10 @@ int main(int argc, char *argv[])
   }
   }
   
-  if(H.has_nan()){
-    cout<<"H dag has a NaN"<<endl;
-    return 0;
-  }
+//   if(H.has_nan()){
+//     cout<<"H dag has a NaN"<<endl;
+//     return 0;
+//   }
   /* following is the setting up pf the matrix for Jz*/
   
 //
@@ -171,20 +171,20 @@ int main(int argc, char *argv[])
   }
   }
   
-  if(dJz.has_nan()){
-    cout<<"dJz has a NaN"<<endl;
-    return 0;
-  }
+//   if(dJz.has_nan()){
+//     cout<<"dJz has a NaN"<<endl;
+//     return 0;
+//   }
 
   H=H+Delta*dJz+eta/Nmax*dJz*dJz;
   
   /*---------------------------------------------*/
   // testing if H has any NaN in it
   
-  if(H.has_nan()){
-    cout<<"H has a NaN"<<endl;
-    return 0;
-  }
+//   if(H.has_nan()){
+//     cout<<"H has a NaN"<<endl;
+//     return 0;
+//   }
   
   
   
