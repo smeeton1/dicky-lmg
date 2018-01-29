@@ -277,8 +277,30 @@ del mJz
 
 ####### Q-Function ######################################################################
 
+Fileval='results/eigenvec_%d_%d_%.1f_%.1f_%.1f_%.1f_%.1f_%.2f.dat' % (Nmax,nmax,omega,omega0,Delta,eta,gamma,en)
+EiVe = [[]]*(int(en*int(Nmax/2)*(nmax+1)))
+f1 = open(Fileval, 'r')
+j=0
+for line in f1:
+  data=line.split()
+  for i in range(0,int(Nmax/2)*(nmax+1))
+    EiVe[j].append(float(data[i])/(Nmax/2))
+  j=j+1
 
+f1.close
 
+VeB=[]
+hold=0.0
+for j in range(0,int(Nmax/2))
+  for i in range(0,(nmax+1))
+    hold=hold +EiVe[l,i+j*(nmax+1)]
+  
+VeB.append(hold)
+
+xmax= (max(VeB)).real+0.1
+xmin= (min(VeB)).real+0.1
+ymax= (max(VeB)).imag+0.1
+ymin= (min(VeB)).imag+0.1
 
 
 
