@@ -206,7 +206,7 @@ xmax=max(DoS1)+0.1
 xmin=min(DoS1)-0.1
 
 ImgDoS='images/DoS_%d_%d_%.1f_%.1f_%.1f_%.1f_%.1f_%.2f.eps' % (Nmax,nmax,omega,omega0,Delta,eta,gamma,en)
-plt.figure(1)
+plt.figure(1,figsize=(2,2))
 plt.plot(DoS1,DoS2,'b.')
 plt.plot([e1,e1],yex,'r--')
 plt.plot([e2,e2],yex,'r--')
@@ -256,7 +256,7 @@ xmax=max(EiV)+0.3
 xmin=min(EiV)-0.3
 
 ImgPeresL='images/PeresL_%d_%d_%.1f_%.1f_%.1f_%.1f_%.1f_%.2f.eps' % (Nmax,nmax,omega,omega0,Delta,eta,gamma,en)
-plt.figure(2)
+plt.figure(2,figsize=(2,2))
 plt.plot(EiV,mJz,'r.')
 plt.plot([e1,e1],yex,'r--')
 plt.plot([e2,e2],yex,'r--')
@@ -283,7 +283,7 @@ f1 = open(Fileval, 'r')
 j=0
 for line in f1:
   data=line.split()
-  for i in range(0,int(Nmax/2)*(nmax+1))
+  for i in range(0,int(Nmax/2)*(nmax+1)):
     EiVe[j].append(float(data[i])/(Nmax/2))
   j=j+1
 
@@ -291,19 +291,36 @@ f1.close
 
 VeB=[]
 hold=0.0
-for j in range(0,int(Nmax/2))
-  for i in range(0,(nmax+1))
+for j in range(0,int(Nmax/2)):
+  for i in range(0,(nmax+1)):
     hold=hold +EiVe[l,i+j*(nmax+1)]
   
 VeB.append(hold)
 
-xmax= (max(VeB)).real+0.1
-xmin= (min(VeB)).real+0.1
-ymax= (max(VeB)).imag+0.1
-ymin= (min(VeB)).imag+0.1
+xrang= range((min(VeB)).real-0.1,(max(VeB)).real+0.1,0.1)
+yrang= range((min(VeB)).imag-0.1,(max(VeB)).imag+0.1,0.1)
+rho=numpy.outer(VeB,VeB)
+nrho=len(rho)
 
-
-
+Qfun=[]
+alpha=[0]*nrho
+for i in xrang:
+  for l in yrang:
+    for k in range(0,nrho)
+      alpha[k]=math.exp(-(pow(i,2)+pow(l,2))/2)*(pow((1+1j*l),k)*math.factorial(k))
+      
+    Qfun[i,j]=real(numpy.dot(alpha,numpy.dot(rho,alpha)))
+ 
+QfunName=='images/Qfun_%d_%d_%.1f_%.1f_%.1f_%.1f_%.1f_%.2f.eps' % (Nmax,nmax,omega,omega0,Delta,eta,gamma,en)
+plt.figure(3,figsize=(2,2))
+plt.matshow(Qfun)
+plt.savefig(QfunName)
+del VeB
+del xrang
+del yrang
+del rho
+del alpha
+del Qfun
 ########################################################################################
 
 
