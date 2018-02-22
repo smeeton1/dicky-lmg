@@ -278,7 +278,7 @@ del mJz
 ####### Q-Function ######################################################################
 
 Fileval='results/eigenvec_%d_%d_%.1f_%.1f_%.1f_%.1f_%.1f_%.2f.dat' % (Nmax,nmax,omega,omega0,Delta,eta,gamma,en)
-EiVe = [[]]*(int(en*int(Nmax/2)*(nmax+1)))
+EiVe = [[]]*(int(int(Nmax/2)*(nmax+1)))
 f1 = open(Fileval, 'r')
 j=0
 for line in f1:
@@ -291,6 +291,7 @@ f1.close
 
 VeB=[]
 hold=0.0
+l=1
 for j in range(0,int(Nmax/2)):
   for i in range(0,(nmax+1)):
     hold=hold +EiVe[l,i+j*(nmax+1)]
@@ -306,7 +307,7 @@ Qfun=[]
 alpha=[0]*nrho
 for i in xrang:
   for l in yrang:
-    for k in range(0,nrho)
+    for k in range(0,nrho):
       alpha[k]=math.exp(-(pow(i,2)+pow(l,2))/2)*(pow((1+1j*l),k)*math.factorial(k))
       
     Qfun[i,j]=real(numpy.dot(alpha,numpy.dot(rho,alpha)))

@@ -1,0 +1,14 @@
+#!/bin/bash
+#
+#SBATCH --job-name=test
+#SBATCH --output=res.txt
+#
+#SBATCH --ntasks=6
+#SBATCH --time=48:00:00
+
+Nmax=50 ##qubit ensemble dimension must be even
+nmax=100 ##field dimension only even numbers 
+en=0.5
+
+
+srun ./cDicky N $Nmax n $nmax W 1.0 w 1.0 D 1.0 E 0.2 G 0.3 e $en
