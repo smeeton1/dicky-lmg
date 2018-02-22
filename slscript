@@ -6,8 +6,8 @@
 #SBATCH --ntasks=6
 #SBATCH --time=48:00:00
 
-Nmax=50 ##qubit ensemble dimension must be even
-nmax=100 ##field dimension only even numbers 
+Nmax=200 ##qubit ensemble dimension must be even
+nmax=600 ##field dimension only even numbers 
 en=0.5
 
 
