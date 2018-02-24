@@ -3,8 +3,7 @@
 #SBATCH --job-name=test
 #SBATCH --output=res.txt
 #
-#SBATCH --ntasks=6
-#SBATCH --time=48:00:00
+#SBATCH --ntasks=8
 
 Nmax=200 ##qubit ensemble dimension must be even
 nmax=600 ##field dimension only even numbers 

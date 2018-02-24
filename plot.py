@@ -206,7 +206,7 @@ xmax=max(DoS1)+0.1
 xmin=min(DoS1)-0.1
 
 ImgDoS='images/DoS_%d_%d_%.1f_%.1f_%.1f_%.1f_%.1f_%.2f.eps' % (Nmax,nmax,omega,omega0,Delta,eta,gamma,en)
-plt.figure(1,figsize=(2,2))
+plt.figure(1)#,figsize=(3,2))
 plt.plot(DoS1,DoS2,'b.')
 plt.plot([e1,e1],yex,'r--')
 plt.plot([e2,e2],yex,'r--')
@@ -256,8 +256,8 @@ xmax=max(EiV)+0.3
 xmin=min(EiV)-0.3
 
 ImgPeresL='images/PeresL_%d_%d_%.1f_%.1f_%.1f_%.1f_%.1f_%.2f.eps' % (Nmax,nmax,omega,omega0,Delta,eta,gamma,en)
-plt.figure(2,figsize=(2,2))
-plt.plot(EiV,mJz,'r.')
+plt.figure(2)#,figsize=(3,2))
+plt.plot(EiV,mJz,'b.')
 plt.plot([e1,e1],yex,'r--')
 plt.plot([e2,e2],yex,'r--')
 axes=plt.gca()
@@ -278,7 +278,7 @@ del mJz
 ####### Q-Function ######################################################################
 
 Fileval='results/eigenvec_%d_%d_%.1f_%.1f_%.1f_%.1f_%.1f_%.2f.dat' % (Nmax,nmax,omega,omega0,Delta,eta,gamma,en)
-EiVe = [[]]*(int(int(Nmax/2)*(nmax+1)))
+EiVe = [[]]#*(int(int(Nmax/2)*(nmax+1)))
 f1 = open(Fileval, 'r')
 j=0
 for line in f1:
@@ -313,7 +313,7 @@ for i in xrang:
     Qfun[i,j]=real(numpy.dot(alpha,numpy.dot(rho,alpha)))
  
 QfunName=='images/Qfun_%d_%d_%.1f_%.1f_%.1f_%.1f_%.1f_%.2f.eps' % (Nmax,nmax,omega,omega0,Delta,eta,gamma,en)
-plt.figure(3,figsize=(2,2))
+plt.figure(3)#,figsize=(3,2))
 plt.matshow(Qfun)
 plt.savefig(QfunName)
 del VeB
