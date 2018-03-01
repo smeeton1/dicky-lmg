@@ -55,7 +55,7 @@ int main(int argc, char *argv[])
   int Nmax, nmax,size;
   complex<double> hold;
   unsigned int i,j,k,l;//counters
-  ostringstream osseva,osseve,ossdos,ossmjz;
+  ostringstream osseva,osseve,ossdos,ossmjz,ossdjz;
   // initializing variables 
   Nmax=20; //qubit ensemble dimension must be even
   nmax=2*Nmax; //field dimension only even numbers
@@ -236,5 +236,19 @@ int main(int argc, char *argv[])
     filedos << "\n";
   }
   filedos.close();
+  
+  ossdjz<<"results/DJz_"<<Nmax<<'_'<<nmax<<'_'<<showpoint<<setprecision(1)<<fixed<<omega<<'_'<<omega0<<'_'<<Delta<<'_'<<eta<<'_'<<gamma<<showpoint<<setprecision(2)<<fixed<<'_'<<en<<".dat";
+  
+  for(i=0;i<eigvac.n_cols;i++){
+    eigvac.colptr(i)=(dJz*eigvac.colptr(i)).t()
+  }
+  ofstream fileeve(ossdjz.str().c_str());
+  for(i=0;i<dJz.n_rows;i++){
+    for(j=0;j<dJz.n_cols;j++){
+      fileeve << eigvac(i,j)<< " ";
+    }
+    fileeve << "\n";
+  }
+  fileeve.close();
   
 }

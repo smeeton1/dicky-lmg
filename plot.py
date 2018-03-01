@@ -3,6 +3,7 @@ import numpy
 import cmath 
 import math 
 import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
 import scipy.integrate as integrate
 
 ########################################################################################################
@@ -278,42 +279,56 @@ del mJz
 ####### Q-Function ######################################################################
 
 Fileval='results/eigenvec_%d_%d_%.1f_%.1f_%.1f_%.1f_%.1f_%.2f.dat' % (Nmax,nmax,omega,omega0,Delta,eta,gamma,en)
-EiVe = [[]]#*(int(int(Nmax/2)*(nmax+1)))
+EiVe = []
 f1 = open(Fileval, 'r')
-j=0
 for line in f1:
   data=line.split()
-  for i in range(0,int(Nmax/2)*(nmax+1)):
-    EiVe[j].append(float(data[i])/(Nmax/2))
-  j=j+1
+  if data:
+    data=[float(i)/(Nmax/2) for i in data]
+    EiVe.append(data)
 
 f1.close
 
 VeB=[]
 hold=0.0
-l=1
-for j in range(0,int(Nmax/2)):
-  for i in range(0,(nmax+1)):
-    hold=hold +EiVe[l,i+j*(nmax+1)]
-  
-VeB.append(hold)
+l=0
+for j in range(0,int(Nmax/2)-1):
+  for i in range(0,(nmax)):
+    hold=hold +EiVe[int(i+j*(nmax+1))][int(l)]
+  VeB.append(hold)
+  hold=0.0
 
-xrang= range((min(VeB)).real-0.1,(max(VeB)).real+0.1,0.1)
-yrang= range((min(VeB)).imag-0.1,(max(VeB)).imag+0.1,0.1)
+
+xrang= numpy.arange((min(VeB)).real-0.1,(max(VeB)).real+0.1,0.01)
+yrang= numpy.arange((min(VeB)).imag-0.1,(max(VeB)).imag+0.1,0.01)
+print(len(xrang),len(yrang))
 rho=numpy.outer(VeB,VeB)
 nrho=len(rho)
 
-Qfun=[]
+Qfun=[[0 for i in xrange(len(xrang))] for i in xrange(len(yrang))]
+print(len(Qfun),len(Qfun[0]))
+h=0
+g=0
 alpha=[0]*nrho
 for i in xrang:
   for l in yrang:
     for k in range(0,nrho):
       alpha[k]=math.exp(-(pow(i,2)+pow(l,2))/2)*(pow((1+1j*l),k)*math.factorial(k))
-      
-    Qfun[i,j]=real(numpy.dot(alpha,numpy.dot(rho,alpha)))
- 
-QfunName=='images/Qfun_%d_%d_%.1f_%.1f_%.1f_%.1f_%.1f_%.2f.eps' % (Nmax,nmax,omega,omega0,Delta,eta,gamma,en)
-plt.figure(3)#,figsize=(3,2))
+    print(h,g)  
+    Qfun[g][h]=(numpy.dot(alpha,numpy.dot(rho,alpha))).real
+    g=g+1
+    
+  h=h+1
+  g=0
+  
+  
+X, Y = numpy.meshgrid(xrang, yrang)
+print(len(xrang),len(yrang), len(Qfun))
+print(len(X[0]),len(Y[0]), len(Qfun[0]))
+QfunName='images/Qfun_%d_%d_%.1f_%.1f_%.1f_%.1f_%.1f_%.2f.eps' % (Nmax,nmax,omega,omega0,Delta,eta,gamma,en)
+fig = plt.figure(3)#,figsize=(3,2))
+#ax = fig.add_subplot(111, projection='3d')
+#ax.plot_surface(X,Y,Qfun)
 plt.matshow(Qfun)
 plt.savefig(QfunName)
 del VeB
@@ -322,6 +337,8 @@ del yrang
 del rho
 del alpha
 del Qfun
+del X
+del Y
 ########################################################################################
 
 
