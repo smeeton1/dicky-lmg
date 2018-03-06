@@ -301,12 +301,12 @@ for j in range(0,int(Nmax/2)-1):
 
 xrang= numpy.arange((min(VeB)).real-0.1,(max(VeB)).real+0.1,0.01)
 yrang= numpy.arange((min(VeB)).imag-0.1,(max(VeB)).imag+0.1,0.01)
-print(len(xrang),len(yrang))
+
 rho=numpy.outer(VeB,VeB)
 nrho=len(rho)
 
 Qfun=[[0 for i in xrange(len(xrang))] for i in xrange(len(yrang))]
-print(len(Qfun),len(Qfun[0]))
+
 h=0
 g=0
 alpha=[0]*nrho
@@ -314,7 +314,7 @@ for i in xrang:
   for l in yrang:
     for k in range(0,nrho):
       alpha[k]=math.exp(-(pow(i,2)+pow(l,2))/2)*(pow((1+1j*l),k)*math.factorial(k))
-    print(h,g)  
+      
     Qfun[g][h]=(numpy.dot(alpha,numpy.dot(rho,alpha))).real
     g=g+1
     
@@ -323,14 +323,20 @@ for i in xrang:
   
   
 X, Y = numpy.meshgrid(xrang, yrang)
-print(len(xrang),len(yrang), len(Qfun))
-print(len(X[0]),len(Y[0]), len(Qfun[0]))
+
 QfunName='images/Qfun_%d_%d_%.1f_%.1f_%.1f_%.1f_%.1f_%.2f.eps' % (Nmax,nmax,omega,omega0,Delta,eta,gamma,en)
 fig = plt.figure(3)#,figsize=(3,2))
 #ax = fig.add_subplot(111, projection='3d')
 #ax.plot_surface(X,Y,Qfun)
 plt.matshow(Qfun)
 plt.savefig(QfunName)
+
+QfunName3d='images/Qfun3D_%d_%d_%.1f_%.1f_%.1f_%.1f_%.1f_%.2f.eps' % (Nmax,nmax,omega,omega0,Delta,eta,gamma,en)
+fig = plt.figure(4)#,figsize=(3,2))
+ax = fig.add_subplot(111, projection='3d')
+ax.plot_surface(X,Y,Qfun)
+plt.savefig(QfunName3d)
+
 del VeB
 del xrang
 del yrang
