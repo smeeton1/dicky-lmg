@@ -1,4 +1,4 @@
-
+#define _USE_MATH_DEFINES
 #include <iostream>
 #include <iomanip>
 #include <fstream>
@@ -10,6 +10,7 @@
 #include <cstring>
 #include <sstream>
 #include <boost/math/special_functions/factorials.hpp>
+#include <math.h>
 
 using namespace std;
 using namespace arma;
@@ -20,6 +21,14 @@ long double fac(int n){
   long double sum=1;
   if(n>0){
   for(i=1;i<=n;i++){sum=sum*i;}
+  return sum;}
+  else{return 1;}
+}
+
+long double fac_st(int n){
+  long double sum;
+  if(n>0){
+  sum=sqrt(2*M_PI*n)*pow(n/M_E,n);
   return sum;}
   else{return 1;}
 }
@@ -42,7 +51,7 @@ complex<long double> Kloop(int i,int j,int l,int Nmax,double alpha){
   long double lhold=0.0;
     #pragma omp parallel for reduction (+:lhold)
     for(int k=0;k<min(i,j)+1;k++){
-      lhold=lhold+(pow(alpha,(i+j-2*k))*pow(-1,(j-k))*((sqrt(fac(i))*sqrt(fac(j)))/(fac(i-k)*fac(j-k)*fac(k)))); 
+      lhold=lhold+(pow(alpha,(i+j-2*k))*pow(-1,(j-k))*((sqrt(fac_st(i))*sqrt(fac_st(j)))/(fac_st(i-k)*fac_st(j-k)*fac_st(k)))); 
     }
     hold=complex<long double>(lhold);
     return hold*(-complex<long double>(exp(-alpha*alpha/2))*sqrt(complex<long double>(Nmax/2*(Nmax/2+1))-complex<long double>((-Nmax/2+l+1)*(-Nmax/2+l)))/complex<long double >(2,0));
