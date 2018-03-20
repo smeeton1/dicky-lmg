@@ -278,16 +278,17 @@ del mJz
 
 ####### Q-Function ######################################################################
 
-Fileval='results/eigenvec_%d_%d_%.1f_%.1f_%.1f_%.1f_%.1f_%.2f.dat' % (Nmax,nmax,omega,omega0,Delta,eta,gamma,en)
+Fileval='results/DJz_%d_%d_%.1f_%.1f_%.1f_%.1f_%.1f_%.2f.dat' % (Nmax,nmax,omega,omega0,Delta,eta,gamma,en)
 EiVe = []
 f1 = open(Fileval, 'r')
 for line in f1:
   data=line.split()
   if data:
-    data=[float(i)/(Nmax/2) for i in data]
+    data=[complex(i)/(Nmax/2) for i in data]
     EiVe.append(data)
 
 f1.close
+
 
 VeB=[]
 hold=0.0
@@ -299,8 +300,8 @@ for j in range(0,int(Nmax/2)-1):
   hold=0.0
 
 
-xrang= numpy.arange((min(VeB)).real-0.1,(max(VeB)).real+0.1,0.01)
-yrang= numpy.arange((min(VeB)).imag-0.1,(max(VeB)).imag+0.1,0.01)
+xrang= numpy.arange(numpy.min(VeB).real-0.1,numpy.max(VeB).real+0.1,0.001)
+yrang= numpy.arange((numpy.min(VeB)).imag-0.1,(numpy.max(VeB)).imag+0.1,0.001)
 
 rho=numpy.outer(VeB,VeB)
 nrho=len(rho)

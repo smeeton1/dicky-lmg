@@ -249,12 +249,12 @@ int main(int argc, char *argv[])
   ossdjz<<"results/DJz_"<<Nmax<<'_'<<nmax<<'_'<<showpoint<<setprecision(1)<<fixed<<omega<<'_'<<omega0<<'_'<<Delta<<'_'<<eta<<'_'<<gamma<<showpoint<<setprecision(2)<<fixed<<'_'<<en<<".dat";
   
   for(i=0;i<eigvac.n_cols;i++){
-    eigvac.col(i)=(dJz*eigvac.col(i)).t();
+    eigvac.col(i)=(dJz*eigvac.col(i));
   }
   ofstream fileevem(ossdjz.str().c_str());
-  for(i=0;i<dJz.n_rows;i++){
-    for(j=0;j<dJz.n_cols;j++){
-      fileevem << eigvac(i,j)<< " ";
+  for(i=0;i<eigvac.n_rows;i++){
+    for(j=0;j<eigvac.n_cols;j++){
+      fileevem << real(eigvac(i,j))<< " "<<imag(eigvac(i,j))<<"j ";
     }
     fileevem << "\n";
   }

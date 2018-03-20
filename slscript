@@ -9,5 +9,13 @@ Nmax=200 ##qubit ensemble dimension must be even
 nmax=600 ##field dimension only even numbers 
 en=0.5
 
+cd /home/fishy/code/Mexico/Dicke-lmg/dicky-lmg/
+./cDicky N $Nmax n $nmax W 1.0 w 1.0 D 1.0 E 0.2 G 0.3 e $en
 
-srun ./cDicky N $Nmax n $nmax W 1.0 w 1.0 D 1.0 E 0.2 G 0.3 e $en
+echo "one done"
+
+./cDicky N $Nmax n $nmax W 1.0 w 1.0 D 1.0 E 0.2 G 0.8 e $en
+
+echo "two done"
+
+./cDicky N $Nmax n $nmax W 1.0 w 1.0 D 1.0 E 2.1 G 0.6 e $en
