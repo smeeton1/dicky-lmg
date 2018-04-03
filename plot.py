@@ -298,6 +298,16 @@ for j in range(0,int(Nmax/2)-1):
     hold=hold +EiVe[int(i+j*(nmax+1))][int(l)]
   VeB.append(hold)
   hold=0.0
+  
+  
+prob=[]
+hold=0.0
+l=0
+
+for i in range(0,len(EiVe)):
+  prob.append((EiVe[int(i)][int(l)]*EiVe[int(i)][int(l)].conjugate()).real)
+
+
 
 
 xrang= numpy.arange(numpy.min(VeB).real-0.1,numpy.max(VeB).real+0.1,0.001)
@@ -308,15 +318,15 @@ nrho=len(rho)
 
 Qfun=[[0 for i in xrange(len(xrang))] for i in xrange(len(yrang))]
 
+alpha=numpy.empty([nrho],dtype=complex)
 h=0
 g=0
-alpha=[0]*nrho
 for i in xrang:
   for l in yrang:
     for k in range(0,nrho):
-      alpha[k]=math.exp(-(pow(i,2)+pow(l,2))/2)*(pow((1+1j*l),k)*math.factorial(k))
+      alpha[k]=cmath.exp(-pow(abs(i+1j*l),2)/2)*(pow((i+1j*l),k)/math.sqrt(math.factorial(k)))
       
-    Qfun[g][h]=(numpy.dot(alpha,numpy.dot(rho,alpha))).real
+    Qfun[g][h]=(numpy.dot(numpy.transpose(alpha),numpy.dot(rho,alpha.conjugate()))).real
     g=g+1
     
   h=h+1
@@ -337,6 +347,15 @@ fig = plt.figure(4)#,figsize=(3,2))
 ax = fig.add_subplot(111, projection='3d')
 ax.plot_surface(X,Y,Qfun)
 plt.savefig(QfunName3d)
+
+
+rp=range(0,len(prob))
+ImgPeresL='images/Prob_%d_%d_%.1f_%.1f_%.1f_%.1f_%.1f_%.2f.eps' % (Nmax,nmax,omega,omega0,Delta,eta,gamma,en)
+plt.figure(5)#,figsize=(3,2))
+plt.plot(rp,prob,'b.')
+plt.savefig(ImgPeresL)
+
+
 
 del VeB
 del xrang
