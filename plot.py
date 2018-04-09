@@ -5,6 +5,8 @@ import math
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 import scipy.integrate as integrate
+import statistics
+import scipy.sparse as sps
 
 ########################################################################################################
 
@@ -308,10 +310,22 @@ for i in range(0,len(EiVe)):
   prob.append((EiVe[int(i)][int(l)]*EiVe[int(i)][int(l)].conjugate()).real)
 
 
+a = [ math.sqrt(x) for x in range(len(VeB)-1)]
+m2 = sps.spdiags(a,1, len(VeB),len(VeB))
 
 
-xrang= numpy.arange(numpy.min(VeB).real-0.1,numpy.max(VeB).real+0.1,0.001)
-yrang= numpy.arange((numpy.min(VeB)).imag-0.1,(numpy.max(VeB)).imag+0.1,0.001)
+dx= (numpy.dot(numpy.transpose(VeB),numpy.dot(sps.spdiags(a,-1, len(VeB),len(VeB))+sps.spdiags(a,1, len(VeB),len(VeB)),VeB.conjugate()))).real
+dy= (numpy.dot(numpy.transpose(VeB),numpy.dot(sps.spdiags(a,-1, len(VeB),len(VeB))-sps.spdiags(a,1, len(VeB),len(VeB)),VeB.conjugate()))).real
+
+if dx>dy:
+  h=4*dx/100
+else:
+  h=4*dy/100
+
+
+
+xrang= numpy.arange(statistics.median(VeB).real-4*dx,statistics.median(VeB).real+4*dx,h)
+yrang= numpy.arange((statistics.median(VeB)).imag-4*dy,(statistics.median(VeB)).imag+4*dy,h)
 
 rho=numpy.outer(VeB,VeB)
 nrho=len(rho)

@@ -152,7 +152,7 @@ int main(int argc, char *argv[])
   //#pragma omp parallel for
   for(i=0;i<Nmax/2;i++){
    for(j=0;j<nmax+1;j++){
-     H(i*int(nmax+1)+j,i*int(nmax+1)+j)=omega*j-omega*alpha*alpha*(i)*(i);
+     H(i*int(nmax+1)+j,i*int(nmax+1)+j)=omega*i-omega*alpha*alpha*(j+1)*(j+1);
    }
   }
   }
@@ -249,7 +249,7 @@ int main(int argc, char *argv[])
   ossdjz<<"results/DJz_"<<Nmax<<'_'<<nmax<<'_'<<showpoint<<setprecision(1)<<fixed<<omega<<'_'<<omega0<<'_'<<Delta<<'_'<<eta<<'_'<<gamma<<showpoint<<setprecision(2)<<fixed<<'_'<<en<<".dat";
   
   for(i=0;i<eigvac.n_cols;i++){
-    eigvac.col(i)=(dJz*eigvac.col(i));
+    eigvac.col(i)=(dJz.t()*eigvac.col(i));
   }
   ofstream fileevem(ossdjz.str().c_str());
   for(i=0;i<eigvac.n_rows;i++){
