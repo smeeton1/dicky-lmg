@@ -203,14 +203,14 @@ for line in fh:
 
 fh.close
 yex=[]
-yex.append(max(DoS2)+1)
-yex.append(min(DoS2)-1)
-xmax=max(DoS1)+0.1
-xmin=min(DoS1)-0.1
+yex.append(max(DoS1)+1)
+yex.append(min(DoS1)-1)
+xmax=max(DoS2)+0.1
+xmin=min(DoS2)-0.1
 
 ImgDoS='images/DoS_%d_%d_%.1f_%.1f_%.1f_%.1f_%.1f_%.2f.eps' % (Nmax,nmax,omega,omega0,Delta,eta,gamma,en)
 plt.figure(1)#,figsize=(3,2))
-plt.plot(DoS1,DoS2,'b.')
+plt.plot(DoS2,DoS1,'b.')
 plt.plot([e1,e1],yex,'r--')
 plt.plot([e2,e2],yex,'r--')
 axes=plt.gca()
@@ -292,13 +292,13 @@ for line in f1:
 f1.close
 
 
-VeB=[]
+VeB=numpy.empty([int(Nmax/2)-1],dtype=complex)
 hold=0.0
 l=0
 for j in range(0,int(Nmax/2)-1):
   for i in range(0,(nmax)):
     hold=hold +EiVe[int(i+j*(nmax+1))][int(l)]
-  VeB.append(hold)
+  VeB[j]=complex(hold)
   hold=0.0
   
   
@@ -311,21 +311,30 @@ for i in range(0,len(EiVe)):
 
 
 a = [ math.sqrt(x) for x in range(len(VeB)-1)]
-m2 = sps.spdiags(a,1, len(VeB),len(VeB))
+am =(sps.spdiags(a,-1, len(VeB),len(VeB))+sps.spdiags(a,1, len(VeB),len(VeB)))#*(sps.spdiags(a,-1, len(VeB),len(VeB))+sps.spdiags(a,1, len(VeB),len(VeB))
 
 
-dx= (numpy.dot(numpy.transpose(VeB),numpy.dot(sps.spdiags(a,-1, len(VeB),len(VeB))+sps.spdiags(a,1, len(VeB),len(VeB)),VeB.conjugate()))).real
-dy= (numpy.dot(numpy.transpose(VeB),numpy.dot(sps.spdiags(a,-1, len(VeB),len(VeB))-sps.spdiags(a,1, len(VeB),len(VeB)),VeB.conjugate()))).real
+dx= abs((numpy.transpose(VeB).dot((am*am).dot(VeB.conjugate()))).real)-abs((numpy.transpose(VeB).dot((am).dot(VeB.conjugate()))).real)
+
+am =(sps.spdiags(a,-1, len(VeB),len(VeB))-sps.spdiags(a,1, len(VeB),len(VeB)))
+dy= abs((numpy.transpose(VeB).dot((am*am).dot(VeB.conjugate()))).real)-abs((numpy.transpose(VeB).dot((am).dot(VeB.conjugate()))).real)
+
+del am
+del a
+
+print(dx, dy)
 
 if dx>dy:
   h=4*dx/100
+  d=dx
 else:
   h=4*dy/100
+  d=dy
 
 
 
-xrang= numpy.arange(statistics.median(VeB).real-4*dx,statistics.median(VeB).real+4*dx,h)
-yrang= numpy.arange((statistics.median(VeB)).imag-4*dy,(statistics.median(VeB)).imag+4*dy,h)
+xrang= numpy.arange(statistics.median(VeB).real-4*d,statistics.median(VeB).real+4*d,h)
+yrang= numpy.arange((statistics.median(VeB)).imag-4*d,(statistics.median(VeB)).imag+4*d,h)
 
 rho=numpy.outer(VeB,VeB)
 nrho=len(rho)
