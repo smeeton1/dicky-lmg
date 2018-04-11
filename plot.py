@@ -252,6 +252,28 @@ for line in f1:
 
 f1.close
 
+QI=[]
+i=0
+while e1<mJz(i):
+ i=i+1
+QI.append(i)
+i=0
+while emin<mJz(i):
+ i=i+1
+QI.append(i) 
+i=0
+while eNe<mJz(i):
+ i=i+1
+QI.append(i)
+
+E0=0.01
+if emin>eNe:
+  while E0<EiV(QI[1]):
+    QI[1]=QI[1]+1
+else:
+  while E0<EiV(QI[2]):
+    QI[2]=QI[2]+1
+
 yex=[]
 yex.append(max(mJz)+1)
 yex.append(min(mJz)-1)
@@ -292,102 +314,105 @@ for line in f1:
 f1.close
 
 
-VeB=numpy.empty([int(Nmax/2)-1],dtype=complex)
-hold=0.0
-l=0
-for j in range(0,int(Nmax/2)-1):
-  for i in range(0,(nmax)):
-    hold=hold +EiVe[int(i+j*(nmax+1))][int(l)]
-  VeB[j]=complex(hold)
+for j in QI:
+  prob=[]
   hold=0.0
-  
-  
-prob=[]
-hold=0.0
-l=0
-
-for i in range(0,len(EiVe)):
-  prob.append((EiVe[int(i)][int(l)]*EiVe[int(i)][int(l)].conjugate()).real)
-
-
-a = [ math.sqrt(x) for x in range(len(VeB)-1)]
-am =(sps.spdiags(a,-1, len(VeB),len(VeB))+sps.spdiags(a,1, len(VeB),len(VeB)))#*(sps.spdiags(a,-1, len(VeB),len(VeB))+sps.spdiags(a,1, len(VeB),len(VeB))
-
-
-dx= abs((numpy.transpose(VeB).dot((am*am).dot(VeB.conjugate()))).real)-abs((numpy.transpose(VeB).dot((am).dot(VeB.conjugate()))).real)
-
-am =(sps.spdiags(a,-1, len(VeB),len(VeB))-sps.spdiags(a,1, len(VeB),len(VeB)))
-dy= abs((numpy.transpose(VeB).dot((am*am).dot(VeB.conjugate()))).real)-abs((numpy.transpose(VeB).dot((am).dot(VeB.conjugate()))).real)
-
-del am
-del a
-
-print(dx, dy)
-
-if dx>dy:
-  h=4*dx/100
-  d=dx
-else:
-  h=4*dy/100
-  d=dy
+  l=0
+  for i in range(0,len(EiVe)):
+    prob.append((EiVe[int(i)][QI[j]]*EiVe[int(i)][QI[j]].conjugate()).real)
+  rp=range(0,len(prob))
+  ImgPeresL='images/Prob_%d_%d_%.1f_%.1f_%.1f_%.1f_%.1f_%.2f_%i.eps' % (Nmax,nmax,omega,omega0,Delta,eta,gamma,en,QI[j])
+  plt.figure(5)#,figsize=(3,2))
+  plt.plot(rp,prob,'b.')
+  plt.savefig(ImgPeresL)
+  del prob
 
 
 
-xrang= numpy.arange(statistics.median(VeB).real-4*d,statistics.median(VeB).real+4*d,h)
-yrang= numpy.arange((statistics.median(VeB)).imag-4*d,(statistics.median(VeB)).imag+4*d,h)
 
-rho=numpy.outer(VeB,VeB)
-nrho=len(rho)
+for l in QI:
+  VeB=numpy.empty([int(Nmax/2)-1],dtype=complex)
+  hold=0.0
+  l=0
+  for j in range(0,int(Nmax/2)-1):
+    for i in range(0,(nmax)):
+      hold=hold +EiVe[int(i+j*(nmax+1))][QI[l]]
+    VeB[j]=complex(hold)
+    hold=0.0
 
-Qfun=[[0 for i in xrange(len(xrang))] for i in xrange(len(yrang))]
+  a = [ math.sqrt(x) for x in range(len(VeB)-1)]
 
-alpha=numpy.empty([nrho],dtype=complex)
-h=0
-g=0
-for i in xrang:
-  for l in yrang:
-    for k in range(0,nrho):
-      alpha[k]=cmath.exp(-pow(abs(i+1j*l),2)/2)*(pow((i+1j*l),k)/math.sqrt(math.factorial(k)))
-      
-    Qfun[g][h]=(numpy.dot(numpy.transpose(alpha),numpy.dot(rho,alpha.conjugate()))).real
-    g=g+1
-    
-  h=h+1
+  am =(sps.spdiags(a,-1, len(VeB),len(VeB))+sps.spdiags(a,1, len(VeB),len(VeB)))#*(sps.spdiags(a,-1, len(VeB),len(VeB))+sps.spdiags(a,1, len(VeB),len(VeB))
+  dx= abs((numpy.transpose(VeB).dot((am*am).dot(VeB.conjugate()))).real)-abs((numpy.transpose(VeB).dot((am).dot(VeB.conjugate()))).real)
+
+  am =(sps.spdiags(a,-1, len(VeB),len(VeB))-sps.spdiags(a,1, len(VeB),len(VeB)))
+  dy= abs((numpy.transpose(VeB).dot((am*am).dot(VeB.conjugate()))).real)-abs((numpy.transpose(VeB).dot((am).dot(VeB.conjugate()))).real)
+
+  del am
+  del a
+
+
+  if dx>dy:
+    h=4*dx/100
+    d=dx
+  else:
+    h=4*dy/100
+    d=dy
+
+
+
+  xrang= numpy.arange(statistics.median(VeB).real-4*d,statistics.median(VeB).real+4*d,h)
+  yrang= numpy.arange((statistics.median(VeB)).imag-4*d,(statistics.median(VeB)).imag+4*d,h)
+
+  rho=numpy.outer(VeB,VeB)
+  nrho=len(rho)
+
+  Qfun=[[0 for i in xrange(len(xrang))] for i in xrange(len(yrang))]
+
+  alpha=numpy.empty([nrho],dtype=complex)
+  h=0
   g=0
+  for i in xrang:
+    for l in yrang:
+      for k in range(0,nrho):
+	alpha[k]=cmath.exp(-pow(abs(i+1j*l),2)/2)*(pow((i+1j*l),k)/math.sqrt(math.factorial(k)))
+      
+      Qfun[g][h]=(numpy.dot(numpy.transpose(alpha),numpy.dot(rho,alpha.conjugate()))).real
+      g=g+1
+      
+    h=h+1
+    g=0
   
   
-X, Y = numpy.meshgrid(xrang, yrang)
+  X, Y = numpy.meshgrid(xrang, yrang)
 
-QfunName='images/Qfun_%d_%d_%.1f_%.1f_%.1f_%.1f_%.1f_%.2f.eps' % (Nmax,nmax,omega,omega0,Delta,eta,gamma,en)
-fig = plt.figure(3)#,figsize=(3,2))
+  QfunName='images/Qfun_%d_%d_%.1f_%.1f_%.1f_%.1f_%.1f_%.2f.eps' % (Nmax,nmax,omega,omega0,Delta,eta,gamma,en)
+  fig = plt.figure(3)#,figsize=(3,2))
 #ax = fig.add_subplot(111, projection='3d')
 #ax.plot_surface(X,Y,Qfun)
-plt.matshow(Qfun)
-plt.savefig(QfunName)
+  plt.matshow(Qfun)
+  plt.savefig(QfunName)
 
-QfunName3d='images/Qfun3D_%d_%d_%.1f_%.1f_%.1f_%.1f_%.1f_%.2f.eps' % (Nmax,nmax,omega,omega0,Delta,eta,gamma,en)
-fig = plt.figure(4)#,figsize=(3,2))
-ax = fig.add_subplot(111, projection='3d')
-ax.plot_surface(X,Y,Qfun)
-plt.savefig(QfunName3d)
+  QfunName3d='images/Qfun3D_%d_%d_%.1f_%.1f_%.1f_%.1f_%.1f_%.2f.eps' % (Nmax,nmax,omega,omega0,Delta,eta,gamma,en)
+  fig = plt.figure(4)#,figsize=(3,2))
+  ax = fig.add_subplot(111, projection='3d')
+  ax.plot_surface(X,Y,Qfun)
+  plt.savefig(QfunName3d)
+
+  del xrang
+  del yrang
+  del rho
+  del alpha
+  del Qfun
+  del X
+  del Y
+  del VeB
 
 
-rp=range(0,len(prob))
-ImgPeresL='images/Prob_%d_%d_%.1f_%.1f_%.1f_%.1f_%.1f_%.2f.eps' % (Nmax,nmax,omega,omega0,Delta,eta,gamma,en)
-plt.figure(5)#,figsize=(3,2))
-plt.plot(rp,prob,'b.')
-plt.savefig(ImgPeresL)
 
 
 
-del VeB
-del xrang
-del yrang
-del rho
-del alpha
-del Qfun
-del X
-del Y
+
 ########################################################################################
 
 
