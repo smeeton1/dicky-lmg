@@ -198,13 +198,13 @@ DoS2 = []
 fh= open(FileDoS, 'r')
 for line in fh:
   data=line.split()
-  DoS1.append(float(data[0])/(Nmax/2))
-  DoS2.append(float(data[1])/(Nmax))
+  DoS1.append(float(data[0])/(Nmax))
+  DoS2.append(float(data[1])/(Nmax)/2)
 
 fh.close
 yex=[]
-yex.append(max(DoS1)+1)
-yex.append(min(DoS1)-1)
+yex.append(max(DoS1)+0.01)
+yex.append(min(DoS1)-0.01)
 xmax=max(DoS2)+0.1
 xmin=min(DoS2)-0.1
 
@@ -215,16 +215,16 @@ plt.plot([e1,e1],yex,'r--')
 plt.plot([e2,e2],yex,'r--')
 axes=plt.gca()
 axes.set_ylim([yex[1]+0.9,yex[0]-0.9])
-#axes.set_xlim(xmin,xmax)
+axes.set_xlim(xmin,xmax)
 if f<1:
   xdos,CDoS=DoSR1(xmin,xmax,e1,e2,omega,omega0,eta,gamma)
 if f>=1 and eta<Delta:
   plt.plot([emin,emin],yex,'r--')
   xdos,CDoS=DoSR2(xmin,xmax,e1,e2,emin,omega,omega0,eta,gamma)
 if f>=1 and eta>=Delta:
-  plt.plot([emin,emin],yex,'r--')
+  plt.plot([emin,emin],yex,'y--')
   plt.plot([eNe,eNe],yex,'r--')
-  xdos,CDoS=DoSR3(xmin,xmax,e1,e2,emin,eNe,omega,omega0,eta,gamma)
+ xdos,CDoS=DoSR3(xmin,xmax,e1,e2,emin,eNe,omega,omega0,eta,gamma)
 plt.plot(xdos,CDoS,'r-')
 plt.savefig(ImgDoS)
 del DoS1
@@ -238,7 +238,7 @@ EiV = []
 f1 = open(Fileval, 'r')
 for line in f1:
   data=line.split()
-  EiV.append(float(data[0])/(Nmax/2))
+  EiV.append(float(data[0])/(Nmax))
 
 f1.close
 
@@ -254,25 +254,23 @@ f1.close
 
 QI=[]
 i=0
-while e1<mJz(i):
+while e1<mJz[i]:
  i=i+1
 QI.append(i)
 i=0
-while emin<mJz(i):
+while eNe<mJz[i]:
+ i=i+1
+QI.append(i)
+i=0
+while emin<mJz[i]:
  i=i+1
 QI.append(i) 
-i=0
-while eNe<mJz(i):
- i=i+1
-QI.append(i)
 
 E0=0.01
-if emin>eNe:
-  while E0<EiV(QI[1]):
-    QI[1]=QI[1]+1
-else:
-  while E0<EiV(QI[2]):
-    QI[2]=QI[2]+1
+
+while E0<EiV(QI[0]):
+    QI[0]=QI[0]+1
+
 
 yex=[]
 yex.append(max(mJz)+1)
