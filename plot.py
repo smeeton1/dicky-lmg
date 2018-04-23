@@ -224,7 +224,7 @@ if f>=1 and eta<Delta:
 if f>=1 and eta>=Delta:
   plt.plot([emin,emin],yex,'y--')
   plt.plot([eNe,eNe],yex,'r--')
- xdos,CDoS=DoSR3(xmin,xmax,e1,e2,emin,eNe,omega,omega0,eta,gamma)
+  xdos,CDoS=DoSR3(xmin,xmax,e1,e2,emin,eNe,omega,omega0,eta,gamma)
 plt.plot(xdos,CDoS,'r-')
 plt.savefig(ImgDoS)
 del DoS1
@@ -253,23 +253,26 @@ for line in f1:
 f1.close
 
 QI=[]
-i=0
-while e1<mJz[i]:
- i=i+1
-QI.append(i)
-i=0
-while eNe<mJz[i]:
- i=i+1
-QI.append(i)
-i=0
-while emin<mJz[i]:
- i=i+1
-QI.append(i) 
+if nmax>300:
+  i=0
+  while e1<mJz[i]:
+    i=i+1
+  QI.append(i)
+  i=0
+  while eNe<mJz[i]:
+    i=i+1
+  QI.append(i)
+    i=0
+  while emin<mJz[i]:
+    i=i+1
+  QI.append(i) 
 
-E0=0.01
+  E0=0.01
 
-while E0<EiV(QI[0]):
+  while E0<EiV(QI[0]):
     QI[0]=QI[0]+1
+else:
+  QI.append(0)
 
 
 yex=[]
