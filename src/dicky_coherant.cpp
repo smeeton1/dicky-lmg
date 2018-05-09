@@ -185,6 +185,7 @@ int main(int argc, char *argv[])
 //     return 0;
 //   }
 
+
   H=H+Delta*dJz+eta/Nmax*dJz*dJz;
   
   /*---------------------------------------------*/
@@ -200,6 +201,8 @@ int main(int argc, char *argv[])
   /*------------------------------------------------------------*/
   //getting Eigenvalues and Eigenvectors
 
+  
+  cout<<"starting eigensolver"<<endl;
   cx_vec eigval;
   cx_mat eigvac;
   eigs_gen(eigval, eigvac, H,int(en*size),"sr");//getting en% of the eigenvalues(eigval)  with smallest real part and corisponding eigenvectors(eigvac)
