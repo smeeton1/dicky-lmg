@@ -49,8 +49,12 @@ return sum;
 complex<long double> Kloop(int i,int j,int l,int Nmax,double alpha){
   complex<long double> hold=complex<double>(0, 0);
   long double lhold=0.0;
+   if(isinfl(fac_st(i))||isinfl(fac_st(j))){
+     cout<<"to big"<<endl;
+     return 0;
+   }
     #pragma omp parallel for reduction (+:lhold)
-    for(int k=0;k<min(i,j)+1;k++){
+    for(int k=1;k<min(i,j)+1;k++){
       lhold=lhold+(pow(alpha,(i+j-2*k))*pow(-1,(j-k))*((sqrt(fac_st(i))*sqrt(fac_st(j)))/(fac_st(i-k)*fac_st(j-k)*fac_st(k)))); 
     }
     hold=complex<long double>(lhold);
