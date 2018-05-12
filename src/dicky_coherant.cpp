@@ -25,11 +25,15 @@ long double fac(int n){
   else{return 1;}
 }
 
-long double fac_st(int n){
-  long double sum;
+double fac_st(int n){
+  double sum;
   if(n>0){
   sum=sqrt(2*M_PI*n)*pow(n/M_E,n);
-  return sum;}
+  if(isinfl(sum)){
+    return 1.8e150;
+  }
+  else{
+  return sum;}}
   else{return 1;}
 }
 
@@ -46,29 +50,25 @@ double laguerre(double n,double m,int k){
 return sum;
 }
 
-complex<long double> Kloop(int i,int j,int l,int Nmax,double alpha){
-  complex<long double> hold=complex<double>(0, 0);
-  long double lhold=0.0;
-   if(isinfl(fac_st(i))||isinfl(fac_st(j))){
-     cout<<"to big"<<endl;
-     return 0;
-   }
+complex<double> Kloop(int i,int j,int l,int Nmax,double alpha){
+  complex<double> hold=complex<double>(0, 0);
+  double lhold=0.0;
     #pragma omp parallel for reduction (+:lhold)
     for(int k=1;k<min(i,j)+1;k++){
       lhold=lhold+(pow(alpha,(i+j-2*k))*pow(-1,(j-k))*((sqrt(fac_st(i))*sqrt(fac_st(j)))/(fac_st(i-k)*fac_st(j-k)*fac_st(k)))); 
     }
-    hold=complex<long double>(lhold);
+    hold=complex<double>(lhold);
     if(isnan(lhold)){
       cout<<"has a NaN"<<endl;
      return 0; 
     }
-    return hold*(-complex<long double>(exp(-alpha*alpha/2))*sqrt(complex<long double>(Nmax/2*(Nmax/2+1))-complex<long double>((-Nmax/2+l+1)*(-Nmax/2+l)))/complex<long double >(2,0));
+    return hold*(-complex<double>(exp(-alpha*alpha/2))*sqrt(complex<double>(Nmax/2*(Nmax/2+1))-complex<double>((-Nmax/2+l+1)*(-Nmax/2+l)))/complex<double >(2,0));
 }
 	  
 
 int main(int argc, char *argv[])
 {
-  long double Delta, eta, gamma, omega, omega0, alpha,tol,en,Dsum,Nsum;
+  double Delta, eta, gamma, omega, omega0, alpha,tol,en,Dsum,Nsum;
   int Nmax, nmax,size;
   complex<double> hold;
   unsigned int i,j,k,l;//counters
