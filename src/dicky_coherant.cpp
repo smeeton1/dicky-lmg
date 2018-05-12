@@ -54,6 +54,10 @@ complex<long double> Kloop(int i,int j,int l,int Nmax,double alpha){
       lhold=lhold+(pow(alpha,(i+j-2*k))*pow(-1,(j-k))*((sqrt(fac_st(i))*sqrt(fac_st(j)))/(fac_st(i-k)*fac_st(j-k)*fac_st(k)))); 
     }
     hold=complex<long double>(lhold);
+    if(isnan(hold)){
+      cout<<"has a NaN"<<endl;
+     return 0; 
+    }
     return hold*(-complex<long double>(exp(-alpha*alpha/2))*sqrt(complex<long double>(Nmax/2*(Nmax/2+1))-complex<long double>((-Nmax/2+l+1)*(-Nmax/2+l)))/complex<long double >(2,0));
 }
 	  
