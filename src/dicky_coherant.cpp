@@ -9,7 +9,7 @@
 #include <cmath>
 #include <cstring>
 #include <sstream>
-#include <boost/math/special_functions/factorials.hpp>
+// #include <boost/math/special_functions/factorials.hpp>
 #include <math.h>
 
 using namespace std;
@@ -54,7 +54,7 @@ complex<long double> Kloop(int i,int j,int l,int Nmax,double alpha){
       lhold=lhold+(pow(alpha,(i+j-2*k))*pow(-1,(j-k))*((sqrt(fac_st(i))*sqrt(fac_st(j)))/(fac_st(i-k)*fac_st(j-k)*fac_st(k)))); 
     }
     hold=complex<long double>(lhold);
-    if(isnan(hold)){
+    if(isnan(lhold)){
       cout<<"has a NaN"<<endl;
      return 0; 
     }
