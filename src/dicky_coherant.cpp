@@ -60,11 +60,11 @@ complex<double> Kloop(int i,int j,int l,int Nmax,double alpha){
     hold=complex<double>(lhold);
     if(isnan(lhold)){
       cout<<"has a NaN"<<endl;
-     return 0; 
+     return complex<double>(-1,0); 
     }
     if(isinf(lhold)){
       cout<<"has a Inf"<<endl;
-     return 1.8e300; 
+     return complex<double>(1.8e300,0); 
     }
     return hold*(-complex<double>(exp(-alpha*alpha/2))*sqrt(complex<double>(Nmax/2*(Nmax/2+1))-complex<double>((-Nmax/2+l+1)*(-Nmax/2+l)))/complex<double >(2,0));
 }
@@ -184,6 +184,10 @@ int main(int argc, char *argv[])
       for(j=0;j<nmax+1;j++){
 	  //if((i+(l+1)*int(nmax+1)<size)&&(j+l*int(nmax+1)<size)){
 	    hold=complex<double>(Kloop(j,i,l,Nmax,alpha));
+	    if(hold==complex<double>(-1,0)){
+	      cout<<"error: a NaN has appared"<<endl;
+	      return 0;
+	    }
 	    dJz(i+(l+1)*int(nmax+1),j+l*int(nmax+1))=hold;
 	    dJz(j+(l)*int(nmax+1),i+(l+1)*int(nmax+1))=conj(hold);
 	  //}
