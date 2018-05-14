@@ -29,7 +29,7 @@ double fac_st(int n){
   double sum;
   if(n>0){
   sum=sqrt(2*M_PI*n)*pow(n/M_E,n);
-  if(isinfl(sum)){
+  if(isinf(sum)){
     return 1.8e150;
   }
   else{
@@ -61,6 +61,10 @@ complex<double> Kloop(int i,int j,int l,int Nmax,double alpha){
     if(isnan(lhold)){
       cout<<"has a NaN"<<endl;
      return 0; 
+    }
+    if(isinf(lhold)){
+      cout<<"has a Inf"<<endl;
+     return 1.8e300; 
     }
     return hold*(-complex<double>(exp(-alpha*alpha/2))*sqrt(complex<double>(Nmax/2*(Nmax/2+1))-complex<double>((-Nmax/2+l+1)*(-Nmax/2+l)))/complex<double >(2,0));
 }
@@ -125,8 +129,8 @@ int main(int argc, char *argv[])
 	  cout<<"Help"<<endl;
 	  cout<<"This program is used to solve for the lowest states"<<endl;
 	  cout<<"of the Hamiltonian W a^t a + w J_z + (g/N^(1/2))(a+a^t)J_x."<<endl;
-	  cout<<"	N: Used to set the number of qubits. This must be even."<<endl;
-	  cout<<"	n: Used to set the field dimension. This must be even."<<endl;
+	  cout<<"	N: Used to set the number of qubits."<<endl;
+	  cout<<"	n: Used to set the field dimension."<<endl;
 	  cout<<"	W: Used to set omega."<<endl;
 	  cout<<"	w: Used to set omega0."<<endl;
 	  cout<<"	D: Used to set Delta."<<endl;
