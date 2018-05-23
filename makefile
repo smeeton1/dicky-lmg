@@ -6,6 +6,7 @@ ifeq ($(MA), mine)
  cc = g++
  FLAGS = -fopenmp
  LIB =    -larmadillo -llapack -lm
+endif
 ifeq ($(MA),213)
  cc = g++
  FLAGS = -fopenmp
