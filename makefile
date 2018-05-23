@@ -6,6 +6,10 @@ ifeq ($(MA), mine)
  cc = g++
  FLAGS = -fopenmp
  LIB =    -larmadillo -llapack -lm
+ifeq ($(MA),213)
+ cc = g++
+ FLAGS = -fopenmp
+ LIB =   -I ~/armadillo/include -DARMA_DONT_USE_WRAPPER  -DMKL_ILP64 -m64 -I${MKLROOT}/include -lm
 endif
 
 
