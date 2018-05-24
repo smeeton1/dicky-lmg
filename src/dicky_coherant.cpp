@@ -80,7 +80,7 @@ int main(int argc, char *argv[])
   // initializing variables 
   Nmax=20; //qubit ensemble dimension must be even
   nmax=2*Nmax; //field dimension only even numbers
-  Delta=1.0;eta=0.2;gamma=0.3;omega=1.0;omega0=1.0;en=0.8;
+  Delta=1.0;eta=0.2;gamma=0.3;omega=1.0;omega0=1.0;en=0.8;tol=0.00001;
   
     if(argc>1){//this is used to set the variables for the program from the command line using flags all can be changed or defults used
     for(i=1;i<argc;i=i+2){
@@ -123,6 +123,11 @@ int main(int argc, char *argv[])
 	case 'e':
 	  if(isdigit(*argv[i+1]) ){
 	    en=atof(argv[i+1]);
+	  }
+	break;
+	case 'T':
+	  if(isdigit(*argv[i+1]) ){
+	    tol=atof(argv[i+1]);
 	  }
 	break;
 	case 'h':
@@ -217,7 +222,7 @@ int main(int argc, char *argv[])
   /*------------------------------------------------------------*/
   //getting Eigenvalues and Eigenvectors
 
-  tol=0.00001;
+
   cout<<"starting eigensolver"<<endl;
   cx_vec eigval;
   cx_mat eigvac;
