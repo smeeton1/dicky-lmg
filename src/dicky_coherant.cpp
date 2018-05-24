@@ -217,11 +217,11 @@ int main(int argc, char *argv[])
   /*------------------------------------------------------------*/
   //getting Eigenvalues and Eigenvectors
 
-  
+  tol=0.00001;
   cout<<"starting eigensolver"<<endl;
   cx_vec eigval;
   cx_mat eigvac;
-  eigs_gen(eigval, eigvac, H,int(en*size),"sr");//getting en% of the eigenvalues(eigval)  with smallest real part and corisponding eigenvectors(eigvac)
+  eigs_gen(eigval, eigvac, H,int(en*size),"sr",tol);//getting en% of the eigenvalues(eigval)  with smallest real part and corisponding eigenvectors(eigvac)
   
   //cout<<H*eigvac.col(1)-eigval(1)*eigvac.col(1)<<endl;//quick test of eigen value
   
