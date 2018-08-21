@@ -159,8 +159,8 @@ int main(int argc, char *argv[])
   /*----------------------------------------*/   
   alpha = 2*gamma/(omega*sqrt(Nmax));
   size= int(Nmax/2)*(nmax+1);
-  cx_mat H(size,size);
-  cx_mat dJz(size,size);
+  sp_cx_mat H(size,size);
+  sp_cx_mat dJz(size,size);
   /*----------------------------------------*/
   // Creating the Hamiltonian
 	
@@ -227,7 +227,7 @@ int main(int argc, char *argv[])
   cout<<"starting eigensolver"<<endl;
   cx_vec eigval;
   cx_mat eigvac;
-  eig_gen(eigval, eigvac, H,int(en*size),"sr",tol);//getting en% of the eigenvalues(eigval)  with smallest real part and corisponding eigenvectors(eigvac)
+  eigs_gen(eigval, eigvac, H,int(en*size),"sr",tol);//getting en% of the eigenvalues(eigval)  with smallest real part and corisponding eigenvectors(eigvac)
   
   //cout<<H*eigvac.col(1)-eigval(1)*eigvac.col(1)<<endl;//quick test of eigen value
   
