@@ -14,7 +14,7 @@ ifeq ($(MA),213)
 endif
 
 
-All: Dicky cDicky
+All: Dicky cDicky cDicky_1
 
 Dicky: 
 	$(cc) src/dicky.cpp -o $@ $(FLAGS)  $(LIB)
@@ -22,5 +22,8 @@ Dicky:
 cDicky: 
 	$(cc) src/dicky_coherant.cpp -o $@ $(FLAGS)  $(LIB)
 	
+cDicky_1:
+	$(cc) src/dicky_coherant_1.cpp -o $@ $(FLAGS)  $(LIB)
+	
 clean: 
-	rm Dicky cDicky
+	rm Dicky cDicky cDicky_1

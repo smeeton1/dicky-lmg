@@ -158,7 +158,7 @@ int main(int argc, char *argv[])
   // calculated values
   /*----------------------------------------*/   
   alpha = 2*gamma/(omega*sqrt(Nmax));
-  size= int(Nmax/2)*(nmax+1);
+  size= int(Nmax)*(nmax+1);
   cx_mat H(size,size);
   cx_mat dJz(size,size);
   /*----------------------------------------*/
@@ -168,7 +168,7 @@ int main(int argc, char *argv[])
   //#pragma omp parallel shared(H)
   {
   //#pragma omp parallel for
-  for(i=0;i<Nmax/2;i++){
+  for(i=0;i<Nmax;i++){
    for(j=0;j<nmax+1;j++){
      H(i*int(nmax+1)+j,i*int(nmax+1)+j)=omega*i-omega*alpha*alpha*(j+1)*(j+1);
    }
@@ -185,7 +185,7 @@ int main(int argc, char *argv[])
  // #pragma omp parallel shared(dJz)
   {
  // #pragma omp parallel for
-  for(l=0;l<Nmax/2-1;l++){ 
+  for(l=0;l<Nmax;l++){ 
     for(i=0;i<nmax+1;i++){
       for(j=0;j<nmax+1;j++){
 	  //if((i+(l+1)*int(nmax+1)<size)&&(j+l*int(nmax+1)<size)){
