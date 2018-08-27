@@ -9,7 +9,7 @@ Nmax=200 ##qubit ensemble dimension must be even
 nmax=600 ##field dimension only even numbers 
 en=0.1
 
-cd /home/fishy/code/Mexico/Dicke-lmg/dicky-lmg/
+cd ~/dicky-lmg/
 python plot.py $Nmax $nmax 1.0 1.0 1.0 0.2 0.3 $en
 
 echo "one done"

@@ -255,21 +255,21 @@ for line in f1:
 f1.close
 
 QI=[]
-if nmax>900:
+if nmax>300:
   i=0
-  while emin<mJz[i]:
+  while emin<-13:#mJz[i]:
     i=i+1
   QI.append(i)
   i=0
-  while eNe<mJz[i]:
+  while eNe<-12:#mJz[i]:
     i=i+1
   QI.append(i)
   i=0
-  while e1<mJz[i]:
+  while e1<-11:#mJz[i]:
     i=i+1
   QI.append(i) 
 
-  E0=0.01
+  E0=0.005
 
   while E0<EiV(QI[0]):
     QI[0]=QI[0]+1
