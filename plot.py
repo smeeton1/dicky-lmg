@@ -255,7 +255,7 @@ for line in f1:
 f1.close
 
 QI=[]
-if nmax>300:
+if nmax>900:
   i=0
   while -13<mJz[i]:
     i=i+1
