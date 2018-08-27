@@ -209,7 +209,7 @@ xmax=max(DoS2)+0.1
 xmin=min(DoS2)-0.1
 
 ImgDoS='images/DoS_%d_%d_%.1f_%.1f_%.1f_%.1f_%.1f_%.2f.eps' % (Nmax,nmax,omega,omega0,Delta,eta,gamma,en)
-plt.figure(1)#,figsize=(3,2))
+plt.figure(1)
 plt.plot(DoS2,DoS1,'b.')
 plt.plot([e1,e1],yex,'r--')
 plt.plot([e2,e2],yex,'r--')
