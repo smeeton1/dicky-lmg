@@ -205,10 +205,10 @@ for line in fh:
 
 fh.close
 yex=[]
-yex.append(max(DoS2)+0.001)
-yex.append(min(DoS2)-0.001)
-xmax=max(DoS1)+0.01
-xmin=min(DoS1)-0.01
+yex.append(max(DoS2)+0.01)
+yex.append(min(DoS2)-0.01)
+xmax=max(DoS1)+0.1
+xmin=min(DoS1)-0.1
 
 ImgDoS='images/DoS_%d_%d_%.1f_%.1f_%.1f_%.1f_%.1f_%.2f.eps' % (Nmax,nmax,omega,omega0,Delta,eta,gamma,en)
 plt.figure(1)
@@ -216,7 +216,7 @@ plt.plot(DoS1,DoS2,'b.')
 plt.plot([e1,e1],yex,'r--')
 plt.plot([e2,e2],yex,'r--')
 axes=plt.gca()
-axes.set_ylim([yex[1]+0.1,yex[0]-0.1])
+axes.set_ylim([yex[1]+0.01,yex[0]-0.01])
 axes.set_xlim(xmin,xmax)
 if f<1:
   xdos,CDoS=DoSR1(xmin,xmax,e1,e2,omega,omega0,eta,gamma)
@@ -289,7 +289,7 @@ plt.plot(EiV,mJz,'b.')
 plt.plot([e1,e1],yex,'r--')
 plt.plot([e2,e2],yex,'r--')
 axes=plt.gca()
-axes.set_ylim([yex[1]+0.1,yex[0]-0.1])
+axes.set_ylim([yex[1]+0.01,yex[0]-0.01])
 axes.set_xlim(xmin,xmax)
 if f>=1 and eta<Delta:
   plt.plot([emin,emin],yex,'r--')
