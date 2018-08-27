@@ -257,15 +257,15 @@ f1.close
 QI=[]
 if nmax>300:
   i=0
-  while emin<-13:#mJz[i]:
+  while -13<mJz[i]:
     i=i+1
   QI.append(i)
   i=0
-  while eNe<-12:#mJz[i]:
+  while -12<mJz[i]:
     i=i+1
   QI.append(i)
   i=0
-  while e1<-11:#mJz[i]:
+  while -11<mJz[i]:
     i=i+1
   QI.append(i) 
 
