@@ -207,8 +207,8 @@ fh.close
 yex=[]
 yex.append(max(DoS2)+0.01)
 yex.append(min(DoS2)-0.01)
-xmax=max(DoS1)+0.1
-xmin=min(DoS1)-0.1
+xmax=max(DoS1)+0.01
+xmin=min(DoS1)-0.01
 
 ImgDoS='images/DoS_%d_%d_%.1f_%.1f_%.1f_%.1f_%.1f_%.2f.eps' % (Nmax,nmax,omega,omega0,Delta,eta,gamma,en)
 plt.figure(1)
@@ -278,10 +278,10 @@ else:
 
 
 yex=[]
-yex.append(max(mJz)+1)
-yex.append(min(mJz)-1)
-xmax=max(EiV)+0.3
-xmin=min(EiV)-0.3
+yex.append(max(mJz)+0.1)
+yex.append(min(mJz)-0.1)
+xmax=max(EiV)+0.01
+xmin=min(EiV)-0.01
 
 ImgPeresL='images/PeresL_%d_%d_%.1f_%.1f_%.1f_%.1f_%.1f_%.2f.eps' % (Nmax,nmax,omega,omega0,Delta,eta,gamma,en)
 plt.figure(2)#,figsize=(3,2))
