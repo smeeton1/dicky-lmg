@@ -205,10 +205,10 @@ for line in fh:
 
 fh.close
 yex=[]
-yex.append(max(DoS1)+0.01)
-yex.append(min(DoS1)-0.01)
-xmax=max(DoS2)+0.1
-xmin=min(DoS2)-0.1
+yex.append(max(DoS2)+0.01)
+yex.append(min(DoS2)-0.01)
+xmax=max(DoS1)+0.1
+xmin=min(DoS1)-0.1
 
 ImgDoS='images/DoS_%d_%d_%.1f_%.1f_%.1f_%.1f_%.1f_%.2f.eps' % (Nmax,nmax,omega,omega0,Delta,eta,gamma,en)
 plt.figure(1)
@@ -255,7 +255,7 @@ for line in f1:
 f1.close
 
 QI=[]
-if nmax>300:
+if nmax>900:
   i=0
   while emin<mJz[i]:
     i=i+1
