@@ -262,7 +262,7 @@ if nmax>300:
   while eNe<mJz[i]:
     i=i+1
   QI.append(i)
-    i=0
+  i=0
   while emin<mJz[i]:
     i=i+1
   QI.append(i) 
