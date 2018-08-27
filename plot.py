@@ -285,7 +285,7 @@ xmin=min(EiV)-0.01
 
 ImgPeresL='images/PeresL_%d_%d_%.1f_%.1f_%.1f_%.1f_%.1f_%.2f.eps' % (Nmax,nmax,omega,omega0,Delta,eta,gamma,en)
 plt.figure(2)#,figsize=(3,2))
-plt.plot(EiV,mJz,'b.')
+plt.plot(mJz,EiV,'b.')
 plt.plot([e1,e1],yex,'r--')
 plt.plot([e2,e2],yex,'r--')
 axes=plt.gca()
