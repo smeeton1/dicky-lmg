@@ -212,7 +212,7 @@ xmin=min(DoS2)-0.1
 
 ImgDoS='images/DoS_%d_%d_%.1f_%.1f_%.1f_%.1f_%.1f_%.2f.eps' % (Nmax,nmax,omega,omega0,Delta,eta,gamma,en)
 plt.figure(1)
-plt.plot(DoS2,DoS1,'b.')
+plt.plot(DoS1,DoS2,'b.')
 plt.plot([e1,e1],yex,'r--')
 plt.plot([e2,e2],yex,'r--')
 axes=plt.gca()
@@ -257,7 +257,7 @@ f1.close
 QI=[]
 if nmax>300:
   i=0
-  while e1<mJz[i]:
+  while emin<mJz[i]:
     i=i+1
   QI.append(i)
   i=0
@@ -265,7 +265,7 @@ if nmax>300:
     i=i+1
   QI.append(i)
   i=0
-  while emin<mJz[i]:
+  while e1<mJz[i]:
     i=i+1
   QI.append(i) 
 
