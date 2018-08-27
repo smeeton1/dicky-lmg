@@ -205,8 +205,8 @@ for line in fh:
 
 fh.close
 yex=[]
-yex.append(max(DoS2)+0.01)
-yex.append(min(DoS2)-0.01)
+yex.append(max(DoS2)+0.001)
+yex.append(min(DoS2)-0.001)
 xmax=max(DoS1)+0.01
 xmin=min(DoS1)-0.01
 
@@ -278,8 +278,8 @@ else:
 
 
 yex=[]
-yex.append(max(mJz)+0.1)
-yex.append(min(mJz)-0.1)
+yex.append(max(mJz)+0.01)
+yex.append(min(mJz)-0.01)
 xmax=max(EiV)+0.01
 xmin=min(EiV)-0.01
 
