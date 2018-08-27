@@ -376,7 +376,7 @@ for l in QI:
   for i in xrang:
     for l in yrang:
       for k in range(0,nrho):
-	alpha[k]=cmath.exp(-pow(abs(i+1j*l),2)/2)*(pow((i+1j*l),k)/math.sqrt(math.factorial(k)))
+        alpha[k]=cmath.exp(-pow(abs(i+1j*l),2)/2)*(pow((i+1j*l),k)/math.sqrt(math.factorial(k)))
       
       Qfun[g][h]=(numpy.dot(numpy.transpose(alpha),numpy.dot(rho,alpha.conjugate()))).real
       g=g+1
