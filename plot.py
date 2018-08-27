@@ -270,9 +270,9 @@ if nmax>300:
   QI.append(i) 
 
   E0=0.005
-
-  while E0<EiV(int(QI[2])):
-    QI[0]=QI[0]+1
+  print(QI)
+  while E0<EiV(QI[2]):
+    QI[2]=QI[2]+1
 else:
   QI.append(0)
 
