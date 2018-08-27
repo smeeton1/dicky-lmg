@@ -201,7 +201,7 @@ fh= open(FileDoS, 'r')
 for line in fh:
   data=line.split()
   DoS1.append(float(data[0])/(Nmax)/2)
-  DoS2.append(-float(data[1])/(Nmax))
+  DoS2.append(float(data[1])/(Nmax))
 
 fh.close
 yex=[]
