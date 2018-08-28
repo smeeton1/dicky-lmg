@@ -278,10 +278,10 @@ else:
 
 
 yex=[]
-yex.append(max(mJz)+0.01)
-yex.append(min(mJz)-0.01)
-xmax=max(EiV)+0.01
-xmin=min(EiV)-0.01
+yex.append(max(EiV)+0.01)
+yex.append(min(EiV)-0.01)
+xmax=max(mJz)+0.01
+xmin=min(mJz)-0.01
 
 ImgPeresL='images/PeresL_%d_%d_%.1f_%.1f_%.1f_%.1f_%.1f_%.2f.eps' % (Nmax,nmax,omega,omega0,Delta,eta,gamma,en)
 plt.figure(2)#,figsize=(3,2))
