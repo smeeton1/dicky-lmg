@@ -255,17 +255,17 @@ for line in f1:
 f1.close
 
 QI=[]
-if nmax>900:
+if nmax>300:
   i=0
-  while -13<mJz[i]:
+  while -0.01<mJz[i]:
     i=i+1
   QI.append(i)
   i=0
-  while -12<mJz[i]:
+  while -0.005<mJz[i]:
     i=i+1
   QI.append(i)
   i=0
-  while -11<mJz[i]:
+  while 0.005<mJz[i]:
     i=i+1
   QI.append(i) 
 
