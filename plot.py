@@ -356,10 +356,10 @@ for l in QI:
 
 
   if dx>dy:
-    h=4*dx/100
+    h=6*dx/100
     d=dx
   else:
-    h=4*dy/100
+    h=6*dy/100
     d=dy
 
 
