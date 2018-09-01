@@ -253,6 +253,7 @@ for line in f1:
   mJz.append(float(data[0])/(Nmax/2))
 
 f1.close
+mJz.sort()
 
 QI=[]
 if nmax>300:
@@ -271,7 +272,7 @@ if nmax>300:
 
   E0=-11
   print(QI)
-  while E0<EiV(QI[2]):
+  while E0<EiV[QI[2]]:
     QI[2]=QI[2]+1
 else:
   QI.append(0)
