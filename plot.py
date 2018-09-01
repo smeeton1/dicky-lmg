@@ -257,19 +257,19 @@ f1.close
 QI=[]
 if nmax>300:
   i=0
-  while -0.01<mJz[i]:
+  while min(mJz)+0.01<mJz[i]:
     i=i+1
   QI.append(i)
   i=0
-  while -0.005<mJz[i]:
+  while (max(mJz)-min(mJz))/2+min(mJz)<mJz[i]:
     i=i+1
   QI.append(i)
   i=0
-  while 0.005<mJz[i]:
+  while max(mJz)-0.005<mJz[i]:
     i=i+1
   QI.append(i) 
 
-  E0=0.005
+  E0=-11
   print(QI)
   while E0<EiV(QI[2]):
     QI[2]=QI[2]+1
