@@ -250,7 +250,7 @@ mJz = []
 f1 = open(Filemjz, 'r')
 for line in f1:
   data=line.split()
-  mJz.append(float(data[0])/(Nmax/20))
+  mJz.append(float(data[0])/(Nmax/100))
 
 f1.close
 #mJz.sort()
