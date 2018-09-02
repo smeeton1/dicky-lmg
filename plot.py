@@ -253,8 +253,34 @@ for line in f1:
   mJz.append(float(data[0])/(Nmax/100))
 
 f1.close
-#mJz.sort()
+#
 
+
+
+
+yex=[]
+yex.append(max(EiV)+0.01)
+yex.append(min(EiV)-0.01)
+xmax=max(mJz)+0.01
+xmin=min(mJz)-0.01
+
+ImgPeresL='images/PeresL_%d_%d_%.1f_%.1f_%.1f_%.1f_%.1f_%.2f.eps' % (Nmax,nmax,omega,omega0,Delta,eta,gamma,en)
+plt.figure(2)#,figsize=(3,2))
+plt.plot(mJz,EiV,'b.')
+plt.plot([e1,e1],yex,'r--')
+plt.plot([e2,e2],yex,'r--')
+axes=plt.gca()
+axes.set_ylim([yex[1]+0.01,yex[0]-0.01])
+axes.set_xlim(xmin,xmax)
+if f>=1 and eta<Delta:
+  plt.plot([emin,emin],yex,'r--')
+if f>=1 and eta>=Delta:
+  plt.plot([emin,emin],yex,'r--')
+  plt.plot([eNe,eNe],yex,'r--')
+plt.savefig(ImgPeresL)
+
+
+mJz.sort()
 QI=[]
 if nmax>300:
   i=0
@@ -278,26 +304,6 @@ else:
   QI.append(0)
 
 
-yex=[]
-yex.append(max(EiV)+0.01)
-yex.append(min(EiV)-0.01)
-xmax=max(mJz)+0.01
-xmin=min(mJz)-0.01
-
-ImgPeresL='images/PeresL_%d_%d_%.1f_%.1f_%.1f_%.1f_%.1f_%.2f.eps' % (Nmax,nmax,omega,omega0,Delta,eta,gamma,en)
-plt.figure(2)#,figsize=(3,2))
-plt.plot(mJz,EiV,'b.')
-plt.plot([e1,e1],yex,'r--')
-plt.plot([e2,e2],yex,'r--')
-axes=plt.gca()
-axes.set_ylim([yex[1]+0.01,yex[0]-0.01])
-axes.set_xlim(xmin,xmax)
-if f>=1 and eta<Delta:
-  plt.plot([emin,emin],yex,'r--')
-if f>=1 and eta>=Delta:
-  plt.plot([emin,emin],yex,'r--')
-  plt.plot([eNe,eNe],yex,'r--')
-plt.savefig(ImgPeresL)
 del EiV
 del mJz
 
