@@ -250,10 +250,10 @@ mJz = []
 f1 = open(Filemjz, 'r')
 for line in f1:
   data=line.split()
-  mJz.append(float(data[0])/(Nmax/2))
+  mJz.append(float(data[0])/(Nmax/20))
 
 f1.close
-mJz.sort()
+#mJz.sort()
 
 QI=[]
 if nmax>300:
