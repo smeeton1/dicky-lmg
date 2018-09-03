@@ -282,6 +282,7 @@ plt.savefig(ImgPeresL)
 
 mJz.sort()
 QI=[]
+print(min(mJz),max(mJz))
 if nmax>300:
   i=0
   while min(mJz)+0.01<mJz[i]:
