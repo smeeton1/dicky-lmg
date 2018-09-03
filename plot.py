@@ -331,7 +331,7 @@ for j in QI:
   l=0
   print(len(EiVe),len(EiVe[0]))
   for i in range(0,len(EiVe)):
-    prob.append((EiVe[int(i)][QI[j]]*EiVe[int(i)][QI[j]].conjugate()).real)
+    prob.append((EiVe[int(i)][QI[0]]*EiVe[int(i)][QI[0]].conjugate()).real)
   rp=range(0,len(prob))
   ImgPeresL='images/Prob_%d_%d_%.1f_%.1f_%.1f_%.1f_%.1f_%.2f_%i.eps' % (Nmax,nmax,omega,omega0,Delta,eta,gamma,en,QI[j])
   plt.figure(5)#,figsize=(3,2))
