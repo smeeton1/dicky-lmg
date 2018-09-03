@@ -325,7 +325,7 @@ for line in f1:
 f1.close
 
 
-for j in range(0,len(QI)):
+for j in range(0,len(QI)-1):
   prob=[]
   hold=0.0
   l=0
