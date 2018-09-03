@@ -402,7 +402,7 @@ for l in range(0,len(QI)):
   fig = plt.figure(3)#,figsize=(3,2))
 #ax = fig.add_subplot(111, projection='3d')
 #ax.plot_surface(X,Y,Qfun)
-  plt.matshow(Qfun)_%i
+  plt.matshow(Qfun)
   plt.savefig(QfunName)
 
   QfunName3d='images/Qfun3D_%d_%d_%.1f_%.1f_%.1f_%.1f_%.1f_%.2f_%i.eps' % (Nmax,nmax,omega,omega0,Delta,eta,gamma,en,QI[int[l]])
