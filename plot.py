@@ -329,6 +329,7 @@ for j in range(0,len(QI)):
   prob=[]
   hold=0.0
   l=0
+  print(j,len(QI))
   print(len(EiVe),len(EiVe[0]))
   for i in range(0,len(EiVe)):
     prob.append((EiVe[int(i)][QI[int[j]]]*EiVe[int(i)][QI[int[j]]].conjugate()).real)
