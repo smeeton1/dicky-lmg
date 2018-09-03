@@ -280,7 +280,7 @@ if f>=1 and eta>=Delta:
 plt.savefig(ImgPeresL)
 
 
-mJz.sort()
+
 QI=[]
 print(min(mJz),max(mJz),mJz[0])
 if nmax>300:
