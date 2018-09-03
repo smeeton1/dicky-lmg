@@ -332,9 +332,9 @@ for j in range(0,len(QI)-1):
   print(j,len(QI))
   print(len(EiVe),len(EiVe[0]))
   for i in range(0,len(EiVe)):
-    prob.append((EiVe[int(i)][QI[int[j]]]*EiVe[int(i)][QI[int[j]]].conjugate()).real)
+    prob.append((EiVe[int(i)][QI[int(j)]]*EiVe[int(i)][QI[int(j)]].conjugate()).real)
   rp=range(0,len(prob))
-  ImgPeresL='images/Prob_%d_%d_%.1f_%.1f_%.1f_%.1f_%.1f_%.2f_%i.eps' % (Nmax,nmax,omega,omega0,Delta,eta,gamma,en,QI[int[j]])
+  ImgPeresL='images/Prob_%d_%d_%.1f_%.1f_%.1f_%.1f_%.1f_%.2f_%i.eps' % (Nmax,nmax,omega,omega0,Delta,eta,gamma,en,QI[int(j)])
   plt.figure(5)#,figsize=(3,2))
   plt.plot(rp,prob,'b.')
   plt.savefig(ImgPeresL)
@@ -349,7 +349,7 @@ for l in range(0,len(QI)):
   l=0
   for j in range(0,int(Nmax/2)-1):
     for i in range(0,(nmax)):
-      hold=hold +EiVe[int(i+j*(nmax+1))][QI[int[l]]]
+      hold=hold +EiVe[int(i+j*(nmax+1))][QI[int(l)]]
     VeB[j]=complex(hold)
     hold=0.0
 
@@ -399,14 +399,14 @@ for l in range(0,len(QI)):
   
   X, Y = numpy.meshgrid(xrang, yrang)
 
-  QfunName='images/Qfun_%d_%d_%.1f_%.1f_%.1f_%.1f_%.1f_%.2f_%i.eps' % (Nmax,nmax,omega,omega0,Delta,eta,gamma,en,QI[int[l]])
+  QfunName='images/Qfun_%d_%d_%.1f_%.1f_%.1f_%.1f_%.1f_%.2f_%i.eps' % (Nmax,nmax,omega,omega0,Delta,eta,gamma,en,QI[int(l)])
   fig = plt.figure(3)#,figsize=(3,2))
 #ax = fig.add_subplot(111, projection='3d')
 #ax.plot_surface(X,Y,Qfun)
   plt.matshow(Qfun)
   plt.savefig(QfunName)
 
-  QfunName3d='images/Qfun3D_%d_%d_%.1f_%.1f_%.1f_%.1f_%.1f_%.2f_%i.eps' % (Nmax,nmax,omega,omega0,Delta,eta,gamma,en,QI[int[l]])
+  QfunName3d='images/Qfun3D_%d_%d_%.1f_%.1f_%.1f_%.1f_%.1f_%.2f_%i.eps' % (Nmax,nmax,omega,omega0,Delta,eta,gamma,en,QI[int(l)])
   fig = plt.figure(4)#,figsize=(3,2))
   ax = fig.add_subplot(111, projection='3d')
   ax.plot_surface(X,Y,Qfun)
