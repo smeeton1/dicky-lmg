@@ -326,6 +326,15 @@ f1.close
 
 
 for j in range(0,len(QI)):
+  hold=0
+  for i in range(len(EiVe)*0.6,len(EiVe)):
+      hold=hold+(EiVe[int(i)][QI[int(j)]]*EiVe[int(i)][QI[int(j)]].conjugate()).real
+  while hold>0.05
+    QI[int(j)]=QI[int(j)]+1
+    hold=0
+       for i in range(len(EiVe)*0.6,len(EiVe)):
+      hold=hold+(EiVe[int(i)][QI[int(j)]]*EiVe[int(i)][QI[int(j)]].conjugate()).real
+  
   prob=[]
   hold=0.0
   l=0
@@ -339,7 +348,7 @@ for j in range(0,len(QI)):
   plt.savefig(ImgPeresL)
   del prob
 
-
+#put in tail check everything over 60% shousl have <phi_40|phi_40> < 0.05
 
 
 for s in range(0,len(QI)):
