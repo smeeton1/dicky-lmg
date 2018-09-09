@@ -332,7 +332,7 @@ for j in range(0,len(QI)):
   while hold>0.05:
     QI[int(j)]=QI[int(j)]+1
     hold=0
-    for i in range(len(EiVe)*0.6,len(EiVe)):
+    for i in range(int(len(EiVe)*0.6),len(EiVe)):
          hold=hold+(EiVe[int(i)][QI[int(j)]]*EiVe[int(i)][QI[int(j)]].conjugate()).real
   
   prob=[]
